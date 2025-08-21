@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Livewire\Curso;
+
+use App\Models\Curso;
+use Carbon\Carbon;
+
+use Livewire\Component;
+
+class Cadastrar extends Component
+{
+    public $empresa_id;
+    public $user_id;
+    public $nome;
+    public $status_id;
+    public $tipo_lancamento;
+    public $hora_aula;
+    public $extracurricular;
+    public $nivel_id;
+    public $user_deleted_id;
+
+    protected $rules = [
+        'empresa_id' => 'required|exists:empresas,id',
+        'nome' => 'required|min:4',
+        'status_id' => 'required|exists:statuses,id',
+        'tipo_lancamento' => 'required|in:Mensal,Anual', // Mensal ou Anual
+        'hora_aula' => 'required|numeric|min:1', // Minimum 1
+        'extracurricular' => 'required|in:Sim,Nao', // Sim ou Nao
+        'nivel_id' => 'required|exists:niveis,id',
+        'user_deleted_id' => 'nullable|exists:users,id',
+    ];
+
+    public function salvar() {
+
+       // $this->validate();
+        
+        Curso::create([
+            'empresa_id' => 1,
+            'user_id' => 1,
+            'nome' => $this->nome,
+            'status_id' => 1,
+            'tipo_lancamento' => $this->tipo_lancamento,
+            'hora_aula' => $this->hora_aula,
+            'extracurricular' => $this->extracurricular,
+            'nivel_id' => 1,
+            'user_deleted_id' => $this->user_deleted_id
+        ]);
+        // Limpa os campos do formulário
+        $this->reset();
+        session()->flash('message', 'Curso cadastrado com sucesso!');
+
+    }
+
+    public function render()
+    {
+        return view('livewire.curso.cadastrar');
+    }
+}
