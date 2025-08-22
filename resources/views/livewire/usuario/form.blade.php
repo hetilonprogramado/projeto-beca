@@ -8,47 +8,30 @@
     </div>
                             
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de pessoa</label>
-            <select id="tipoDePessoa" wire:model="tipo_pessoa" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                <option value="">Selecione</option>
-                <option value="Fisica">Fisica</option>
-                <option value="Juridica">Juridica</option>
-            </select>
-        </div>
-
         <div class="lg:col-span-2">
             <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo *</label>
-            <input type="text" id="nomeCompleto" wire:model="rsocial_nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
-            @error('rsocial_nome')
-                <small class="text-danger">{{ $message }}</small>
-            @enderror
-        </div>
-
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">nfantasia_apelido *</label>
-            <input type="text" id="Apelido" wire:model="rsocial_nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
-            @error('nfantasia_apelido')
+            <input type="text" id="nomeCompleto" wire:model="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
+            @error('name')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
                                 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">CPF *</label>
-            <input type="text" id="cpf" wire:model="cnpj_cpf" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="000.000.000-00" maxlength="14">
-            @error('cnpj_cpf') 
+            <input type="text" id="cpf" wire:model="cpf" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="000.000.000-00" maxlength="14">
+            @error('cpf') 
                 <small class="text-danger">{{ $message }}</small> 
             @enderror
         </div>
                                 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">RG</label>
-            <input type="text" wire:model="ie_rg" id="rg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00.000.000-0">
+            <input type="text" wire:model="rg" id="rg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00.000.000-0">
         </div>
                                 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Data de Nascimento</label>
-            <input type="date" wire:model="data_abert_nasc" id="dataNascimento" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <input type="date" wire:model="data_nascimento" id="dataNascimento" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
         </div>
                                 
         <div>
@@ -59,30 +42,54 @@
                 <option value="Feminino">Feminino</option>
             </select>
         </div>
-                                
+
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Estado Civil</label>
-            <select id="estadoCivil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                <option value="">Selecione</option>
-                <option value="solteiro">Solteiro(a)</option>
-                <option value="casado">Casado(a)</option>
-                <option value="divorciado">Divorciado(a)</option>
-                <option value="viuvo">Viúvo(a)</option>
-                <option value="uniao_estavel">União Estável</option>
-            </select>
-        </div>
-                                
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Profissão</label>
-            <input type="text" id="profissao" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite a profissão">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Fornecedor</label>
-            <select id="fornecedor" wire:model="fornecedor" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Usuario do Sistema?</label>
+            <select id="user_system" wire:model="user_system" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione</option>
                 <option value="Sim">Sim</option>
                 <option value="Nao">Não</option>
             </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Data de Admissão</label>
+            <input type="date" wire:model="data_admissao" id="dataAdmissao" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Data de Demissão</label>
+            <input type="date" wire:model="data_demissao" id="dataDemissao" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Salario *</label>
+            <input type="text" wire:model="salario" id="salario" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="1.000,00">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Cargo *</label>
+            <input type="text" wire:model="cargo" id="cargo" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o cargo">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Perc. Compra *</label>
+            <input type="text" wire:model="perc_compra" id="perc_compra" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="10,00%">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Codigo de Acesso *</label>
+            <input type="text" wire:model="codigo_acesso" id="codigo_acesso" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">PIS *</label>
+            <input type="text" wire:model="pis" id="pis" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">CTPS *</label>
+            <input type="text" wire:model="ctps" id="ctps" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
         </div>
     </div>
 </div>
@@ -110,11 +117,6 @@
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Número *</label>
             <input type="text" wire:model="numero" id="numero" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="123">
-        </div>
-                                
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Complemento</label>
-            <input type="text" id="complemento" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Apto, Bloco, etc.">
         </div>
                                 
         <div class="lg:col-span-2">
@@ -180,17 +182,21 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Email Principal *</label>
-                <input type="email" wire:moedl="email" id="emailPrincipal" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="email@exemplo.com">
+                <input type="email" wire:model="email" id="emailPrincipal" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="email@exemplo.com">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Password *</label>
+                <input type="password" wire:model="password" id="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="123456">
             </div>
                                 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Celular *</label>
-                <input type="text" id="celular" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 00000-0000" maxlength="15">
+                <input type="text" wire:model="telefone1" id="celular" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 00000-0000" maxlength="15">
             </div>
                                 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Fixo</label>
-                <input type="text" id="telefoneFixo" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 0000-0000" maxlength="14">
+                <input type="text" wire:model="telefone2" id="telefoneFixo" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 0000-0000" maxlength="14">
             </div>
 
         </div>
@@ -210,165 +216,9 @@
             <textarea id="observacoes" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none" placeholder="Digite observações importantes sobre o cliente..."></textarea>
         </div>
     </div>
-
-    <!-- Matrículas do Cliente -->
-    <div class="mb-8">
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-file-signature text-indigo-600"></i>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-800">Matrículas</h3>
-            </div>
-            <button onclick="adicionarMatricula()" class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition-all text-sm">
-                <i class="fas fa-plus mr-2"></i>Nova Matrícula
-            </button>
-        </div>
-                            
-        <div id="matriculasContainer" class="space-y-4">
-            <!-- Matrícula Exemplo 1 -->
-            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                <div class="flex items-center justify-between mb-3">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-laptop-code text-blue-600"></i>
-                        </div>
-                    <div>
-                    <h4 class="font-semibold text-gray-800">Curso de JavaScript Avançado</h4>
-                    <p class="text-sm text-gray-600">Turma JS-2024-01 • Matrícula: #2024001</p>
-                </div>
-            </div>
-            <div class="flex items-center space-x-2">
-                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Ativa</span>
-                    <button onclick="editarMatricula(this)" class="text-blue-500 hover:text-blue-700 p-1">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button onclick="removerMatricula(this)" class="text-red-500 hover:text-red-700 p-1">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-                                    
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-                <div>
-                    <span class="text-gray-600">Data Matrícula:</span>
-                    <p class="font-medium text-gray-800">15/01/2024</p>
-                </div>
-                <div>
-                    <span class="text-gray-600">Valor:</span>
-                    <p class="font-medium text-gray-800">R$ 299,00</p>
-                </div>
-                <div>
-                    <span class="text-gray-600">Forma Pagamento:</span>
-                    <p class="font-medium text-gray-800">Cartão 3x</p>
-                </div>
-                <div>
-                    <span class="text-gray-600">Situação Pagamento:</span>
-                    <p class="font-medium text-green-600">Em Dia</p>
-                </div>
-            </div>
-                                    
-            <div class="mt-3 pt-3 border-t border-gray-200">
-                <div class="flex items-center justify-between">
-                    <div class="text-sm text-gray-600">
-                        <span>Progresso do Curso:</span>
-                        <span class="font-medium text-gray-800 ml-1">65%</span>
-                    </div>
-                    <div class="flex items-center space-x-2 text-sm">
-                        <span class="text-gray-600">Início:</span>
-                        <span class="font-medium text-gray-800">20/01/2024</span>
-                        <span class="text-gray-600 ml-3">Previsão Término:</span>
-                        <span class="font-medium text-gray-800">20/03/2024</span>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-blue-500 h-2 rounded-full" style="width: 65%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Matrícula Exemplo 2 -->
-        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-            <div class="flex items-center justify-between mb-3">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-python text-green-600"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-gray-800">Curso de Python para Web</h4>
-                        <p class="text-sm text-gray-600">Turma PY-2023-02 • Matrícula: #2023089</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">Concluída</span>
-                    <button onclick="editarMatricula(this)" class="text-blue-500 hover:text-blue-700 p-1">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button onclick="removerMatricula(this)" class="text-red-500 hover:text-red-700 p-1">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-                                    
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-                <div>
-                    <span class="text-gray-600">Data Matrícula:</span>
-                    <p class="font-medium text-gray-800">10/09/2023</p>
-                </div>
-                <div>
-                    <span class="text-gray-600">Valor:</span>
-                    <p class="font-medium text-gray-800">R$ 349,00</p>
-                </div>
-                <div>
-                    <span class="text-gray-600">Forma Pagamento:</span>
-                    <p class="font-medium text-gray-800">PIX à Vista</p>
-                </div>
-                <div>
-                    <span class="text-gray-600">Situação Pagamento:</span>
-                    <p class="font-medium text-blue-600">Pago</p>
-                </div>
-            </div>
-                                    
-            <div class="mt-3 pt-3 border-t border-gray-200">
-                <div class="flex items-center justify-between">
-                    <div class="text-sm text-gray-600">
-                        <span>Progresso do Curso:</span>
-                        <span class="font-medium text-green-600 ml-1">100%</span>
-                    </div>
-                    <div class="flex items-center space-x-2 text-sm">
-                        <span class="text-gray-600">Início:</span>
-                        <span class="font-medium text-gray-800">15/09/2023</span>
-                        <span class="text-gray-600 ml-3">Concluído em:</span>
-                        <span class="font-medium text-gray-800">20/12/2023</span>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-green-500 h-2 rounded-full" style="width: 100%"></div>
-                    </div>
-                </div>
-                <div class="mt-2 flex items-center space-x-2">
-                    <i class="fas fa-certificate text-yellow-500"></i>
-                    <span class="text-sm text-gray-600">Certificado emitido em 22/12/2023</span>
-                    <button class="text-blue-500 hover:text-blue-700 text-sm font-medium ml-2">
-                        <i class="fas fa-download mr-1"></i>Baixar
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mensagem quando não há matrículas -->
-        <div id="semMatriculas" class="hidden text-center py-8 text-gray-500">
-            <i class="fas fa-file-signature text-4xl mb-3 text-gray-300"></i>
-            <p class="text-lg font-medium">Nenhuma matrícula encontrada</p>
-            <p class="text-sm">Este cliente ainda não possui matrículas em cursos.</p>
-        </div>
-    </div>
 </div>
 
-<!-- Status do Cliente -->
+<!-- Status do Usuario -->
 <div class="mb-6">
     <div class="flex items-center space-x-2 mb-4">
         <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">

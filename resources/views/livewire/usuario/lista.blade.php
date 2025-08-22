@@ -22,42 +22,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-b hover:bg-gray-50">
-                                        <td class="py-3 px-4">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                                                    <span class="text-white text-sm font-bold">AD</span>
+                                    @foreach($usuarios as $usuario)
+                                        <tr class="border-b hover:bg-gray-50">
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center space-x-3">
+                                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                                        <span class="text-white text-sm font-bold">AD</span>
+                                                    </div>
+                                                    <span>{{$usuario->name}}</span>
                                                 </div>
-                                                <span>Admin Sistema</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-3 px-4">admin@sistema.com</td>
-                                        <td class="py-3 px-4"><span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm">Administrador</span></td>
-                                        <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Ativo</span></td>
-                                        <td class="py-3 px-4">Agora</td>
-                                        <td class="py-3 px-4">
-                                            <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></button>
-                                            <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-key"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b hover:bg-gray-50">
-                                        <td class="py-3 px-4">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                                                    <span class="text-white text-sm font-bold">CS</span>
-                                                </div>
-                                                <span>Carlos Silva</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-3 px-4">carlos@sistema.com</td>
-                                        <td class="py-3 px-4"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Professor</span></td>
-                                        <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Ativo</span></td>
-                                        <td class="py-3 px-4">2 horas atrás</td>
-                                        <td class="py-3 px-4">
-                                            <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></button>
-                                            <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-key"></i></button>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td class="py-3 px-4">{{$usuario->email}}</td>
+                                            <td class="py-3 px-4"><span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm">Administrador</span></td>
+                                            <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Ativo</span></td>
+                                            <td class="py-3 px-4">Agora</td>
+                                            <td class="py-3 px-4">
+                                                <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></button>
+                                                <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-key"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

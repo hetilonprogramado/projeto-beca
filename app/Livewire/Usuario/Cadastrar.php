@@ -10,6 +10,7 @@ use Livewire\Component;
 class Cadastrar extends Component
 {
     public $name;
+    public $cliente_id;
     public $email;
     public $password;
     public $empresa_id;
@@ -43,6 +44,7 @@ class Cadastrar extends Component
     public $deleted_at;
 
     protected $rules = [
+        'cliente_id' => 'required|integer',
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255|unique:users,email',
         'password' => 'required|string|min:8|confirmed',
@@ -51,9 +53,9 @@ class Cadastrar extends Component
         'codigo_acesso' => 'nullable|string|max:50',
         'cpf' => 'nullable|string|max:14',
         'rg' => 'nullable|string|max:20',
-        'sexo' => 'nullable|string|max:1',
+        'sexo' => 'required|in:Masculino,Feminino',
         'status_id' => 'required|exists:statuses,id',
-        'user_system' => 'boolean',
+        'user_system' => 'nullable|in:Sim,Nao',
         'user_deleted_id' => 'nullable|exists:users,id',
         'user_id' => 'required|exists:users,id',
         'rua' => 'nullable|string|max:255',
@@ -87,23 +89,39 @@ class Cadastrar extends Component
        // $this->validate();
         
         User::create([
-            'empresa_id' => $this->empresa_id,
-            'status_id' => $this->status_id,
+            'empresa_id' => 1,
+            'status_id' => 1,
             'cliente_id' => $this->cliente_id,
-            'responsavel_id' => $this->responsavel_id,
-            'curso_id' => $this->curso_id,
-            'turma_id' => $this->turma_id,
-            'sala_id' => $this->sala_id,
-            'valor' => $this->valor,
-            'desconto' => $this->desconto,
-            'data_cad' => $this->data_cad,
-            'ordem' => $this->ordem,
-            'obs_carteira' => $this->obs_carteira,
-            'aluno_curso' => $this->aluno_curso,
-            'instituicao_anterior' => $this->instituicao_anterior,
+            'responsavel_id' => 1,
+            'curso_id' => 1,
+            'turma_id' => 1,
+            'sala_id' => 1,
             'user_id' => 1,
-            'ano_letivo' => $this->ano_letivo,
-            'user_deleted_id' => $this->user_deleted_id
+            'user_deleted_id' => $this->user_deleted_id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => bcrypt($this->password),
+            'codigo_acesso' => $this->codigo_acesso,
+            'cpf' => $this->cpf,
+            'rg' => $this->rg,
+            'sexo' => $this->sexo,
+            'user_system' => $this->user_system,
+            'rua' => $this->rua,
+            'numero' => $this->numero,
+            'cep' => $this->cep,
+            'bairro' => $this->bairro,
+            'cidade_id' => 17,
+            'estado_id' => 17,
+            'data_admissao' => $this->data_admissao,
+            'data_demissao' => $this->data_demissao,
+            'data_nascimento' => $this->data_nascimento,
+            'telefone01' => $this->telefone01,
+            'telefone02' => $this->telefone02,
+            'salario' => $this->salario,
+            'perc_compra' => $this->perc_compra,
+            'cargo' => $this->cargo,
+            'pis' => $this->pis,
+            'ctps' => $this->ctps
         ]);
         // Limpa os campos do formulário
         $this->reset();
