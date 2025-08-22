@@ -10,7 +10,6 @@ use Livewire\Component;
 class Cadastrar extends Component
 {
     public $name;
-    public $cliente_id;
     public $email;
     public $password;
     public $empresa_id;
@@ -32,8 +31,8 @@ class Cadastrar extends Component
     public $data_admissao;
     public $data_demissao;
     public $data_nascimento;
-    public $telefone01;
-    public $telefone02;
+    public $telefone1;
+    public $telefone2;
     public $salario;
     public $perc_compra;
     public $cargo;
@@ -44,7 +43,6 @@ class Cadastrar extends Component
     public $deleted_at;
 
     protected $rules = [
-        'cliente_id' => 'required|integer',
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255|unique:users,email',
         'password' => 'required|string|min:8|confirmed',
@@ -67,8 +65,8 @@ class Cadastrar extends Component
         'data_admissao' => 'nullable|date',
         'data_demissao' => 'nullable|date',
         'data_nascimento' => 'nullable|date',
-        'telefone01' => 'nullable|string|max:15',
-        'telefone02' => 'nullable|string|max:15',
+        'telefone1' => 'nullable|string|max:15',
+        'telefone2' => 'nullable|string|max:15',
         'salario' => 'nullable|numeric|min:0',
         'perc_compra' => 'nullable|numeric|min:0|max:100',
         'cargo' => 'nullable|string|max:100',
@@ -91,7 +89,6 @@ class Cadastrar extends Component
         User::create([
             'empresa_id' => 1,
             'status_id' => 1,
-            'cliente_id' => $this->cliente_id,
             'responsavel_id' => 1,
             'curso_id' => 1,
             'turma_id' => 1,
@@ -115,8 +112,8 @@ class Cadastrar extends Component
             'data_admissao' => $this->data_admissao,
             'data_demissao' => $this->data_demissao,
             'data_nascimento' => $this->data_nascimento,
-            'telefone01' => $this->telefone01,
-            'telefone02' => $this->telefone02,
+            'telefone1' => $this->telefone01,
+            'telefone2' => $this->telefone02,
             'salario' => $this->salario,
             'perc_compra' => $this->perc_compra,
             'cargo' => $this->cargo,

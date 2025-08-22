@@ -34,6 +34,7 @@ Volt::route('turma/editar/{id}', 'turma.alterar')->name('turma.alterar');
 
 Volt::route('usuario', 'usuario.lista')->name('usuario');
 Volt::route('usuario/cadastrar', 'usuario.cadastrar')->name('usuario.cadastrar');
+Volt::route('usuario/editar/{id}', 'usuario.alterar')->name('usuario.alterar');
 
 Volt::route('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
