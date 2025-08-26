@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Cliente;
 use App\Models\Cliente;
+use Carbon\Carbon;
 
 use Livewire\Component;
 
@@ -25,19 +26,25 @@ class Alterar extends Component
     public $ie_rg;
     public $email;
     public $sexo;
-    public $fornecedor;
     public $user_deleted_id;
 
     protected $rules = [
         'rsocial_nome' => 'required|min:3',
-        'cnpj_cpf' => 'required|string|max:14',
-        'telefone' => 'nullable|string|max:15',
-        'telefone_fixo' => 'nullable|string|max:15',
-        'cep' => 'nullable|string|max:9',
-        'rua' => 'nullable|string|max:255',
-        'bairro' => 'nullable|string|max:255',
-        'cidade_id' => 'nullable|string|max:255',
-        'estado_id' => 'nullable|string|max:2',
+        'nfantasia_apelido' => 'required|min:4',
+        'status_id' => 'required|exists:statuses,id',
+        'rua' => 'required|min:3',
+        'numero' => 'required|numeric',
+        'cep' => 'required|regex:/^\d{8}$/',
+        'bairro' => 'required|min:3',
+        'estado_id' => 'required|exists:estados,id',
+        'cidade_id' => 'required|exists:cidades,id',
+        'data_abert_nasc' => 'required|date',
+        'tipo_pessoa' => 'required|in:Fisica,Juridica', //Pessoa Física, Pessoa Jurídica
+        'cnpj_cpf' => 'required|regex:/^(\d{11}|\d{14})$/',// 11 digits for CPF, 14 for CNPJ
+        'ie_rg' => 'required|min:3',
+        'email' => 'required|email',
+        'sexo' => 'required|in:Masculino,Feminino', // M for Masculino, F
+        'user_deleted_id' => 'nullable|exists:users,id',
     ];
 
     public function mount($id)
@@ -46,12 +53,22 @@ class Alterar extends Component
 
         $this->cliente_id = $cliente->id;
         $this->rsocial_nome = $cliente->rsocial_nome;
+        $this->nfantasia_apelido = $cliente->nfantasia_apelido;
+        $this->status_id = $cliente->status_id;
+        $this->user_id = $cliente->user_id;
+        $this->data_abert_nasc = $cliente->data_abert_nasc;
+        $this->tipo_pessoa = $cliente->tipo_pessoa;
         $this->cnpj_cpf = $cliente->cnpj_cpf;
         $this->cep = $cliente->cep;
         $this->rua = $cliente->rua;
         $this->bairro = $cliente->bairro;
         $this->cidade_id = $cliente->cidade_id;
         $this->estado_id = $cliente->estado_id;
+        $this->numero = $cliente->numero;
+        $this->ie_rg = $cliente->ie_rg;
+        $this->email = $cliente->email;
+        $this->sexo = $cliente->sexo;
+
     }
 
     public function atualizar()
@@ -59,15 +76,25 @@ class Alterar extends Component
         $this->validate();
 
         Cliente::where('id', $this->clienteId)->update([
+            'empresa_id' => 1,
             'rsocial_nome' => $this->rsocial_nome,
-            'cnpj_cpf' => $this->cnpj_cpf,
-            'telefone' => $this->telefone,
-            'telefone_fixo' => $this->telefone_fixo,
-            'cep' => $this->cep,
+            'nfantasia_apelido' => $this->nfantasia_apelido,
+            'status_id' => 1,
+            'user_id' => 1,
             'rua' => $this->rua,
+            'numero' => $this->numero,
+            'cep' => $this->cep,
             'bairro' => $this->bairro,
-            'cidade_id' => $this->cidade_id,
-            'estado_id' => $this->estado_id
+            'estado_id' => 17,
+            'cidade_id' => 13,
+            'data_abert_nasc' => Carbon::parse($this->data_abert_nasc),
+            'tipo_pessoa' => $this->tipo_pessoa,
+            'cnpj_cpf' => $this->cnpj_cpf,
+            'ie_rg' => $this->ie_rg,
+            'email' => $this->email,
+            'sexo' => $this->sexo,
+            'fornecedor' => $this->fornecedor,
+            'user_deleted_id' => $this->user_deleted_id
         ]);
 
         session()->flash('message', 'Cliente atualizado com sucesso!');

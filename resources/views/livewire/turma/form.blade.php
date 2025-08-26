@@ -16,12 +16,9 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">Curso *</label>
             <select id="cursoTurma" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione o curso</option>
-                <option value="javascript">JavaScript Avançado</option>
-                <option value="python">Python para Web</option>
-                <option value="react">React.js Completo</option>
-                <option value="nodejs">Node.js Backend</option>
-                <option value="database">Banco de Dados</option>
-                <option value="mobile">Desenvolvimento Mobile</option>
+                @foreach($cursos as $curso)
+                    <option value="{{ $curso->id }}">{{ $curso->nome }}</option>
+                @endforeach
             </select>
         </div>
                                 

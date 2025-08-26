@@ -2,12 +2,20 @@
 
 namespace App\Livewire\Turma;
 use App\Models\Turmas;
+use App\Models\Curso;
 use Carbon\Carbon;
 
 use Livewire\Component;
 
 class Cadastrar extends Component
 {
+    public $cursos;
+
+    public function mount()
+    {
+        $this->cursos = Curso::all(); // pega todos os cursos
+    }
+
     public $empresa_id;
     public $nome;
     public $curso_id;
@@ -73,5 +81,7 @@ class Cadastrar extends Component
     public function render()
     {
         return view('livewire.turma.cadastrar');
+
+        return view('livewire.turma.form');
     }
 }

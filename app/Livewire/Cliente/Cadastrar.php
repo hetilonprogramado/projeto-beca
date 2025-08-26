@@ -6,11 +6,46 @@ use Livewire\Component;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use DB;
+use App\Models\Cidades;
+use App\Models\Estados;
+use Illuminate\Support\Facades\Http;
 use Pest\ArchPresets\Custom;
 
 class Cadastrar extends Component
 {
+    public $cep;
+    public $estado_id;
+    public $cidade_id;
+    public $estados = [];
+    public $cidades = [];
+
+    public function updatedCep()
+    {
+        $cep = preg_replace('/[^0-9]/', '', $this->cep);
+
+        if(strlen($cep) === 8){
+            // 🔹 Busca no ViaCEP
+            $response = Http::get("https://viacep.com.br/ws/{$cep}/json/");
+
+            if($response->ok() && !$response->json('erro')){
+                $dados = $response->json();
+
+                // procura no banco o estado
+                $estado = Estados::where('sigla', $dados['uf'])->first();
+                if($estado){
+                    $this->estado_id = $estado->id;
+                    $this->cidades = Cidades::where('estado_id', $estado->id)->get();
+
+                    // tenta achar a cidade pelo nome
+                    $cidade = Cidades::where('nome', 'LIKE', $dados['localidade'])->first();
+                    if($cidade){
+                        $this->cidade_id = $cidade->id;
+                    }
+                }
+            }
+        }
+    }
+
     public $empresa_id;
     public $rsocial_nome;
     public $nfantasia_apelido;
@@ -18,10 +53,7 @@ class Cadastrar extends Component
     public $user_id;
     public $rua;
     public $numero;
-    public $cep;
     public $bairro;
-    public $estado_id;
-    public $cidade_id;
     public $data_abert_nasc;
     public $tipo_pessoa;
     public $cnpj_cpf;
@@ -91,5 +123,9 @@ class Cadastrar extends Component
     public function render()
     {
         return view('livewire.cliente.cadastrar');
+
+        $this->estados = Estados::all();
+        $this->cidades = Cidades::all();
+        return view('livewire.turma.form');
     }
 }

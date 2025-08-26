@@ -26,8 +26,8 @@
         </div>
 
         <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">nfantasia_apelido *</label>
-            <input type="text" id="Apelido" wire:model="rsocial_nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Apelido *</label>
+            <input type="text" id="Apelido" wire:model="nfantasia_apelido" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o apelido">
             @error('nfantasia_apelido')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
@@ -76,14 +76,6 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">Profissão</label>
             <input type="text" id="profissao" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite a profissão">
         </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Fornecedor</label>
-            <select id="fornecedor" wire:model="fornecedor" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                <option value="">Selecione</option>
-                <option value="Sim">Sim</option>
-                <option value="Nao">Não</option>
-            </select>
-        </div>
     </div>
 </div>
 
@@ -124,40 +116,21 @@
                                 
         <div class="lg:col-span-2">
             <label class="block text-sm font-medium text-gray-700 mb-2">Cidade *</label>
-            <input type="text" wire:model="cidade_id" id="cidade" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome da cidade">
+            <select wire:model="cidade_id" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                <option value="">Selecione</option>
+                @foreach($cidades as $cidade)
+                    <option value="{{ $cidade->id }}">{{ $cidade->nome }}</option>
+                @endforeach
+            </select>
         </div>
                                 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
                 <select id="estado" wire:model="estado_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                     <option value="">Selecione</option>
-                    <option value="AC">Acre</option>
-                    <option value="AL">Alagoas</option>
-                    <option value="AP">Amapá</option>
-                    <option value="AM">Amazonas</option>
-                    <option value="BA">Bahia</option>
-                    <option value="CE">Ceará</option>
-                    <option value="DF">Distrito Federal</option>
-                    <option value="ES">Espírito Santo</option>
-                    <option value="GO">Goiás</option>
-                    <option value="MA">Maranhão</option>
-                    <option value="MT">Mato Grosso</option>
-                    <option value="MS">Mato Grosso do Sul</option>
-                    <option value="MG">Minas Gerais</option>
-                    <option value="PA">Pará</option>
-                    <option value="PB">Paraíba</option>
-                    <option value="PR">Paraná</option>
-                    <option value="PE">Pernambuco</option>
-                    <option value="PI">Piauí</option>
-                    <option value="RJ">Rio de Janeiro</option>
-                    <option value="RN">Rio Grande do Norte</option>
-                    <option value="RS">Rio Grande do Sul</option>
-                    <option value="RO">Rondônia</option>
-                    <option value="RR">Roraima</option>
-                    <option value="SC">Santa Catarina</option>
-                    <option value="SP">São Paulo</option>
-                    <option value="SE">Sergipe</option>
-                    <option value="TO">Tocantins</option>
+                    @foreach($estados as $estado)
+                        <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
+                    @endforeach
                 </select>
             </div>
                                 
