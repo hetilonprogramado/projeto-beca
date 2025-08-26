@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('niveis', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
             $table->softDeletes();
+            $table->string('nome');
+            $table->integer('user_id')->unsigned();
+            $table->integer('status_id')->unsigned();
             $table->integer('user_deleted_id')->unsigned()->nullable();
             $table->timestamps();
+
+            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
