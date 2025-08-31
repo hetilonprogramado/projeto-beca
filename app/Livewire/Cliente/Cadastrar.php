@@ -10,6 +10,7 @@ use App\Models\Cidades;
 use App\Models\Estados;
 use Illuminate\Support\Facades\Http;
 use Pest\ArchPresets\Custom;
+use Illuminate\Support\Facades\Auth;
 
 class Cadastrar extends Component
 {
@@ -19,32 +20,35 @@ class Cadastrar extends Component
     public $estados = [];
     public $cidades = [];
 
-    public function updatedCep()
+    public function mount()
+    {
+        $this->estados = Estados::all();
+        $this->cidades = Cidades::where('estado_id', Auth()->user()->estado_id)->get();
+        $this->estado_id = Auth()->user()->estado_id;
+        $this->cidade_id = Auth()->user()->cidade_id;
+    }
+
+    public function buscarCep()
     {
         $cep = preg_replace('/[^0-9]/', '', $this->cep);
 
-        if(strlen($cep) === 8){
-            // 🔹 Busca no ViaCEP
-            $response = Http::get("https://viacep.com.br/ws/{$cep}/json/");
+        if (strlen($cep) !== 8) {
+            return;
+        }
 
-            if($response->ok() && !$response->json('erro')){
-                $dados = $response->json();
+        $response = Http::get("https://viacep.com.br/ws/{$cep}/json/");
 
-                // procura no banco o estado
-                $estado = Estados::where('sigla', $dados['uf'])->first();
-                if($estado){
-                    $this->estado_id = $estado->id;
-                    $this->cidades = Cidades::where('estado_id', $estado->id)->get();
+        if ($response->ok() && !$response->json('erro')) {
+            $data = $response->json();
 
-                    // tenta achar a cidade pelo nome
-                    $cidade = Cidades::where('nome', 'LIKE', $dados['localidade'])->first();
-                    if($cidade){
-                        $this->cidade_id = $cidade->id;
-                    }
-                }
-            }
+            // Busca cidade pelo código IBGE
+            $cidades = Cidades::where('ibge_code', $data['ibge'])->first();
+            $this->cidade_id = $cidades->id;
+            $this->estado_id = $cidades->estado_id;
+            $this->buscarCidades(); 
         }
     }
+
 
     public $empresa_id;
     public $rsocial_nome;
@@ -55,13 +59,15 @@ class Cadastrar extends Component
     public $numero;
     public $bairro;
     public $data_abert_nasc;
-    public $tipo_pessoa;
     public $cnpj_cpf;
     public $ie_rg;
     public $email;
     public $sexo;
-    public $fornecedor;
     public $user_deleted_id;
+    public $registro_nascimento;
+    public $nacionalidade;
+    public $naturalidade;
+    public $religiao;
 
     protected $rules = [
         'empresa_id' => 'required|exists:empresas,id',
@@ -75,13 +81,15 @@ class Cadastrar extends Component
         'estado_id' => 'required|exists:estados,id',
         'cidade_id' => 'required|exists:cidades,id',
         'data_abert_nasc' => 'required|date',
-        'tipo_pessoa' => 'required|in:Fisica,Juridica', //Pessoa Física, Pessoa Jurídica
-        'cnpj_cpf' => 'required|regex:/^(\d{11}|\d{14})$/',// 11 digits for CPF, 14 for CNPJ
+        'cnpj_cpf' => 'regex:/^(\d{11}|\d{14})$/',// 11 digits for CPF, 14 for CNPJ
         'ie_rg' => 'required|min:3',
         'email' => 'required|email',
         'sexo' => 'required|in:Masculino,Feminino', // M for Masculino, F
-        'fornecedor' => 'required|in:Sim,Nao',
         'user_deleted_id' => 'nullable|exists:users,id',
+        'registro_nascimento' => 'required',
+        'nacionalidade' => 'required',
+        'naturalidade' => 'required',
+        'religiao' => 'required',
     ];
 
     public function salvar() {
@@ -106,13 +114,15 @@ class Cadastrar extends Component
             'estado_id' => 17,
             'cidade_id' => 13,
             'data_abert_nasc' => Carbon::parse($this->data_abert_nasc),
-            'tipo_pessoa' => $this->tipo_pessoa,
             'cnpj_cpf' => $this->cnpj_cpf,
             'ie_rg' => $this->ie_rg,
             'email' => $this->email,
             'sexo' => $this->sexo,
-            'fornecedor' => $this->fornecedor,
-            'user_deleted_id' => $this->user_deleted_id
+            'user_deleted_id' => $this->user_deleted_id,
+            'registro_nascimento' => $this->registro_nascimento,
+            'nacionalidade' => $this->nacionalidade,
+            'naturalidade' => $this->naturalidade,
+            'religiao' => $this->religiao,
         ]);
         // Limpa os campos do formulário
         $this->reset();
@@ -122,10 +132,14 @@ class Cadastrar extends Component
 
     public function render()
     {
-        return view('livewire.cliente.cadastrar');
-
-        $this->estados = Estados::all();
-        $this->cidades = Cidades::all();
+        return view('livewire.cliente.cadastrar', [
+            'estados' => $this->estados,
+            'cidades' => $this->cidades,
+        ]);
         return view('livewire.turma.form');
+    }
+
+    public function buscarCidades() {
+        $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
     }
 }

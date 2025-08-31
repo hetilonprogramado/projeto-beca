@@ -34,7 +34,7 @@
                                             </td>
                                             <td class="py-3 px-4">{{$usuario->email}}</td>
                                             <td class="py-3 px-4"><span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm">Administrador</span></td>
-                                            <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Ativo</span></td>
+                                            <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">{{$usuario->status->nome}}</span></td>
                                             <td class="py-3 px-4">Agora</td>
                                             <td class="py-3 px-4">
                                                 <a href="{{ route('usuario.alterar', $usuario->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></a>

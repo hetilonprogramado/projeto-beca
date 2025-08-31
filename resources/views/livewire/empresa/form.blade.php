@@ -17,17 +17,17 @@
             </select>
         </div>
 
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo *</label>
+        <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nome da Empresa *</label>
             <input type="text" id="nomeCompleto" wire:model="rsocial" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
             @error('rsocial')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
 
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Nome Fantasia *</label>
-            <input type="text" id="Apelido" wire:model="nome_fantasia" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
+        <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Fantasia *</label>
+            <input type="text" id="fantasia" wire:model="nome_fantasia" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome fantasia">
             @error('nome_fantasia')
                 <small class="text-danger">{{ $message }}</small>
             @enderror

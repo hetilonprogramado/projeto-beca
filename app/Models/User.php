@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Statues;
 
 class User extends Authenticatable
 {
@@ -64,7 +65,7 @@ class User extends Authenticatable
 
     function status()
     {
-        return $this->belongsTo('app\status', 'status_id');
+        return $this->belongsTo(Statues::class, 'status_id');
     }
 
     function funcionario() {

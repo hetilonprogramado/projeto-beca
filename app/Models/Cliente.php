@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Statues;
 
 class Cliente extends Model
 {
@@ -28,12 +29,16 @@ class Cliente extends Model
         'sexo',
         'fornecedor',        
         'token_acesso',
-        'user_deleted_id'
+        'user_deleted_id',
+        'registro_nascimento',
+        'nacionalidade',
+        'naturalidade',
+        'religiao'
     ];
 
     public function status()
     {
-        return $this->belongsTo('App\Models\Status', 'status_id');
+        return $this->belongsTo(Statues::class, 'status_id');
     }
 
     public function empresa()

@@ -6,34 +6,40 @@
                             <i class="fas fa-plus mr-2"></i>Novo Curso
                         </a>
                     </div>
-                    
+
                     <div class="p-6">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            @foreach($cursos as $curso)
-                                <div class="border rounded-lg p-6 hover:shadow-md transition-all">
-                                    <div class="flex items-start justify-between mb-4">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-code text-blue-600 text-xl"></i>
-                                            </div>
-                                            <div>
-                                                <h3 class="font-semibold text-gray-800">{{$curso->nome}}</h3>
-                                                <p class="text-sm text-gray-600">{{$curso->hora_aula}} horas</p>
-                                            </div>
-                                        </div>
-                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Ativo</span>
-                                    </div>
-                                    <p class="text-gray-600 text-sm mb-4">Curso completo de desenvolvimento web com HTML, CSS, JavaScript e frameworks modernos.</p>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-lg font-bold text-blue-600">R$ 599,00</span>
-                                        <div class="space-x-2">
-                                            <button class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
-                                            <button class="text-green-500 hover:text-green-700"><i class="fas fa-users"></i></button>
-                                            <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                        <div class="mb-4">
+                            <input type="text" placeholder="Buscar cursos..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                                    
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Nome</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Hora|Aula</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($cursos as $curso)
+                                        <tr class="border-b hover:bg-gray-50">
+                                            <td class="py-3 px-4">{{$curso->nome}}</td>
+                                            <td class="py-3 px-4">{{$curso->hora_aula}} horas</td>
+                                            <td class="py-3 px-4">
+                                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
+                                                    {{ $curso->status->nome}}
+                                                </span>
+                                            </td>
+                                            <td class="py-3 px-4">
+                                                <a href="{{ route('curso.alterar', $curso->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></a>
+                                                <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

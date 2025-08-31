@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Statues;
 
 class Curso extends Model
 {
@@ -33,7 +34,7 @@ class Curso extends Model
     protected $dates = ['deleted_at'];
     
     function status() {
-        return $this->belongsTo('App\status');
+        return $this->belongsTo(Statues::class, 'status_id');
     }
     
     function nivel() {

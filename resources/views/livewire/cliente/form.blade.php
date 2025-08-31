@@ -8,16 +8,8 @@
     </div>
                             
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de pessoa</label>
-            <select id="tipoDePessoa" wire:model="tipo_pessoa" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                <option value="">Selecione</option>
-                <option value="Fisica">Fisica</option>
-                <option value="Juridica">Juridica</option>
-            </select>
-        </div>
 
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo *</label>
             <input type="text" id="nomeCompleto" wire:model="rsocial_nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
             @error('rsocial_nome')
@@ -25,7 +17,7 @@
             @enderror
         </div>
 
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Apelido *</label>
             <input type="text" id="Apelido" wire:model="nfantasia_apelido" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o apelido">
             @error('nfantasia_apelido')
@@ -59,23 +51,39 @@
                 <option value="Feminino">Feminino</option>
             </select>
         </div>
-                                
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Estado Civil</label>
-            <select id="estadoCivil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                <option value="">Selecione</option>
-                <option value="solteiro">Solteiro(a)</option>
-                <option value="casado">Casado(a)</option>
-                <option value="divorciado">Divorciado(a)</option>
-                <option value="viuvo">Viúvo(a)</option>
-                <option value="uniao_estavel">União Estável</option>
-            </select>
+
+        <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Registro de nascimento *</label>
+            <input type="text" id="registro_nascimento" wire:model="registro_nascimento" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
+            @error('registro_nascimento')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
-                                
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Profissão</label>
-            <input type="text" id="profissao" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite a profissão">
+
+        <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nacionalidade *</label>
+            <input type="text" id="nacionalidade" wire:model="nacionalidade" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
+            @error('nacionalidade')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
+
+        <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Naturalidade *</label>
+            <input type="text" id="naturalidade" wire:model="naturalidade" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
+            @error('naturalidade')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Religião *</label>
+            <input type="text" id="religiao" wire:model="religiao" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
+            @error('religiao')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+                      
     </div>
 </div>
 
@@ -91,10 +99,35 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">CEP *</label>
-            <input type="text" wire:model="cep" id="cep" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00000-000" maxlength="9">
+            <input type="text" wire:model.lazy="cep" id="cep" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00000-000" maxlength="9"
+            wire:blur="buscarCep">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
+            <select id="estado" wire:change= "buscarCidades" wire:model="estado_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                <option value="">Selecione</option>
+                @foreach($estados as $estado)
+                    <option value="{{ $estado->id }}" @selected($estado_id == $estado->id)>
+                        {{ $estado->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Cidade *</label>
+            <select wire:model="cidade_id" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                <option value="">Selecione</option>
+                @foreach($cidades as $cidade)
+                    <option value="{{ $cidade->id }}" @selected($cidade_id == $cidade->id)>
+                        {{ $cidade->nome }}
+                    </option>
+                @endforeach
+            </select>
         </div>
                                 
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Logradouro *</label>
             <input type="text" wire:model="rua" id="logradouro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Rua, Avenida, etc.">
         </div>
@@ -104,42 +137,19 @@
             <input type="text" wire:model="numero" id="numero" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="123">
         </div>
                                 
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Complemento</label>
             <input type="text" id="complemento" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Apto, Bloco, etc.">
         </div>
                                 
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Bairro *</label>
             <input type="text" wire:model="bairro" id="bairro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome do bairro">
         </div>
                                 
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Cidade *</label>
-            <select wire:model="cidade_id" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
-                <option value="">Selecione</option>
-                @foreach($cidades as $cidade)
-                    <option value="{{ $cidade->id }}">{{ $cidade->nome }}</option>
-                @endforeach
-            </select>
-        </div>
-                                
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
-                <select id="estado" wire:model="estado_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                    <option value="">Selecione</option>
-                    @foreach($estados as $estado)
-                        <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
-                    @endforeach
-                </select>
-            </div>
-                                
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">País</label>
-                <input type="text" id="pais" value="Brasil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50" readonly>
-            </div>
-        </div>
     </div>
+
+    <br>
 
     <!-- Dados de Contato -->
     <div class="mb-8">
@@ -153,7 +163,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Email Principal *</label>
-                <input type="email" wire:moedl="email" id="emailPrincipal" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="email@exemplo.com">
+                <input type="email" wire:model="email" id="emailPrincipal" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="email@exemplo.com">
             </div>
                                 
             <div>

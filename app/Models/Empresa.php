@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Statues;
 
 class Empresa extends Model
 {
@@ -36,7 +37,7 @@ class Empresa extends Model
 
     public function status()
     {
-        return $this->belongsTo('App\Models\Status', 'status_id');
+        return $this->belongsTo(Statues::class, 'status_id');
     }
 
     public function user()

@@ -14,7 +14,7 @@
             <nav class="p-4">
                 <ul class="space-y-2">
                     <li><a href="{{ url('dashboard') }}" onclick="showScreen('dashboard')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-chart-dashboard w-5"></i><span>Dashboard</span></a></li>
-                    <li><a href="{{ url('cliente') }}" onclick="showScreen('cliente')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-users w-5"></i><span>Clientes</span></a></li>
+                    <li><a href="{{ url('cliente') }}" onclick="showScreen('cliente')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-users w-5"></i><span>Alunos</span></a></li>
                     <li><a href="{{ url('empresa') }}" onclick="showScreen('empresa')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-users w-5"></i><span>Empresas</span></a></li>
                     <li><a href="{{ url('produtos') }}" onclick="showScreen('produtos')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-box w-5"></i><span>Produtos</span></a></li>
                     <li><a href="{{ url('matricula') }}" onclick="showScreen('matriculas')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-file-signature w-5"></i><span>Matrículas</span></a></li>

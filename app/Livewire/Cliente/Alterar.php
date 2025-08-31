@@ -27,6 +27,10 @@ class Alterar extends Component
     public $email;
     public $sexo;
     public $user_deleted_id;
+    public $registro_nascimento;
+    public $nacionalidade;
+    public $naturalidade;
+    public $religiao;
 
     protected $rules = [
         'rsocial_nome' => 'required|min:3',
@@ -45,6 +49,10 @@ class Alterar extends Component
         'email' => 'required|email',
         'sexo' => 'required|in:Masculino,Feminino', // M for Masculino, F
         'user_deleted_id' => 'nullable|exists:users,id',
+        'registro_nascimento' => 'required',
+        'nacionalidade' => 'required',
+        'naturalidade' => 'required',
+        'religiao' => 'required',
     ];
 
     public function mount($id)
@@ -68,6 +76,10 @@ class Alterar extends Component
         $this->ie_rg = $cliente->ie_rg;
         $this->email = $cliente->email;
         $this->sexo = $cliente->sexo;
+        $this->registro_nascimento = $cliente->registro_nascimento;
+        $this->nacionalidade = $cliente->nacionalidade;
+        $this->naturalidade = $cliente->naturalidade;
+        $this->religiao = $cliente->religiao;
 
     }
 
@@ -94,7 +106,11 @@ class Alterar extends Component
             'email' => $this->email,
             'sexo' => $this->sexo,
             'fornecedor' => $this->fornecedor,
-            'user_deleted_id' => $this->user_deleted_id
+            'user_deleted_id' => $this->user_deleted_id,
+            'registro_nascimento' => $this->registro_nascimento,
+            'nacionalidade' => $this->nacionalidade,
+            'naturalidade' => $this->naturalidade,
+            'religiao' => $this->religiao,
         ]);
 
         session()->flash('message', 'Cliente atualizado com sucesso!');

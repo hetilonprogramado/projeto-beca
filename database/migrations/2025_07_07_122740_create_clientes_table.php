@@ -16,7 +16,11 @@ return new class extends Migration
             $table->softDeletes();
             $table->integer('empresa_id')->unsigned();
             $table->string('rsocial_nome');
-            $table->string('nfantasia_apelido')->nullable();
+            $table->string('nfantasia_apelido');
+            $table->string('registro_nascimento')->nullable();
+            $table->string('nacionalidade')->nullable();
+            $table->string('naturalidade')->nullable();
+            $table->string('religiao')->nullable();
             $table->integer('status_id')->unsigned();;
             $table->integer('user_id');
             $table->string('rua',100)->nullable();
