@@ -3,11 +3,64 @@
 namespace App\Livewire\Cliente;
 use App\Models\Cliente;
 use Carbon\Carbon;
-
+use App\Models\Cidades;
+use App\Models\Estados;
+use Illuminate\Support\Facades\Http;
+use Pest\ArchPresets\Custom;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Alterar extends Component
 {
+    public $cep;
+    public $estado_id;
+    public $cidade_id;
+    public $estados = [];
+    public $cidades = [];
+
+    public function mountCep()
+    {
+        $this->estados = Estados::all();
+        $this->cidades = Cidades::where('estado_id', Auth()->user()->estado_id)->get();
+        $this->estado_id = Auth()->user()->estado_id;
+        $this->cidade_id = Auth()->user()->cidade_id;
+    }
+
+    public function buscarCep()
+    {
+        $cep = preg_replace('/[^0-9]/', '', $this->cep);
+
+        if (strlen($cep) !== 8) {
+            return;
+        }
+
+        $response = Http::get("https://viacep.com.br/ws/{$cep}/json/");
+
+        if ($response->ok() && !$response->json('erro')) {
+            $data = $response->json();
+
+            // Preenche os campos de endereço
+            $this->rua = $data['logradouro'] ?? '';
+            $this->bairro = $data['bairro'] ?? '';
+
+            // Busca cidade pelo código IBGE
+            $cidades = Cidades::where('ibge_code', $data['ibge'])->first();
+            
+            if($cidades) {
+                $this->cidade_id = $cidades->id;
+                $this->estado_id = $cidades->estado_id;
+
+                // garante que a lista de estados esteja carregada
+                if (empty($this->estados)) {
+                    $this->estados = Estados::all();
+                }
+
+                // atualiza lista de cidades para o estado
+                $this->buscarCidades();
+            } 
+        }
+    }
+
     public $empresa_id;
     public $cliente_id;
     public $rsocial_nome;
@@ -16,10 +69,7 @@ class Alterar extends Component
     public $user_id;
     public $rua;
     public $numero;
-    public $cep;
     public $bairro;
-    public $estado_id;
-    public $cidade_id;
     public $data_abert_nasc;
     public $tipo_pessoa;
     public $cnpj_cpf;
@@ -87,7 +137,7 @@ class Alterar extends Component
     {
         $this->validate();
 
-        Cliente::where('id', $this->clienteId)->update([
+        Cliente::where('id', $this->cliente_id)->update([
             'empresa_id' => 1,
             'rsocial_nome' => $this->rsocial_nome,
             'nfantasia_apelido' => $this->nfantasia_apelido,
@@ -97,8 +147,8 @@ class Alterar extends Component
             'numero' => $this->numero,
             'cep' => $this->cep,
             'bairro' => $this->bairro,
-            'estado_id' => 17,
-            'cidade_id' => 13,
+            'estado_id' => $this->estado_id,
+            'cidade_id' => $this->cidade_id,
             'data_abert_nasc' => Carbon::parse($this->data_abert_nasc),
             'tipo_pessoa' => $this->tipo_pessoa,
             'cnpj_cpf' => $this->cnpj_cpf,
@@ -118,6 +168,13 @@ class Alterar extends Component
 
     public function render()
     {
-        return view('livewire.cliente.alterar');
+        return view('livewire.cliente.alterar',[
+            'estados' => $this->estados,
+            'cidades' => $this->cidades,
+        ]);
+    }
+
+    public function buscarCidades() {
+        $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
     }
 }

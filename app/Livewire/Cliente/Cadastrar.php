@@ -41,8 +41,13 @@ class Cadastrar extends Component
         if ($response->ok() && !$response->json('erro')) {
             $data = $response->json();
 
+            // Preenche os campos de endereço
+            $this->rua = $data['logradouro'] ?? '';
+            $this->bairro = $data['bairro'] ?? '';
+
             // Busca cidade pelo código IBGE
             $cidades = Cidades::where('ibge_code', $data['ibge'])->first();
+
             $this->cidade_id = $cidades->id;
             $this->estado_id = $cidades->estado_id;
             $this->buscarCidades(); 
@@ -124,10 +129,18 @@ class Cadastrar extends Component
             'naturalidade' => $this->naturalidade,
             'religiao' => $this->religiao,
         ]);
-        // Limpa os campos do formulário
-        $this->reset();
+        // 1. Cria mensagem de sucesso
         session()->flash('message', 'Cliente cadastrado com sucesso!');
 
+        // 2. Limpa campos
+        $this->reset();
+
+    }
+
+    public function cancelar()
+    {
+        $this->reset(); // limpa todos os campos
+        session()->flash('message', 'Cadastro cancelado!');
     }
 
     public function render()
@@ -136,7 +149,7 @@ class Cadastrar extends Component
             'estados' => $this->estados,
             'cidades' => $this->cidades,
         ]);
-        return view('livewire.turma.form');
+        return view('livewire.cliente.form');
     }
 
     public function buscarCidades() {

@@ -5,9 +5,49 @@ namespace App\Livewire\Empresa;
 use App\Models\Empresa;
 use Carbon\Carbon;
 use Livewire\Component;
+use App\Models\Cidades;
+use App\Models\Estados;
+use Illuminate\Support\Facades\Http;
+use Pest\ArchPresets\Custom;
+use Illuminate\Support\Facades\Auth;
 
 class Cadastrar extends Component
 {
+    public $cep;
+    public $estado_id;
+    public $cidade_id;
+    public $estados = [];
+    public $cidades = [];
+
+    public function mount()
+    {
+        $this->estados = Estados::all();
+        $this->cidades = Cidades::where('estado_id', Auth()->user()->estado_id)->get();
+        $this->estado_id = Auth()->user()->estado_id;
+        $this->cidade_id = Auth()->user()->cidade_id;
+    }
+
+    public function buscarCep()
+    {
+        $cep = preg_replace('/[^0-9]/', '', $this->cep);
+
+        if (strlen($cep) !== 8) {
+            return;
+        }
+
+        $response = Http::get("https://viacep.com.br/ws/{$cep}/json/");
+
+        if ($response->ok() && !$response->json('erro')) {
+            $data = $response->json();
+
+            // Busca cidade pelo código IBGE
+            $cidades = Cidades::where('ibge_code', $data['ibge'])->first();
+            $this->cidade_id = $cidades->id;
+            $this->estado_id = $cidades->estado_id;
+            $this->buscarCidades(); 
+        }
+    }
+
     public $rsocial;
     public $nome_fantasia;
     public $status_id;
@@ -17,8 +57,6 @@ class Cadastrar extends Component
     public $rua;
     public $numero;
     public $bairro;
-    public $estado_id;
-    public $cidade_id;
     public $modulo_id;
     public $email;
     public $telefone1;
@@ -26,7 +64,6 @@ class Cadastrar extends Component
     public $site;
     public $data_lib;
     public $tipo_pessoa;
-    public $cep;
 
     protected $rules = [
         'rsocial' => 'required|min:4',
@@ -69,8 +106,8 @@ class Cadastrar extends Component
             'rua' => $this->rua,
             'numero' => $this->numero,
             'bairro' => $this->bairro,
-            'estado_id' => 17,
-            'cidade_id' => 21,
+            'estado_id' => $this->estado_id,
+            'cidade_id' => $this->cidade_id,
             'email' => $this->email,
             'telefone1' => $this->telefone1,
             'telefone2' => $this->telefone2,
@@ -87,6 +124,13 @@ class Cadastrar extends Component
 
     public function render()
     {
-        return view('livewire.empresa.cadastrar');
+        return view('livewire.empresa.cadastrar', [
+            'estados' => $this->estados,
+            'cidades' => $this->cidades,
+        ]);
+    }
+
+    public function buscarCidades() {
+        $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
     }
 }

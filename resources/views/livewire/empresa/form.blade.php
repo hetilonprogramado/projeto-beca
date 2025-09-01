@@ -65,10 +65,34 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">CEP *</label>
-            <input type="text" wire:model="cep" id="cep" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00000-000" maxlength="9">
+            <input type="text" wire:model="cep"  wire:change="buscarCep" id="cep" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00000-000" maxlength="9">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
+            <select id="estado" wire:change= "buscarCidades" wire:model="estado_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                <option value="">Selecione</option>
+                @foreach($estados as $estado)
+                    <option value="{{ $estado->id }}" @selected($estado_id == $estado->id)>
+                        {{ $estado->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="lg:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Cidade *</label>
+            <select wire:model="cidade_id" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                <option value="">Selecione</option>
+                @foreach($cidades as $cidade)
+                    <option value="{{ $cidade->id }}" @selected($cidade_id == $cidade->id)>
+                        {{ $cidade->nome }}
+                    </option>
+                @endforeach
+            </select>
         </div>
                                 
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Logradouro *</label>
             <input type="text" wire:model="rua" id="logradouro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Rua, Avenida, etc.">
         </div>
@@ -78,54 +102,15 @@
             <input type="text" wire:model="numero" id="numero" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="123">
         </div>
                                 
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Endereco</label>
             <input type="text" id="endereco" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Apto, Bloco, etc.">
         </div>
                                 
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Bairro *</label>
             <input type="text" wire:model="bairro" id="bairro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome do bairro">
         </div>
-                                
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Cidade *</label>
-            <input type="text" wire:model="cidade_id" id="cidade" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome da cidade">
-        </div>
-                                
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
-                <select id="estado" wire:model="estado_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                    <option value="">Selecione</option>
-                    <option value="AC">Acre</option>
-                    <option value="AL">Alagoas</option>
-                    <option value="AP">Amapá</option>
-                    <option value="AM">Amazonas</option>
-                    <option value="BA">Bahia</option>
-                    <option value="CE">Ceará</option>
-                    <option value="DF">Distrito Federal</option>
-                    <option value="ES">Espírito Santo</option>
-                    <option value="GO">Goiás</option>
-                    <option value="MA">Maranhão</option>
-                    <option value="MT">Mato Grosso</option>
-                    <option value="MS">Mato Grosso do Sul</option>
-                    <option value="MG">Minas Gerais</option>
-                    <option value="PA">Pará</option>
-                    <option value="PB">Paraíba</option>
-                    <option value="PR">Paraná</option>
-                    <option value="PE">Pernambuco</option>
-                    <option value="PI">Piauí</option>
-                    <option value="RJ">Rio de Janeiro</option>
-                    <option value="RN">Rio Grande do Norte</option>
-                    <option value="RS">Rio Grande do Sul</option>
-                    <option value="RO">Rondônia</option>
-                    <option value="RR">Roraima</option>
-                    <option value="SC">Santa Catarina</option>
-                    <option value="SP">São Paulo</option>
-                    <option value="SE">Sergipe</option>
-                    <option value="TO">Tocantins</option>
-                </select>
-            </div>
                                 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">País</label>
