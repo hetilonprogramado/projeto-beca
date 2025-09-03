@@ -23,6 +23,33 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{-- Mensagem de sucesso --}}
+                        @if (session()->has('success'))
+                            <div 
+                                x-data="{ show: true }"
+                                x-init="setTimeout(() => show = false, 4000)"
+                                x-show="show"
+                                x-transition
+                                class="fixed top-5 right-5 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50"
+                            >
+                                <i class="fas fa-check-circle mr-2"></i>
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        {{-- Mensagem de erro --}}
+                        @if (session()->has('error'))
+                            <div 
+                                x-data="{ show: true }"
+                                x-init="setTimeout(() => show = false, 4000)"
+                                x-show="show"
+                                x-transition
+                                class="fixed top-5 right-5 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50"
+                            >
+                                <i class="fas fa-times-circle mr-2"></i>
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         @foreach($clientes as $cliente)
                             <tr class="border-b hover:bg-gray-50">
                                 <td class="py-3 px-4">{{ $cliente->rsocial_nome }}</td>
@@ -34,7 +61,7 @@
                                 </td>
                                 <td class="py-3 px-4">
                                     <a href="{{ route('cliente.alterar', $cliente->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></a>
-                                    <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                                    <button wire:click="deletar({{ $cliente->id }})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr>
                         @endforeach

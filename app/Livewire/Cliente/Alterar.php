@@ -166,6 +166,12 @@ class Alterar extends Component
         session()->flash('message', 'Cliente atualizado com sucesso!');
     }
 
+    public function cancelar()
+    {
+        $this->reset(); // limpa todos os campos
+        session()->flash('message', 'Alterar cancelado!');
+    }
+
     public function render()
     {
         return view('livewire.cliente.alterar',[

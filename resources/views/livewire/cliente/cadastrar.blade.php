@@ -8,12 +8,15 @@
                 <h2 class="text-xl font-semibold text-gray-800">Cadastro de Aluno</h2>
             </div>
             <div class="flex space-x-3">
-                <button onclick="showScreen('clientes')" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all">
+                <button wire:click.prevent="cancelar" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all">
                     <i class="fas fa-times mr-2"></i>Cancelar
                 </button>
-                <button type="submit" wire:click.prevent="salvar" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
-                    <i class="fas fa-save mr-2"></i>Salvar Aluno
-                </button>
+                <div class="flex flex-col">
+                    <button type="submit" wire:click.prevent="salvar" 
+                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
+                        <i class="fas fa-save mr-2"></i>Salvar Aluno
+                    </button>
+                </div>
             </div>
         </div>
                     
