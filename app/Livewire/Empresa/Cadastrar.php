@@ -40,6 +40,10 @@ class Cadastrar extends Component
         if ($response->ok() && !$response->json('erro')) {
             $data = $response->json();
 
+            // Preenche os campos de endereço
+            $this->rua = $data['logradouro'] ?? '';
+            $this->bairro = $data['bairro'] ?? '';
+
             // Busca cidade pelo código IBGE
             $cidades = Cidades::where('ibge_code', $data['ibge'])->first();
             $this->cidade_id = $cidades->id;
@@ -120,6 +124,12 @@ class Cadastrar extends Component
         $this->reset();
         session()->flash('message', 'Empresa cadastrado com sucesso!');
 
+    }
+
+    public function cancelar()
+    {
+        $this->reset(); // limpa todos os campos
+        session()->flash('message', 'Cadastro cancelado!');
     }
 
     public function render()

@@ -91,7 +91,11 @@
                 @endforeach
             </select>
         </div>
-                                
+               
+        <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Bairro *</label>
+            <input type="text" wire:model="bairro" id="bairro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome do bairro">
+        </div>
         <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Logradouro *</label>
             <input type="text" wire:model="rua" id="logradouro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Rua, Avenida, etc.">
@@ -105,11 +109,6 @@
         <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Endereco</label>
             <input type="text" id="endereco" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Apto, Bloco, etc.">
-        </div>
-                                
-        <div class="lg:col-span-1">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Bairro *</label>
-            <input type="text" wire:model="bairro" id="bairro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome do bairro">
         </div>
                                 
             <div>

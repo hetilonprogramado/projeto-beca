@@ -2,7 +2,7 @@
                 <div class="bg-white rounded-xl shadow-sm">
                     <div class="p-6 border-b flex justify-between items-center">
                         <h2 class="text-xl font-semibold text-gray-800">Gerenciar Matrículas</h2>
-                        <a href="{{route('produtos.cadastrar')}}" wire:navigate class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
+                        <a href="{{route('matricula.cadastrar')}}" wire:navigate class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
                             <i class="fas fa-plus mr-2"></i>Nova Matrícula
                         </a>
                     </div>
@@ -30,7 +30,7 @@
                                         <td class="py-3 px-4">
                                             <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-eye"></i></button>
                                             <button class="text-green-500 hover:text-green-700 mr-2"><i class="fas fa-edit"></i></button>
-                                            <button class="text-red-500 hover:text-red-700"><i class="fas fa-times"></i></button>
+                                            <button wire:click="" class="text-red-500 hover:text-red-700"><i class="fas fa-times"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
