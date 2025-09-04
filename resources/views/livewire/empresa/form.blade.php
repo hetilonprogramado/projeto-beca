@@ -110,12 +110,6 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">Endereco</label>
             <input type="text" id="endereco" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Apto, Bloco, etc.">
         </div>
-                                
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">País</label>
-                <input type="text" id="pais" value="Brasil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50" readonly>
-            </div>
-        </div>
     </div>
 
     <!-- Dados de Contato -->
