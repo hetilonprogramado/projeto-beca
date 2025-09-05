@@ -9,7 +9,6 @@ use Livewire\Component;
 
 class Cadastrar extends Component
 {
-    public $empresa_id;
     public $user_id;
     public $nome;
     public $status_id;
@@ -20,7 +19,6 @@ class Cadastrar extends Component
     public $user_deleted_id;
 
     protected $rules = [
-        'empresa_id' => 'required|exists:empresas,id',
         'nome' => 'required|min:4',
         'status_id' => 'required|exists:statuses,id',
         'tipo_lancamento' => 'required|in:Mensal,Anual', // Mensal ou Anual
@@ -35,7 +33,6 @@ class Cadastrar extends Component
        // $this->validate();
         
         Curso::create([
-            'empresa_id' => 1,
             'user_id' => 1,
             'nome' => $this->nome,
             'status_id' => 1,
