@@ -8,18 +8,20 @@
                 <h2 class="text-xl font-semibold text-gray-800">Cadastro de Aluno</h2>
             </div>
             <div class="flex space-x-3">
-                <button wire:click.prevent="cancelar" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all">
+                <a href="{{ route('cliente') }}" wire:navigate class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all">
                     <i class="fas fa-times mr-2"></i>Cancelar
-                </button>
+                </a>
                 <div class="flex flex-col">
-                    <button type="submit" wire:click.prevent="salvar" 
+                    <button type="submit" wire:click.prevent="salvar"
+                        target="salvar"
                         class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
                         <i class="fas fa-save mr-2"></i>Salvar Aluno
+                        <span wire:loading wire:target="salvar" class="ml-2 spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     </button>
                 </div>
             </div>
         </div>
-                    
+
         <form wire:submit.prevent="salvar" id="clienteForm" class="p-6">
             @include('livewire.cliente.form')
         </form>

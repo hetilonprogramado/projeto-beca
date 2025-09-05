@@ -50,22 +50,22 @@ class Cadastrar extends Component
 
             $this->cidade_id = $cidades->id;
             $this->estado_id = $cidades->estado_id;
-            $this->buscarCidades(); 
+            $this->buscarCidades();
         }
     }
 
 
     public $empresa_id;
-    public $rsocial_nome;
-    public $nfantasia_apelido;
+    public $nome;
+    public $apelido;
     public $status_id;
     public $user_id;
     public $rua;
     public $numero;
     public $bairro;
-    public $data_abert_nasc;
-    public $cnpj_cpf;
-    public $ie_rg;
+    public $data_nasc;
+    public $cpf;
+    public $rg;
     public $email;
     public $sexo;
     public $user_deleted_id;
@@ -73,78 +73,66 @@ class Cadastrar extends Component
     public $nacionalidade;
     public $naturalidade;
     public $religiao;
+    public $celular;
 
-    protected $rules = [
-        'empresa_id' => 'required|exists:empresas,id',
-        'rsocial_nome' => 'required|min:4',
-        'nfantasia_apelido' => 'required|min:4',
-        'status_id' => 'required|exists:statuses,id',
-        'rua' => 'required|min:3',
-        'numero' => 'required|numeric',
-        'cep' => 'required|regex:/^\d{8}$/',
-        'bairro' => 'required|min:3',
-        'estado_id' => 'required|exists:estados,id',
-        'cidade_id' => 'required|exists:cidades,id',
-        'data_abert_nasc' => 'required|date',
-        'cnpj_cpf' => 'regex:/^(\d{11}|\d{14})$/',// 11 digits for CPF, 14 for CNPJ
-        'ie_rg' => 'required|min:3',
-        'email' => 'required|email',
-        'sexo' => 'required|in:Masculino,Feminino', // M for Masculino, F
-        'user_deleted_id' => 'nullable|exists:users,id',
-        'registro_nascimento' => 'required',
-        'nacionalidade' => 'required',
-        'naturalidade' => 'required',
-        'religiao' => 'required',
-    ];
+    protected function validarDados(): array{
+        $rules = [
+            'empresa_id' => 'required|exists:empresas,id',
+            'nome' => 'required|min:4',
+            'apelido' => 'required|min:4',
+            'status_id' => 'required|exists:statuses,id',
+            'rua' => 'required|min:3',
+            'numero' => 'required|numeric',
+            'cep' => 'nullable|digits:8',
+            'bairro' => 'nullable|min:3',
+            'estado_id' => 'required|exists:estados,id',
+            'cidade_id' => 'required|exists:cidades,id',
+            'data_nasc' => 'nullable|date',
+            'cpf' => 'nullable|digits_between:11',// 11 digits for CPF, 14 for CNPJ
+            'rg' => 'nullable|min:3',
+            'email' => 'nullable|email',
+            'sexo' => 'required|in:Masculino,Feminino', // M for Masculino, F
+            'user_deleted_id' => 'nullable|exists:users,id',
+            'registro_nascimento' => 'nullable',
+            'nacionalidade' => 'nullable',
+            'naturalidade' => 'nullable',
+            'religiao' => 'nullable',
+            'celular' => 'nullable|min:9',
+        ];
+
+        return $this->validate($rules);
+    }
 
     public function salvar() {
         // --- Formatação dos campos ---
         $this->cep = preg_replace('/\D/', '', $this->cep);
-        $this->cnpj_cpf = preg_replace('/\D/', '', $this->cnpj_cpf);
-        $this->ie_rg = preg_replace('/\s+/', '', trim($this->ie_rg));
-        $this->data_abert_nasc = Carbon::parse($this->data_abert_nasc)->format('Y-m-d');
+        $this->cpf = preg_replace('/\D/', '', $this->cpf);
+        // 1. Validação separada em método dedicado
+       $validatedData = $this->validarDados();
+        try {
+            // 2. Transação para garantir consistência
+            DB::transaction(function () use ($validatedData) {
+                // 3. Operação de create simplificada
+                $cliente = Clientes::Create(
+                    $validatedData
+                );
+            });
 
-       // $this->validate();
-        
-        Cliente::create([
-            'empresa_id' => 1,
-            'rsocial_nome' => $this->rsocial_nome,
-            'nfantasia_apelido' => $this->nfantasia_apelido,
-            'status_id' => 1,
-            'user_id' => 1,
-            'rua' => $this->rua,
-            'numero' => $this->numero,
-            'cep' => $this->cep,
-            'bairro' => $this->bairro,
-            'estado_id' => 17,
-            'cidade_id' => 13,
-            'data_abert_nasc' => Carbon::parse($this->data_abert_nasc),
-            'cnpj_cpf' => $this->cnpj_cpf,
-            'ie_rg' => $this->ie_rg,
-            'email' => $this->email,
-            'sexo' => $this->sexo,
-            'user_deleted_id' => $this->user_deleted_id,
-            'registro_nascimento' => $this->registro_nascimento,
-            'nacionalidade' => $this->nacionalidade,
-            'naturalidade' => $this->naturalidade,
-            'religiao' => $this->religiao,
-        ]);
-        // 1. Cria mensagem de sucesso
-        session()->flash('message', 'Cliente cadastrado com sucesso!');
+            // 5. Feedback para o usuário
+            session()->flash('message', 'Cliente cadastrado com sucesso!');
 
-        // 2. Limpa campos
-        $this->reset();
+            // 6. Limpa campos
+            $this->reset();
+
+        } catch (\Exception $e) {
+            // 7. Tratamento de erro adequado
+            session()->flash('error', 'Erro ao salvar cliente: ' . $e->getMessage());
+            Log::error('Erro ao salvar cliente: ' . $e->getMessage());
+        }
 
     }
 
-    public function cancelar()
-    {
-        $this->reset(); // limpa todos os campos
-        session()->flash('message', 'Cadastro cancelado!');
-    }
-
-    public function render()
-    {
+    public function render(){
         return view('livewire.cliente.cadastrar', [
             'estados' => $this->estados,
             'cidades' => $this->cidades,

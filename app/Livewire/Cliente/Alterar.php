@@ -18,6 +18,26 @@ class Alterar extends Component
     public $estados = [];
     public $cidades = [];
 
+    public $empresa_id;
+    public $cliente_id;
+    public $nome;
+    public $apelido;
+    public $status_id;
+    public $user_id;
+    public $rua;
+    public $numero;
+    public $bairro;
+    public $data_nasc;
+    public $cpf;
+    public $rg;
+    public $email;
+    public $sexo;
+    public $user_deleted_id;
+    public $registro_nascimento;
+    public $nacionalidade;
+    public $naturalidade;
+    public $religiao;
+
     public function mountCep()
     {
         $this->estados = Estados::all();
@@ -45,7 +65,7 @@ class Alterar extends Component
 
             // Busca cidade pelo código IBGE
             $cidades = Cidades::where('ibge_code', $data['ibge'])->first();
-            
+
             if($cidades) {
                 $this->cidade_id = $cidades->id;
                 $this->estado_id = $cidades->estado_id;
@@ -57,30 +77,9 @@ class Alterar extends Component
 
                 // atualiza lista de cidades para o estado
                 $this->buscarCidades();
-            } 
+            }
         }
     }
-
-    public $empresa_id;
-    public $cliente_id;
-    public $rsocial_nome;
-    public $nfantasia_apelido;
-    public $status_id;
-    public $user_id;
-    public $rua;
-    public $numero;
-    public $bairro;
-    public $data_abert_nasc;
-    public $tipo_pessoa;
-    public $cnpj_cpf;
-    public $ie_rg;
-    public $email;
-    public $sexo;
-    public $user_deleted_id;
-    public $registro_nascimento;
-    public $nacionalidade;
-    public $naturalidade;
-    public $religiao;
 
     protected $rules = [
         'rsocial_nome' => 'required|min:3',
@@ -110,8 +109,8 @@ class Alterar extends Component
         $cliente = Cliente::findOrFail($id);
 
         $this->cliente_id = $cliente->id;
-        $this->rsocial_nome = $cliente->rsocial_nome;
-        $this->nfantasia_apelido = $cliente->nfantasia_apelido;
+        $this->nome = $cliente->nome;
+        $this->apelido = $cliente->apelido;
         $this->status_id = $cliente->status_id;
         $this->user_id = $cliente->user_id;
         $this->data_abert_nasc = $cliente->data_abert_nasc;
@@ -130,6 +129,9 @@ class Alterar extends Component
         $this->nacionalidade = $cliente->nacionalidade;
         $this->naturalidade = $cliente->naturalidade;
         $this->religiao = $cliente->religiao;
+
+        $this->estados = Estados::all();
+        $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
 
     }
 

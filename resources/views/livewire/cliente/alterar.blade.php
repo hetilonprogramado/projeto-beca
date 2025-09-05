@@ -8,15 +8,15 @@
                 <h2 class="text-xl font-semibold text-gray-800">Alterar Cliente</h2>
             </div>
             <div class="flex space-x-3">
-                <button onclick="showScreen('clientes')" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all">
+                <a href="{{ route('cliente') }}" wire:navigate class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all">
                     <i class="fas fa-times mr-2"></i>Cancelar
-                </button>
+                </a>
                 <button type="submit" wire:click.prevent="atualizar" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
                     <i class="fas fa-save mr-2"></i>Alterar Cliente
                 </button>
             </div>
         </div>
-                    
+
         <form wire:submit.prevent="atualizar" id="clienteForm" class="p-6">
             @include('livewire.cliente.form')
         </form>

@@ -6,43 +6,43 @@
         </div>
         <h3 class="text-lg font-semibold text-gray-800">Dados Pessoais</h3>
     </div>
-                            
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
         <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo *</label>
-            <input type="text" id="nomeCompleto" wire:model="rsocial_nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
-            @error('rsocial_nome')
+            <input type="text" id="nomeCompleto" wire:model="nome" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
+            @error('nome')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
 
         <div class="lg:col-span-1">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Apelido *</label>
-            <input type="text" id="Apelido" wire:model="nfantasia_apelido" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o apelido">
-            @error('nfantasia_apelido')
+            <label class="block text-sm font-medium text-gray-700 mb-2">Apelido</label>
+            <input type="text" id="Apelido" wire:model="apelido" class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o apelido">
+            @error('apelido')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
-                                
+
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">CPF *</label>
-            <input type="text" id="cpf" wire:model="cnpj_cpf" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="000.000.000-00" maxlength="14">
-            @error('cnpj_cpf') 
-                <small class="text-danger">{{ $message }}</small> 
+            <label class="block text-sm font-medium text-gray-700 mb-2">CPF</label>
+            <input type="text" id="cpf" wire:model="cpf" class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="000.000.000-00" maxlength="14">
+            @error('cpf')
+                <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
-                                
+
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">RG</label>
-            <input type="text" wire:model="ie_rg" id="rg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00.000.000-0">
+            <input type="text" wire:model="rg" id="rg" class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00.000.000-0">
         </div>
-                                
+
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Data de Nascimento</label>
-            <input type="date" wire:model="data_abert_nasc" id="dataNascimento" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <input type="date" wire:model="data_nasc" required id="dataNascimento" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
         </div>
-                                
+
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Sexo</label>
             <select id="sexo" wire:model="sexo" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
@@ -50,10 +50,13 @@
                 <option value="Masculino">Masculino</option>
                 <option value="Feminino">Feminino</option>
             </select>
+            @error('sexo')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
 
         <div class="lg:col-span-1">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Registro de nascimento *</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Registro de nascimento</label>
             <input type="text" id="registro_nascimento" wire:model="registro_nascimento" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
             @error('registro_nascimento')
                 <small class="text-danger">{{ $message }}</small>
@@ -61,29 +64,29 @@
         </div>
 
         <div class="lg:col-span-1">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Nacionalidade *</label>
-            <input type="text" id="nacionalidade" wire:model="nacionalidade" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nacionalidade</label>
+            <input type="text" id="nacionalidade" wire:model="nacionalidade" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
             @error('nacionalidade')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
 
         <div class="lg:col-span-1">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Naturalidade *</label>
-            <input type="text" id="naturalidade" wire:model="naturalidade" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Naturalidade</label>
+            <input type="text" id="naturalidade" wire:model="naturalidade" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
             @error('naturalidade')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
 
         <div class="lg:col-span-1">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Religião *</label>
-            <input type="text" id="religiao" wire:model="religiao" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Religião</label>
+            <input type="text" id="religiao" wire:model="religiao" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="">
             @error('religiao')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
-                      
+
     </div>
 </div>
 
@@ -95,12 +98,15 @@
         </div>
         <h3 class="text-lg font-semibold text-gray-800">Dados de Endereço</h3>
     </div>
-                            
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">CEP *</label>
-            <input type="text" wire:model.lazy="cep" id="cep" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00000-000" maxlength="9"
+            <label class="block text-sm font-medium text-gray-700 mb-2">CEP</label>
+            <input type="text" wire:model="cep" id="cep" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00000-000" maxlength="9"
             wire:blur="buscarCep">
+            @error('cep')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
 
         <div>
@@ -113,6 +119,9 @@
                     </option>
                 @endforeach
             </select>
+            @error('estado_id')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
 
         <div class="lg:col-span-1">
@@ -125,28 +134,43 @@
                     </option>
                 @endforeach
             </select>
+            @error('cidade_id')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
-                                
+
         <div class="lg:col-span-1">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Logradouro *</label>
-            <input type="text" wire:model="rua" id="logradouro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Rua, Avenida, etc.">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Logradouro</label>
+            <input type="text" wire:model="rua" id="logradouro" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Rua, Avenida, etc.">
+            @error('rua')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
-                                
+
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Número *</label>
-            <input type="text" wire:model="numero" id="numero" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="123">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Número</label>
+            <input type="text" wire:model="numero" id="numero" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="123">
+            @error('numero')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
-                                
+
         <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Complemento</label>
-            <input type="text" id="complemento" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Apto, Bloco, etc.">
+            <input type="text" id="complemento" class="w-full uppercase px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Apto, Bloco, etc.">
+            @error('complemento')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
-                                
+
         <div class="lg:col-span-1">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Bairro *</label>
-            <input type="text" wire:model="bairro" id="bairro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome do bairro">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Bairro</label>
+            <input type="text" wire:model="bairro" id="bairro" required class="w-full uppercase px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome do bairro">
+            @error('bairro')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
-                                
+
     </div>
 
     <br>
@@ -159,21 +183,22 @@
             </div>
             <h3 class="text-lg font-semibold text-gray-800">Dados de Contato</h3>
         </div>
-                            
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Email Principal *</label>
-                <input type="email" wire:model="email" id="emailPrincipal" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="email@exemplo.com">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email Principal</label>
+                <input type="email" wire:model="email" id="emailPrincipal" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="email@exemplo.com">
+                @error('email')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
-                                
+
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Celular *</label>
-                <input type="text" id="celular" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 00000-0000" maxlength="15">
-            </div>
-                                
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Fixo</label>
-                <input type="text" id="telefoneFixo" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 0000-0000" maxlength="14">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Celular</label>
+                <input type="text" id="celular" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 00000-0000" maxlength="15">
+                @error('celular')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
 
         </div>
@@ -187,10 +212,10 @@
             </div>
             <h3 class="text-lg font-semibold text-gray-800">Observações</h3>
         </div>
-                            
+
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Observações Gerais</label>
-            <textarea id="observacoes" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none" placeholder="Digite observações importantes sobre o cliente..."></textarea>
+            <textarea id="observacoes" rows="4" class="w-full uppercase px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none" placeholder="Digite observações importantes sobre o cliente..."></textarea>
         </div>
     </div>
 
@@ -207,7 +232,7 @@
                 <i class="fas fa-plus mr-2"></i>Nova Matrícula
             </button>
         </div>
-                            
+
         <div id="matriculasContainer" class="space-y-4">
             <!-- Matrícula Exemplo 1 -->
             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
@@ -231,7 +256,7 @@
                     </button>
                 </div>
             </div>
-                                    
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                 <div>
                     <span class="text-gray-600">Data Matrícula:</span>
@@ -250,7 +275,7 @@
                     <p class="font-medium text-green-600">Em Dia</p>
                 </div>
             </div>
-                                    
+
             <div class="mt-3 pt-3 border-t border-gray-200">
                 <div class="flex items-center justify-between">
                     <div class="text-sm text-gray-600">
@@ -294,7 +319,7 @@
                     </button>
                 </div>
             </div>
-                                    
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                 <div>
                     <span class="text-gray-600">Data Matrícula:</span>
@@ -313,7 +338,7 @@
                     <p class="font-medium text-blue-600">Pago</p>
                 </div>
             </div>
-                                    
+
             <div class="mt-3 pt-3 border-t border-gray-200">
                 <div class="flex items-center justify-between">
                     <div class="text-sm text-gray-600">
@@ -359,7 +384,7 @@
         </div>
         <h3 class="text-lg font-semibold text-gray-800">Status</h3>
     </div>
-                            
+
     <div class="flex items-center space-x-4">
         <label class="flex items-center space-x-2 cursor-pointer">
             <input type="radio" name="status" value="ativo" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">

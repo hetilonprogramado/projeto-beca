@@ -7,8 +7,18 @@ use App\Models\Cliente;
 
 class Lista extends Component
 {
-    public function deletar($id)
-    {
+    public $clientes = [];
+    public $pesquisa = '';
+
+    public function mount(){
+        $this->clientes = Cliente::all();
+    }
+
+    public function render(){
+        return view('livewire.cliente.lista');
+    }
+
+    public function deletar($id){
         $cliente = Cliente::find($id);
 
         if ($cliente) {
@@ -19,14 +29,14 @@ class Lista extends Component
         }
     }
 
-    public function render()
-    {
-        // Busca todos os clientes do banco
-        $clientes = Cliente::all();
-
-        return view('livewire.cliente.lista',[
-            'clientes' => $clientes
-        ]);
+    public function atualizarLista(){
+        $this->clientes = Cliente::where('nome', 'like', '%' . $this->pesquisa . '%')
+            ->orWhere('apelido', 'like', '%' . $this->pesquisa . '%')
+            ->get();
     }
-    
+
+    public function updatedPesquisa(){
+        $this->atualizarLista();
+    }
+
 }

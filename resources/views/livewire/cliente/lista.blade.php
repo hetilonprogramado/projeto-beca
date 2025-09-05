@@ -6,12 +6,12 @@
                 <i class="fas fa-plus mr-2"></i>Novo Aluno
             </a>
         </div>
-                    
+
         <div class="p-6">
             <div class="mb-4">
-                <input type="text" placeholder="Buscar alunos..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <input type="text" wire:model.live.debounce.500ms="pesquisa" placeholder="Buscar alunos..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             </div>
-                        
+
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead>
@@ -25,7 +25,7 @@
                     <tbody>
                         {{-- Mensagem de sucesso --}}
                         @if (session()->has('success'))
-                            <div 
+                            <div
                                 x-data="{ show: true }"
                                 x-init="setTimeout(() => show = false, 4000)"
                                 x-show="show"
@@ -39,7 +39,7 @@
 
                         {{-- Mensagem de erro --}}
                         @if (session()->has('error'))
-                            <div 
+                            <div
                                 x-data="{ show: true }"
                                 x-init="setTimeout(() => show = false, 4000)"
                                 x-show="show"
