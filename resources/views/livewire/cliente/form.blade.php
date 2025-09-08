@@ -11,7 +11,7 @@
 
         <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo *</label>
-            <input type="text" id="nomeCompleto" wire:model="nome" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
+            <input type="text" id="nome" wire:model="nome" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
             @error('nome')
                 <small class="text-danger">{{ $message }}</small>
             @enderror

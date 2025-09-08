@@ -11,8 +11,10 @@
                 <button onclick="showScreen('cursos')" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all">
                     <i class="fas fa-times mr-2"></i>Cancelar
                 </button>
-                <button type="submit" wire:click.prevent="salvar" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
-                    <i class="fas fa-save mr-2"></i>Salvar Curso
+                <button type="submit" wire:click.prevent="salvar" wire:target="salvar" wire:loading.attr="disabled" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
+                    <span wire:loading.remove wire:target="salvar">Salvar Curso</span>
+                    <i class="fas fa-spinner fa-spin mr-2" wire:loading wire:target="salvar"></i>
+                    <span wire:loading wire:target="salvar">Salvando...</span>
                 </button>
             </div>
         </div>

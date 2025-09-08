@@ -12,11 +12,10 @@
                     <i class="fas fa-times mr-2"></i>Cancelar
                 </a>
                 <div class="flex flex-col">
-                    <button type="submit" wire:click.prevent="salvar"
-                        target="salvar"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
-                        <i class="fas fa-save mr-2"></i>Salvar Aluno
-                        <span wire:loading wire:target="salvar" class="ml-2 spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <button type="submit" wire:click.prevent="salvar" wire:target="salvar" wire:loading.attr="disabled" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
+                        <span wire:loading.remove wire:target="salvar">Salvar Aluno</span>
+                        <i class="fas fa-spinner fa-spin mr-2" wire:loading wire:target="salvar"></i>
+                        <span wire:loading wire:target="salvar">Salvando...</span>
                     </button>
                 </div>
             </div>

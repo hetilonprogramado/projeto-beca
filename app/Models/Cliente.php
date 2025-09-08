@@ -11,8 +11,8 @@ class Cliente extends Model
 
     protected $fillable = [
         'empresa_id',
-        'rsocial_nome',
-        'nfantasia_apelido',
+        'nome',
+        'apelido',
         'status_id',
         'user_id',
         'rua',
@@ -23,8 +23,8 @@ class Cliente extends Model
         'cidade_id',
         'data_abert_nasc',
         'tipo_pessoa',
-        'cnpj_cpf',
-        'ie_rg',
+        'cpf',
+        'rg',
         'email',
         'sexo',
         'fornecedor',        

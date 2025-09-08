@@ -52,7 +52,7 @@
                         @endif
                         @foreach($clientes as $cliente)
                             <tr class="border-b hover:bg-gray-50">
-                                <td class="py-3 px-4">{{ $cliente->rsocial_nome }}</td>
+                                <td class="py-3 px-4">{{ $cliente->nome }}</td>
                                 <td class="py-3 px-4">{{ $cliente->email }}</td>
                                 <td class="py-3 px-4">
                                     <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
