@@ -67,29 +67,39 @@ class Cadastrar extends Component
     public $telefone2;
     public $site;
     public $data_lib;
-    public $tipo_pessoa;
+    public $tipo_pessoa = 'Juridica';
 
-    protected $rules = [
-        'rsocial' => 'required|min:4',
-        'nome_fantasia' => 'required|min:4',
-        'status_id' => 'required|exists:statuses,id',
-        'rua' => 'required|min:3',
-        'numero' => 'required|numeric',
-        'cep' => 'required|regex:/^\d{8}$/',
-        'bairro' => 'required|min:3',
-        'estado_id' => 'required|exists:estados,id',
-        'cidade_id' => 'required|exists:cidades,id',
-        'email' => 'nullable|email',
-        'telefone1' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/',
-        'telefone2' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/',
-        'site' => 'nullable|url',
-        'data_lib' => 'nullable|date',
-        'tipo_pessoa' => 'required|in:1,2',
-        'cep' => 'required|regex:/^\d{5}-\d{3}$/',
-        'user_id' => 'required|exists:users,id',
-        'cnpj' => 'required|regex:/^\d{2}\.\d{2}\.\d{3}\/\d{4}-\d{2}$/',
-        'ie' => 'nullable|regex:/^\d{2}\.\d{3}\.\d{3}\.\d{3}$/',
-    ];
+    public function rules()
+    {
+        $rules = [
+            'rsocial' => 'required|min:4',
+            'nome_fantasia' => 'required|min:4',
+            'status_id' => 'required|exists:statuses,id',
+            'rua' => 'required|min:3',
+            'numero' => 'required|numeric',
+            'bairro' => 'required|min:3',
+            'estado_id' => 'required|exists:estados,id',
+            'cidade_id' => 'required|exists:cidades,id',
+            'email' => 'nullable|email',
+            'telefone1' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/',
+            'telefone2' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/',
+            'site' => 'nullable|url',
+            'data_lib' => 'nullable|date',
+            'tipo_pessoa' => 'required|in:Fisica,Juridica',
+            'cep' => 'required|regex:/^\d{5}-\d{3}$/',
+            'user_id' => 'required|exists:users,id',
+            'ie' => 'nullable|regex:/^\d{2}\.\d{3}\.\d{3}\.\d{3}$/',
+        ];
+
+        if ($this->tipo_pessoa === 'Fisica') {
+            $rules['cnpj'] = 'required|regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/'; // CPF
+        } else {
+            $rules['cnpj'] = 'required|regex:/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/'; // CNPJ
+        }
+
+
+        return $rules;
+    }
 
     public function salvar() {
         // --- Formatação dos campos ---

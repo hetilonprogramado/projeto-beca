@@ -17,6 +17,30 @@
             </select>
         </div>
 
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                @if($tipo_pessoa === 'Fisica') CPF * @else CNPJ * @endif
+            </label>
+
+            @if($tipo_pessoa === 'Fisica')
+                <input type="text" wire:model="cnpj" 
+                    x-mask="999.999.999-99"
+                    wire:key="cpf-input"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="000.000.000-00">
+            @elseif($tipo_pessoa === 'Juridica')
+                <input type="text" wire:model="cnpj" 
+                    x-mask="99.999.999/9999-99"
+                    wire:key="cnpj-input"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="00.000.000/0000-00">
+            @endif
+
+            @error('cnpj')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
         <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Nome da Empresa *</label>
             <input type="text" id="nomeCompleto" wire:model="rsocial" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
@@ -30,14 +54,6 @@
             <input type="text" id="fantasia" wire:model="nome_fantasia" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome fantasia">
             @error('nome_fantasia')
                 <small class="text-danger">{{ $message }}</small>
-            @enderror
-        </div>
-                                
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">CNPJ *</label>
-            <input type="text" id="cpf" wire:model="cnpj" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="000.000.000-00" maxlength="14">
-            @error('cnpj') 
-                <small class="text-danger">{{ $message }}</small> 
             @enderror
         </div>
                                 
