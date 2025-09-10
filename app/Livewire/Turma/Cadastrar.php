@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Cadastrar extends Component
 {
-    public $cursos;
+    public $cursos = [];
 
     public function mount()
     {

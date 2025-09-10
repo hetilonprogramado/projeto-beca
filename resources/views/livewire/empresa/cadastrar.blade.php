@@ -8,21 +8,14 @@
                 <h2 class="text-xl font-semibold text-gray-800">Cadastro de Empresa</h2>
             </div>
             <div class="flex space-x-3">
-                <button wire:click="cancelar" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all">
+                <a href="{{ route('cliente') }}" wire:navigate class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all">
                     <i class="fas fa-times mr-2"></i>Cancelar
-                </button>
+                 </a>
                 <button type="submit" wire:click.prevent="salvar" wire:target="salvar" wire:loading.attr="disabled" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
                     <span wire:loading.remove wire:target="salvar">Salvar Empresa</span>
                     <i class="fas fa-spinner fa-spin mr-2" wire:loading wire:target="salvar"></i>
                     <span wire:loading wire:target="salvar">Salvando...</span>
                 </button>
-
-                {{-- Mensagem de sucesso --}}
-                @if (session()->has('message'))
-                    <div class="mt-3 p-3 rounded-lg bg-green-500 text-white text-sm shadow-md">
-                        {{ session('message') }}
-                    </div>
-                @endif
             </div>
         </div>
 

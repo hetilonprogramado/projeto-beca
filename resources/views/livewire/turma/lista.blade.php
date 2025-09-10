@@ -7,35 +7,63 @@
                             <i class="fas fa-plus mr-2"></i>Nova Turma
                         </a>
                     </div>
-                    
+
                     <div class="p-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            @foreach($turmas as $turma)
-                                <div class="border rounded-lg p-6 hover:shadow-md transition-all">
-                                    <div class="flex items-center justify-between mb-4">
-                                        <h3 class="font-semibold text-gray-800">{{$turma->nome }}</h3>
-                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">Em Andamento</span>
-                                    </div>
-                                    <div class="space-y-2 text-sm text-gray-600 mb-4">
-                                        <p><i class="fas fa-book mr-2"></i>JavaScript Avançado</p>
-                                        <p><i class="fas fa-calendar mr-2"></i>{{ $turma->data_inicial }}</p>
-                                        <p><i class="fas fa-users mr-2"></i>18/20 alunos</p>
-                                        <p><i class="fas fa-clock mr-2"></i>Seg/Qua/Sex - 19h às 22h</p>
-                                        <p><i class="fas fa-dollar-sign mr-2"></i>{{$turma->valor}}</p>
-                                        <p><i class="fas fa-door-open mr-2"></i>Sala 101</p>
-                                    </div>
-                                    <div class="flex justify-between items-center">
-                                        <div class="text-sm">
-                                            <span class="text-gray-600">Professor:</span>
-                                            <span class="font-medium text-gray-800">Carlos Silva</span>
+                        <div class="mb-4">
+                            <input type="text" wire:model.live.debounce.500ms="pesquisa" placeholder="Buscar alunos..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Aluno</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Data Inicial</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Valor</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- Mensagem de sucesso --}}
+                                    @if (session()->has('success'))
+                                        <div
+                                            x-data="{ show: true }"
+                                            x-init="setTimeout(() => show = false, 4000)"
+                                            x-show="show"
+                                            x-transition
+                                            class="fixed top-5 right-5 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50"
+                                        >
+                                            <i class="fas fa-check-circle mr-2"></i>
+                                            {{ session('success') }}
                                         </div>
-                                        <div class="space-x-2">
-                                            <button class="text-blue-500 hover:text-blue-700"><i class="fas fa-eye"></i></button>
-                                            <button onclick="showTurmaForm()" class="text-green-500 hover:text-green-700"><i class="fas fa-edit"></i></button>
+                                    @endif
+
+                                    {{-- Mensagem de erro --}}
+                                    @if (session()->has('error'))
+                                        <div
+                                            x-data="{ show: true }"
+                                            x-init="setTimeout(() => show = false, 4000)"
+                                            x-show="show"
+                                            x-transition
+                                            class="fixed top-5 right-5 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50"
+                                        >
+                                            <i class="fas fa-times-circle mr-2"></i>
+                                            {{ session('error') }}
                                         </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                                    @endif
+                                    @foreach($turmas as $turma)
+                                        <tr class="border-b hover:bg-gray-50">
+                                            <td class="py-3 px-4">{{ $turma->nome }}</td>
+                                            <td class="py-3 px-4">{{ $turma->data_inicial }}</td>
+                                            <td class="py-3 px-4">{{ $turma->valor }}</td>
+                                            <td class="py-3 px-4">
+                                                <a href="{{ route('turma.alterar', $turma->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></a>
+                                                <button wire:click="deletar({{ $turma->id }})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
