@@ -4,9 +4,53 @@ namespace App\Livewire\Empresa;
 
 use App\Models\Empresa;
 use Livewire\Component;
+use App\Models\Cidades;
+use App\Models\Estados;
+use Illuminate\Support\Facades\Http;
+use Pest\ArchPresets\Custom;
+use Illuminate\Support\Facades\Auth;
 
 class Alterar extends Component
 {
+    public $cep;
+    public $estado_id;
+    public $cidade_id;
+    public $estados = [];
+    public $cidades = [];
+
+    public function mountCep()
+    {
+        $this->estados = Estados::all();
+        $this->cidades = Cidades::where('estado_id', Auth()->user()->estado_id)->get();
+        $this->estado_id = Auth()->user()->estado_id;
+        $this->cidade_id = Auth()->user()->cidade_id;
+    }
+
+    public function buscarCep()
+    {
+        $cep = preg_replace('/[^0-9]/', '', $this->cep);
+
+        if (strlen($cep) !== 8) {
+            return;
+        }
+
+        $response = Http::get("https://viacep.com.br/ws/{$cep}/json/");
+
+        if ($response->ok() && !$response->json('erro')) {
+            $data = $response->json();
+
+            // Preenche os campos de endereço
+            $this->rua = $data['logradouro'] ?? '';
+            $this->bairro = $data['bairro'] ?? '';
+
+            // Busca cidade pelo código IBGE
+            $cidades = Cidades::where('ibge_code', $data['ibge'])->first();
+            $this->cidade_id = $cidades->id;
+            $this->estado_id = $cidades->estado_id;
+            $this->buscarCidades(); 
+        }
+    }
+
     public $empresa_id;
     public $rsocial;
     public $nome_fantasia;
@@ -17,16 +61,13 @@ class Alterar extends Component
     public $rua;
     public $numero;
     public $bairro;
-    public $estado_id;
-    public $cidade_id;
     public $modulo_id;
     public $email;
     public $telefone1;
     public $telefone2;
     public $site;
     public $data_lib;
-    public $tipo_pessoa;
-    public $cep;
+    public $tipo_pessoa = 'Juridica';
 
     protected $rules = [
         'rsocial' => 'required|min:4',
@@ -43,7 +84,7 @@ class Alterar extends Component
         'telefone2' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/',
         'site' => 'nullable|url',
         'data_lib' => 'nullable|date',
-        'tipo_pessoa' => 'required|in:1,2',
+        'tipo_pessoa' => 'required|in:Fisica,Juridica',
         'cep' => 'required|regex:/^\d{5}-\d{3}$/',
         'user_id' => 'required|exists:users,id',
         'cnpj' => 'required|regex:/^\d{2}\.\d{2}\.\d{3}\/\d{4}-\d{2}$/',
@@ -107,6 +148,13 @@ class Alterar extends Component
 
     public function render()
     {
-        return view('livewire.empresa.alterar');
+        return view('livewire.empresa.alterar', [
+            'estados' => $this->estados,
+            'cidades' => $this->cidades,
+        ]);
+    }
+
+    public function buscarCidades() {
+        $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
     }
 }

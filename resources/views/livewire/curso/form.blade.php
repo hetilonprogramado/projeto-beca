@@ -14,13 +14,11 @@
                                 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Nível do Curso *</label>
-            <select id="nivelCurso" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <select id="nivelCurso" wire:model="nivel_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione o nível</option>
-                <option value="iniciante">Iniciante</option>
-                <option value="basico">Básico</option>
-                <option value="intermediario">Intermediário</option>
-                <option value="avancado">Avançado</option>
-                <option value="especialista">Especialista</option>
+                @foreach($niveis as $nivel)
+                    <option value="{{ $nivel->id }}">{{ $nivel->nome }}</option>
+                @endforeach
             </select>
         </div>
                                 
@@ -46,7 +44,7 @@
     <div class="space-y-6">
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Descrição do Curso</label>
-            <textarea id="descricaoCurso" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none" placeholder="Descreva o que o aluno aprenderá neste curso..."></textarea>
+            <textarea id="descricaoCurso" wire:model="descricao" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none" placeholder="Descreva o que o aluno aprenderá neste curso..."></textarea>
         </div>
                                     
         <div>

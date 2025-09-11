@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
 			$table->softDeletes();
             $table->string('nome');
+            $table->string('descricao')->nullable();
             $table->integer('nivel_id')->unsigned();
             $table->enum('tipo_lancamento',['Nota','Conceito'])->nullable()->default('Nota');
             $table->enum('extracurricular',['Sim','Nao'])->nullable()->default('Nao');

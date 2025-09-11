@@ -4,6 +4,7 @@ namespace App\Livewire\Curso;
 
 use App\Models\Curso;
 use Carbon\Carbon;
+use App\Models\Niveis;
 
 use Livewire\Component;
 
@@ -16,6 +17,8 @@ class Cadastrar extends Component
     public $hora_aula;
     public $extracurricular;
     public $nivel_id;
+    public $niveis;
+    public $descricao;
     public $user_deleted_id;
 
     protected $rules = [
@@ -25,6 +28,7 @@ class Cadastrar extends Component
         'hora_aula' => 'required|numeric|min:1', // Minimum 1
         'extracurricular' => 'required|in:Sim,Nao', // Sim ou Nao
         'nivel_id' => 'required|exists:niveis,id',
+        'descricao' => 'nullable|string|max:1000',
         'user_deleted_id' => 'nullable|exists:users,id',
     ];
 
@@ -39,17 +43,25 @@ class Cadastrar extends Component
             'tipo_lancamento' => $this->tipo_lancamento,
             'hora_aula' => $this->hora_aula,
             'extracurricular' => $this->extracurricular,
-            'nivel_id' => 1,
+            'nivel_id' => $this->nivel_id,
+            'descricao' => $this->descricao,
             'user_deleted_id' => $this->user_deleted_id
         ]);
         // Limpa os campos do formulário
-        $this->reset();
+        $this->reset(['nome', 'status_id', 'tipo_lancamento', 'hora_aula', 'extracurricular', 'descricao', 'user_deleted_id']);
         session()->flash('message', 'Curso cadastrado com sucesso!');
 
+    }
+
+    public function mount()
+    {
+        $this->niveis = Niveis::all(); // carrega todos os níveis
     }
 
     public function render()
     {
         return view('livewire.curso.cadastrar');
+
+        return view('livewire.curso.form');
     }
 }
