@@ -143,39 +143,6 @@ class Cadastrar extends Component
 
     }
 
-    // public function salvar() {
-    //     // --- Formatação dos campos ---
-    //     $this->cep = preg_replace('/\D/', '', $this->cep);
-    //     $this->cpf = preg_replace('/\D/', '', $this->cpf);
-    //     // 1. Validação separada em método dedicado
-    //    $validatedData = $this->validarDados();
-
-    //    $validatedData['empresa_id'] = Auth()->user()->empresa_id;
-    //    $validatedData['user_id'] = Auth()->user()->id;
-
-    //     try {
-    //         // 2. Transação para garantir consistência
-    //         DB::transaction(function () use ($validatedData) {
-    //             // 3. Operação de create simplificada
-    //             $cliente = Cliente::Create(
-    //                 $validatedData
-    //             );
-    //         });
-
-    //         // 5. Feedback para o usuário
-    //         session()->flash('message', 'Cliente cadastrado com sucesso!');
-
-    //         // 6. Limpa campos
-    //         $this->reset();
-
-    //     } catch (\Exception $e) {
-    //         // 7. Tratamento de erro adequado
-    //         session()->flash('error', 'Erro ao salvar cliente: ' . $e->getMessage());
-    //         Log::error('Erro ao salvar cliente: ' . $e->getMessage());
-    //     }
-
-    // }
-
     public function render(){
         return view('livewire.cliente.cadastrar', [
             'estados' => $this->estados,

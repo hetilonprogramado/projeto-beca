@@ -18,7 +18,7 @@
                                 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">CPF *</label>
-            <input type="text" id="cpf" wire:model="cpf" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="000.000.000-00" maxlength="14">
+            <input type="text" id="cpf" x-mask="{{ '999.999.999-99' }}" wire:model="cpf" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="000.000.000-00" maxlength="14">
             @error('cpf') 
                 <small class="text-danger">{{ $message }}</small> 
             @enderror
@@ -108,8 +108,32 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">CEP *</label>
             <input type="text" wire:model="cep" id="cep" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00000-000" maxlength="9">
         </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
+            <select id="estado"wire:change= "buscarCidades" wire:model="estado_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                <option value="">Selecione</option>
+                @foreach($estados as $estado)
+                    <option value="{{ $estado->id }}" @selected($estado_id == $estado->id)>
+                        {{ $estado->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Cidade *</label>
+            <select wire:model="cidade_id" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                <option value="">Selecione</option>
+                @foreach($cidades as $cidade)
+                    <option value="{{ $cidade->id }}" @selected($cidade_id == $cidade->id)>
+                        {{ $cidade->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
                                 
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Logradouro *</label>
             <input type="text" wire:model="rua" id="logradouro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Rua, Avenida, etc.">
         </div>
@@ -119,49 +143,10 @@
             <input type="text" wire:model="numero" id="numero" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="123">
         </div>
                                 
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Bairro *</label>
             <input type="text" wire:model="bairro" id="bairro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome do bairro">
         </div>
-                                
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Cidade *</label>
-            <input type="text" wire:model="cidade_id" id="cidade" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome da cidade">
-        </div>
-                                
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
-                <select id="estado" wire:model="estado_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                    <option value="">Selecione</option>
-                    <option value="AC">Acre</option>
-                    <option value="AL">Alagoas</option>
-                    <option value="AP">Amapá</option>
-                    <option value="AM">Amazonas</option>
-                    <option value="BA">Bahia</option>
-                    <option value="CE">Ceará</option>
-                    <option value="DF">Distrito Federal</option>
-                    <option value="ES">Espírito Santo</option>
-                    <option value="GO">Goiás</option>
-                    <option value="MA">Maranhão</option>
-                    <option value="MT">Mato Grosso</option>
-                    <option value="MS">Mato Grosso do Sul</option>
-                    <option value="MG">Minas Gerais</option>
-                    <option value="PA">Pará</option>
-                    <option value="PB">Paraíba</option>
-                    <option value="PR">Paraná</option>
-                    <option value="PE">Pernambuco</option>
-                    <option value="PI">Piauí</option>
-                    <option value="RJ">Rio de Janeiro</option>
-                    <option value="RN">Rio Grande do Norte</option>
-                    <option value="RS">Rio Grande do Sul</option>
-                    <option value="RO">Rondônia</option>
-                    <option value="RR">Roraima</option>
-                    <option value="SC">Santa Catarina</option>
-                    <option value="SP">São Paulo</option>
-                    <option value="SE">Sergipe</option>
-                    <option value="TO">Tocantins</option>
-                </select>
-            </div>
                                 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">País</label>
@@ -191,12 +176,12 @@
                                 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Celular *</label>
-                <input type="text" wire:model="telefone1" id="celular" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 00000-0000" maxlength="15">
+                <input type="text" x-mask="{{ '(99) 9999-9999' }}" wire:model="telefone1" id="celular" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 00000-0000" maxlength="15">
             </div>
                                 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Fixo</label>
-                <input type="text" wire:model="telefone2" id="telefoneFixo" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 0000-0000" maxlength="14">
+                <input type="text" x-mask="{{ '(99) 9999-9999' }}" wire:model="telefone2" id="telefoneFixo" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 0000-0000" maxlength="14">
             </div>
 
         </div>

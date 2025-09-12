@@ -10,8 +10,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de pessoa</label>
-            <select id="tipoDePessoa" wire:model="tipo_pessoa" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                <option value="">Selecione</option>
+            <select id="tipoDePessoa" wire:model.live="tipo_pessoa" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="Fisica">Fisica</option>
                 <option value="Juridica">Juridica</option>
             </select>
@@ -19,22 +18,20 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
-                @if($tipo_pessoa === 'Fisica') CPF * @else CNPJ * @endif
+                {{ $tipo_pessoa === 'Fisica' ? 'CPF *' : 'CNPJ *' }}
             </label>
 
-            @if($tipo_pessoa === 'Fisica')
-                <input type="text" wire:model="cnpj" 
-                    x-mask="999.999.999-99"
-                    wire:key="cpf-input"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                    placeholder="000.000.000-00">
-            @elseif($tipo_pessoa === 'Juridica')
-                <input type="text" wire:model="cnpj" 
-                    x-mask="99.999.999/9999-99"
-                    wire:key="cnpj-input"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                    placeholder="00.000.000/0000-00">
-            @endif
+            <input 
+                type="text"
+                wire:model.defer="cnpj"
+                {{-- força recriação quando muda o tipo --}}
+                wire:key="documento-{{ $tipo_pessoa }}" 
+                x-data
+                {{-- usa notação direta do Alpine --}}
+                x-mask="{{ $tipo_pessoa === 'Fisica' ? '999.999.999-99' : '99.999.999/9999-99' }}"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="{{ $tipo_pessoa === 'Fisica' ? '000.000.000-00' : '00.000.000/0000-00' }}"
+            >
 
             @error('cnpj')
                 <small class="text-danger">{{ $message }}</small>
@@ -128,6 +125,8 @@
         </div>
     </div>
 
+    <br>
+
     <!-- Dados de Contato -->
     <div class="mb-8">
         <div class="flex items-center space-x-2 mb-4">
@@ -145,12 +144,12 @@
                                 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Celular *</label>
-                <input type="text" wire:model="telefone1" id="telefone1" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 00000-0000" maxlength="15">
+                <input type="text" x-mask="{{ '(99) 9999-9999' }}" wire:model="telefone1" id="telefone1" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 00000-0000" maxlength="15">
             </div>
                                 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Fixo</label>
-                <input type="text" wire:model="telefone2" id="telefone2" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 0000-0000" maxlength="14">
+                <input type="text" x-mask="{{ '(99) 9999-9999' }}" wire:model="telefone2" id="telefone2" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 0000-0000" maxlength="14">
             </div>
 
         </div>

@@ -27,7 +27,7 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">CPF</label>
-            <input type="text" id="cpf" wire:model="cpf" class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="000.000.000-00" maxlength="14">
+            <input type="text" id="cpf" x-mask="{{ '999.999.999-99' }}" wire:model="cpf" class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="000.000.000-00" maxlength="14">
             @error('cpf')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
@@ -195,7 +195,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Celular</label>
-                <input type="text" id="celular" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 00000-0000" maxlength="15">
+                <input type="text" x-mask="{{ '(99) 9999-9999' }}" id="celular" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 00000-0000" maxlength="15">
                 @error('celular')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror

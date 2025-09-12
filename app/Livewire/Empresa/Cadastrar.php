@@ -67,7 +67,13 @@ class Cadastrar extends Component
     public $telefone2;
     public $site;
     public $data_lib;
-    public $tipo_pessoa = 'Juridica';
+    public $tipo_pessoa = 'Fisica';
+
+    public function updatedTipoPessoa()
+    {
+        // Limpa o campo cnpj/cpf sempre que o tipo mudar
+        $this->cnpj = '';
+    }
 
     public function rules()
     {
@@ -92,11 +98,12 @@ class Cadastrar extends Component
         ];
 
         if ($this->tipo_pessoa === 'Fisica') {
-            $rules['cnpj'] = 'required|regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/'; // CPF
+            // CPF só números (11 dígitos)
+            $rules['cnpj'] = 'required|digits:11';
         } else {
-            $rules['cnpj'] = 'required|regex:/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/'; // CNPJ
+            // CNPJ só números (14 dígitos)
+            $rules['cnpj'] = 'required|digits:14';
         }
-
 
         return $rules;
     }
