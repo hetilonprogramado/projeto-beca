@@ -50,15 +50,11 @@
                                 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Sala *</label>
-            <select id="salaTurma" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <select id="salasTurma" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione a sala</option>
-                <option value="101">Sala 101 - Lab. Informática 1</option>
-                <option value="102">Sala 102 - Lab. Informática 2</option>
-                <option value="201">Sala 201 - Auditório</option>
-                <option value="202">Sala 202 - Sala de Aula</option>
-                <option value="203">Sala 203 - Lab. Avançado</option>
-                <option value="301">Sala 301 - Sala Multimídia</option>
-                <option value="online">Online - EAD</option>
+                @foreach($salas as $sala)
+                    <option value="{{ $sala->id }}">{{ $sala->nome }}</option>
+                @endforeach
             </select>
         </div>
                                 

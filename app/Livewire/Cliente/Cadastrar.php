@@ -117,7 +117,6 @@ class Cadastrar extends Component
             'nome' => $this->nome,
             'apelido' => $this->apelido,
             'status_id' => 1,
-            'user_id' => 1,
             'rua' => $this->rua,
             'numero' => $this->numero,
             'cep' => $this->cep,
