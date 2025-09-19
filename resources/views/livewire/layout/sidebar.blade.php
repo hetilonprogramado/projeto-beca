@@ -13,14 +13,14 @@
 
             <nav class="p-4">
                 <ul class="space-y-2">
-                    <li><a href="{{ url('dashboard') }}" onclick="showScreen('dashboard')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-chart-dashboard w-5"></i><span>Dashboard</span></a></li>
-                    <li><a href="{{ url('cliente') }}" onclick="showScreen('cliente')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-users w-5"></i><span>Alunos</span></a></li>
-                    <li><a href="{{ url('empresa') }}" onclick="showScreen('empresa')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-users w-5"></i><span>Empresas</span></a></li>
-                    <li><a href="{{ url('produtos') }}" onclick="showScreen('produtos')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-box w-5"></i><span>Produtos</span></a></li>
-                    <li><a href="{{ url('matricula') }}" onclick="showScreen('matriculas')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-file-signature w-5"></i><span>Matrículas</span></a></li>
-                    <li><a href="{{ url('curso') }}" onclick="showScreen('cursos')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-book w-5"></i><span>Cursos</span></a></li>
-                    <li><a href="{{ url('turma') }}" onclick="showScreen('turmas')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-chalkboard-teacher w-5"></i><span>Turmas</span></a></li>
-                    <li><a href="{{ url('usuario') }}" onclick="showScreen('usuarios')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-user-cog w-5"></i><span>Usuários</span></a></li>
+                    <li><a href="{{ url('dashboard') }}" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-chart-dashboard w-5"></i><span>Dashboard</span></a></li>
+                    <li><a href="{{ url('cliente') }}" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-users w-5"></i><span>Alunos</span></a></li>
+                    <li><a href="{{ url('empresa') }}" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-school w-5"></i><span>Empresa</span></a></li>
+                    <li><a href="{{ url('produtos') }}" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-box w-5"></i><span>Produtos</span></a></li>
+                    <li><a href="{{ url('matricula') }}" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-file-signature w-5"></i><span>Matrículas</span></a></li>
+                    <li><a href="{{ url('curso') }}" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-book w-5"></i><span>Cursos</span></a></li>
+                    <li><a href="{{ url('turma') }}" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-chalkboard-teacher w-5"></i><span>Turmas</span></a></li>
+                    <li><a href="{{ url('usuario') }}" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-user-cog w-5"></i><span>Usuários</span></a></li>
                 </ul>
             </nav>
 

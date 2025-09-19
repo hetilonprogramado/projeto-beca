@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('funcionarios', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->softDeletes();
 			$table->integer('empresa_id')->unsigned();
             $table->string('nome',100);
@@ -39,7 +39,7 @@ return new class extends Migration
             $table->string('pis',20)->nullable();
             $table->string('ctps',20)->nullable();
             $table->datetime('data_nascimento')->nullable();
-            $table->string('nome_mae',100)->nullable();			
+            $table->string('nome_mae',100)->nullable();
             $table->timestamps();
         });
     }

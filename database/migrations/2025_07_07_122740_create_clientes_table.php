@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->softDeletes();
             $table->integer('empresa_id')->unsigned();
-            $table->string('nome');
+            $table->string('nome',100);
             $table->string('apelido')->nullable();
             $table->string('registro_nascimento',20)->nullable();
             $table->string('nacionalidade',50)->nullable();

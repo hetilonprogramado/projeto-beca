@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('niveis', function (Blueprint $table) {
+        Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
-            $table->softDeletes();
             $table->string('nome',100);
+            $table->string('rota',100);
+            $table->string('icone');
+            $table->integer('status_id');
+            $table->integer('user_deleted_id')->nullable();
             $table->integer('user_id')->unsigned();
-            $table->integer('status_id')->unsigned();
-            $table->integer('user_deleted_id')->unsigned()->nullable();
+            $table->integer('tipo');
+            $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('status_id')->references('id')->on('statuses');
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('niveis');
+        Schema::dropIfExists('menus');
     }
 };

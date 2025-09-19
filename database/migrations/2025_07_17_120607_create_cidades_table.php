@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cidades', function(Blueprint $table) {
-            $table->id();
-            $table->string('nome');
+            $table->increments('id');
+            $table->string('nome',100);
             $table->string('ibge_code');
             $table->unsignedBigInteger('estado_id')->unsigned();
 			$table->timestamps();
         });
-        
+
         Schema::table('cidades', function ($table) {
             $table->foreign('estado_id')->references('id')->on('estados');
         });

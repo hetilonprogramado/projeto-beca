@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tipos_contas', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->softDeletes();
-			$table->integer('empresa_id')->unsigned();       
-            $table->string('nome');
+			$table->integer('empresa_id')->unsigned();
+            $table->string('nome',100);
             $table->integer('user_id')->unsigned();
             $table->integer('status_id')->unsigned();
             $table->integer('user_deleted_id')->nullable();
 			$table->string('updated_x')->nullable();
             $table->enum('tipo', ['E', 'S', 'I'])->nullable()->default('I');
             $table->timestamps();
-			
+
 			$table->foreign('status_id')->references('id')->on('statuses');
 			$table->foreign('empresa_id')->references('id')->on('empresas');
         });

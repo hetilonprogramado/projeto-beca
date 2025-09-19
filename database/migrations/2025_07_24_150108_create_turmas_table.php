@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('turmas', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
 			$table->softDeletes();
 			$table->integer('empresa_id')->unsigned();
-            $table->string('nome');
+            $table->string('nome',100);
             $table->integer('curso_id');
             $table->integer('tipo_conta_id');
             $table->integer('sala_id')->nullable();
@@ -32,7 +32,7 @@ return new class extends Migration
 			$table->enum('recorrente',['Nao','Sim'])->default('Nao');
 			$table->string('updated_x')->nullable();
             $table->timestamps();
-            
+
             $table->foreign('status_id')->references('id')->on('statuses');
         });
     }

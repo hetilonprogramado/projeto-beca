@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('salas', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->softDeletes();
 			$table->integer('empresa_id')->unsigned();
-            $table->string('nome');
+            $table->string('nome',100);
             $table->integer('limite');
             $table->integer('status_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('user_deleted_id')->nullable();
 			$table->string('updated_x')->nullable();
             $table->timestamps();
-            
+
             $table->foreign('status_id')->references('id')->on('statuses');
         });
     }

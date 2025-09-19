@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cursos', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
 			$table->softDeletes();
-            $table->string('nome');
+            $table->string('nome',100);
             $table->string('descricao')->nullable();
             $table->integer('nivel_id')->unsigned();
             $table->enum('tipo_lancamento',['Nota','Conceito'])->nullable()->default('Nota');

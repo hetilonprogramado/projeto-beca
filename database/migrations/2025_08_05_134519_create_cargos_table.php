@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cargos', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome');
+            $table->increments('id');
+            $table->string('nome',100);
             $table->integer('status_id');
             $table->integer('user_deleted_id')->nullable();
             $table->softDeletes();
