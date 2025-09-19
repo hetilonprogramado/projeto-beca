@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Acadêmico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar-item:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .loading-button {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .loading-button:hover {
+            opacity: 0.7;
+        }
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        .message-enter {
+            animation: slideInRight 0.3s ease-out;
+        }
+        .message-exit {
+            animation: slideOutRight 0.3s ease-in;
+        }
+        .permission-card {
+            transition: all 0.3s ease;
+        }
+        .permission-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .permission-toggle {
+            transition: all 0.3s ease;
+        }
+        .permission-enabled {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .permission-disabled {
+            background: #e5e7eb;
+        }
+        .module-header {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Tela de Login -->
+    <div id="loginScreen" class="hidden min-h-screen flex items-center justify-center gradient-bg">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800">Sistema Acadêmico</h1>
+                <p class="text-gray-600">Faça login para continuar</p>
+            </div>
+            
+            <form onsubmit="login(event)" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="seu@email.com">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Senha</label>
+                    <div class="relative">
+                        <input id="passwordInput" type="password" required class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="••••••••">
+                        <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors">
+                            <i id="eyeIcon" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+                        <span class="ml-2 text-sm text-gray-600">Lembre-me</span>
+                    </label>
+                    <a href="#" class="text-sm text-blue-600 hover:text-blue-800 transition-colors">Esqueceu a senha?</a>
+                </div>
+                
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105">
+                    Entrar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sistema Principal -->
+    <div id="mainSystem" class="">
+        <!-- Sidebar -->
+        <div class="fixed left-0 top-0 h-full w-64 bg-white shadow-lg z-50">
+            <div class="p-6 border-b">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-gray-800">Sistema Acadêmico</h2>
+                        <p class="text-sm text-gray-600">Administração</p>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="p-4">
+                <ul class="space-y-2">
+                    <li><a href="#" onclick="showScreen('dashboard')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-chart-dashboard w-5"></i><span>Dashboard</span></a></li>                    
+                    <li><a href="#" onclick="showScreen('grupos')" class="sidebar-item flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:text-white transition-all"><i class="fas fa-users-cog w-5"></i><span>Grupos de Usuários</span></a></li>
+                </ul>
+            </nav>
+            
+            <div class="absolute bottom-4 left-4 right-4">
+                <button onclick="logout()" class="w-full flex items-center justify-center space-x-2 p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="ml-64 min-h-screen bg-gray-50">
+            <!-- Header -->
+            <header class="bg-white shadow-sm border-b p-6">
+                <div class="flex justify-between items-center">
+                    <h1 id="pageTitle" class="text-2xl font-bold text-gray-800">Dashboard</h1>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <i class="fas fa-bell text-gray-600 text-xl cursor-pointer hover:text-blue-500"></i>
+                            <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-sm"></i>
+                            </div>
+                            <span class="text-gray-700 font-medium">Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+
+            <!-- Grupos de Usuários -->
+            <div id="gruposContent" class="p-6">
+                <div class="bg-white rounded-xl shadow-sm">
+                    <div class="p-6 border-b flex justify-between items-center">
+                        <h2 class="text-xl font-semibold text-gray-800">Gerenciar Grupos de Usuários</h2>
+                        <button onclick="showGrupoForm()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
+                            <i class="fas fa-plus mr-2"></i>Novo Grupo
+                        </button>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="mb-4">
+                            <input type="text" placeholder="Buscar grupos..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Nome do Grupo</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Usuários</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Data Criação</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+                                                    <i class="fas fa-crown text-red-600"></i>
+                                                </div>
+                                                <span class="font-medium">Administradores</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Ativo</span></td>
+                                        <td class="py-3 px-4">2 usuários</td>
+                                        <td class="py-3 px-4">01/01/2024</td>
+                                        <td class="py-3 px-4">
+                                            <button onclick="editarGrupo('admin')" class="text-blue-500 hover:text-blue-700 mr-2" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button onclick="gerenciarPermissoes('Administradores', 'admin')" class="text-purple-500 hover:text-purple-700 mr-2" title="Permissões">
+                                                <i class="fas fa-shield-alt"></i>
+                                            </button>
+                                            <button onclick="excluirGrupo('admin')" class="text-red-500 hover:text-red-700" title="Excluir">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                                    <i class="fas fa-chalkboard-teacher text-blue-600"></i>
+                                                </div>
+                                                <span class="font-medium">Professores</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Ativo</span></td>
+                                        <td class="py-3 px-4">8 usuários</td>
+                                        <td class="py-3 px-4">05/01/2024</td>
+                                        <td class="py-3 px-4">
+                                            <button onclick="editarGrupo('professor')" class="text-blue-500 hover:text-blue-700 mr-2" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button onclick="gerenciarPermissoes('Professores', 'professor')" class="text-purple-500 hover:text-purple-700 mr-2" title="Permissões">
+                                                <i class="fas fa-shield-alt"></i>
+                                            </button>
+                                            <button onclick="excluirGrupo('professor')" class="text-red-500 hover:text-red-700" title="Excluir">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                                    <i class="fas fa-user-graduate text-green-600"></i>
+                                                </div>
+                                                <span class="font-medium">Alunos</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Ativo</span></td>
+                                        <td class="py-3 px-4">1.234 usuários</td>
+                                        <td class="py-3 px-4">10/01/2024</td>
+                                        <td class="py-3 px-4">
+                                            <button onclick="editarGrupo('aluno')" class="text-blue-500 hover:text-blue-700 mr-2" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button onclick="gerenciarPermissoes('Alunos', 'aluno')" class="text-purple-500 hover:text-purple-700 mr-2" title="Permissões">
+                                                <i class="fas fa-shield-alt"></i>
+                                            </button>
+                                            <button onclick="excluirGrupo('aluno')" class="text-red-500 hover:text-red-700" title="Excluir">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                                                    <i class="fas fa-headset text-orange-600"></i>
+                                                </div>
+                                                <span class="font-medium">Suporte</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm">Inativo</span></td>
+                                        <td class="py-3 px-4">3 usuários</td>
+                                        <td class="py-3 px-4">15/01/2024</td>
+                                        <td class="py-3 px-4">
+                                            <button onclick="editarGrupo('suporte')" class="text-blue-500 hover:text-blue-700 mr-2" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button onclick="gerenciarPermissoes('Suporte', 'suporte')" class="text-purple-500 hover:text-purple-700 mr-2" title="Permissões">
+                                                <i class="fas fa-shield-alt"></i>
+                                            </button>
+                                            <button onclick="excluirGrupo('suporte')" class="text-red-500 hover:text-red-700" title="Excluir">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gerenciar Permissões -->
+            <div id="permissoesContent" class="p-6 hidden">
+                <div class="bg-white rounded-xl shadow-sm">
+                    <div class="p-6 border-b flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <button onclick="showScreen('grupos')" class="text-gray-500 hover:text-gray-700 transition-colors">
+                                <i class="fas fa-arrow-left text-xl"></i>
+                            </button>
+                            <div>
+                                <h2 class="text-xl font-semibold text-gray-800">Gerenciar Permissões</h2>
+                                <p class="text-sm text-gray-600">Grupo: <span id="nomeGrupoPermissoes" class="font-medium text-purple-600"></span></p>
+                            </div>
+                        </div>                        
+                    </div>
+                    
+                    <div class="p-6">
+                        <!-- Controles Gerais -->
+                        <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 mb-1">Controles Gerais</h3>
+                                    <p class="text-sm text-gray-600">Ações rápidas para todas as permissões</p>
+                                </div>
+                                <div class="flex space-x-3">
+                                    <button onclick="marcarTodasPermissoes(true)" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-all text-sm">
+                                        <i class="fas fa-check-double mr-1"></i>Marcar Todas
+                                    </button>
+                                    <button onclick="marcarTodasPermissoes(false)" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all text-sm">
+                                        <i class="fas fa-times mr-1"></i>Desmarcar Todas
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Módulos de Permissões -->
+                        <div class="space-y-6">
+                            <!-- Dashboard -->
+                            <div class="permission-card border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="module-header p-4 border-b">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-chart-dashboard text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-semibold text-gray-800">Dashboard</h3>
+                                                <p class="text-sm text-gray-600">Acesso ao painel principal e relatórios</p>
+                                            </div>
+                                        </div>
+                                        <button onclick="toggleModulePermissions('dashboard')" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                            <i class="fas fa-chevron-down mr-1"></i>Expandir
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="dashboard-permissions" class="p-4 space-y-3">
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-eye text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Visualizar Dashboard</span>
+                                                <p class="text-xs text-gray-600">Acesso ao painel principal</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="dashboard.view" checked>
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-chart-bar text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Relatórios Financeiros</span>
+                                                <p class="text-xs text-gray-600">Acesso aos relatórios de receitas e despesas</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="dashboard.reports" checked>
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Clientes -->
+                            <div class="permission-card border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="module-header p-4 border-b">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-users text-green-600"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-semibold text-gray-800">Clientes</h3>
+                                                <p class="text-sm text-gray-600">Gerenciamento de clientes e alunos</p>
+                                            </div>
+                                        </div>
+                                        <button onclick="toggleModulePermissions('clientes')" class="text-green-600 hover:text-green-800 text-sm font-medium">
+                                            <i class="fas fa-chevron-down mr-1"></i>Expandir
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="clientes-permissions" class="p-4 space-y-3 hidden">
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-eye text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Visualizar Clientes</span>
+                                                <p class="text-xs text-gray-600">Ver lista e detalhes dos clientes</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="clientes.view">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-plus text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Criar Clientes</span>
+                                                <p class="text-xs text-gray-600">Cadastrar novos clientes</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="clientes.create">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-edit text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Editar Clientes</span>
+                                                <p class="text-xs text-gray-600">Modificar dados dos clientes</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="clientes.edit">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-trash text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Excluir Clientes</span>
+                                                <p class="text-xs text-gray-600">Remover clientes do sistema</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="clientes.delete">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cursos -->
+                            <div class="permission-card border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="module-header p-4 border-b">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-book text-purple-600"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-semibold text-gray-800">Cursos</h3>
+                                                <p class="text-sm text-gray-600">Gerenciamento de cursos e disciplinas</p>
+                                            </div>
+                                        </div>
+                                        <button onclick="toggleModulePermissions('cursos')" class="text-purple-600 hover:text-purple-800 text-sm font-medium">
+                                            <i class="fas fa-chevron-down mr-1"></i>Expandir
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="cursos-permissions" class="p-4 space-y-3 hidden">
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-eye text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Visualizar Cursos</span>
+                                                <p class="text-xs text-gray-600">Ver lista e detalhes dos cursos</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="cursos.view">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-plus text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Criar Cursos</span>
+                                                <p class="text-xs text-gray-600">Cadastrar novos cursos</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="cursos.create">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-edit text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Editar Cursos</span>
+                                                <p class="text-xs text-gray-600">Modificar cursos existentes</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="cursos.edit">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Matrículas -->
+                            <div class="permission-card border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="module-header p-4 border-b">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-file-signature text-orange-600"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-semibold text-gray-800">Matrículas</h3>
+                                                <p class="text-sm text-gray-600">Gerenciamento de matrículas e pagamentos</p>
+                                            </div>
+                                        </div>
+                                        <button onclick="toggleModulePermissions('matriculas')" class="text-orange-600 hover:text-orange-800 text-sm font-medium">
+                                            <i class="fas fa-chevron-down mr-1"></i>Expandir
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="matriculas-permissions" class="p-4 space-y-3 hidden">
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-eye text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Visualizar Matrículas</span>
+                                                <p class="text-xs text-gray-600">Ver lista de matrículas</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="matriculas.view">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-plus text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Criar Matrículas</span>
+                                                <p class="text-xs text-gray-600">Realizar novas matrículas</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="matriculas.create">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-dollar-sign text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Gerenciar Pagamentos</span>
+                                                <p class="text-xs text-gray-600">Controlar pagamentos e inadimplência</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="matriculas.payments">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Usuários e Grupos -->
+                            <div class="permission-card border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="module-header p-4 border-b">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-users-cog text-red-600"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-semibold text-gray-800">Usuários e Grupos</h3>
+                                                <p class="text-sm text-gray-600">Administração de usuários e permissões</p>
+                                            </div>
+                                        </div>
+                                        <button onclick="toggleModulePermissions('usuarios')" class="text-red-600 hover:text-red-800 text-sm font-medium">
+                                            <i class="fas fa-chevron-down mr-1"></i>Expandir
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="usuarios-permissions" class="p-4 space-y-3 hidden">
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-eye text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Visualizar Usuários</span>
+                                                <p class="text-xs text-gray-600">Ver lista de usuários do sistema</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="usuarios.view">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-user-plus text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Criar Usuários</span>
+                                                <p class="text-xs text-gray-600">Cadastrar novos usuários</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="usuarios.create">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-users-cog text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Gerenciar Grupos</span>
+                                                <p class="text-xs text-gray-600">Criar e editar grupos de usuários</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="usuarios.groups">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-shield-alt text-gray-600"></i>
+                                            <div>
+                                                <span class="font-medium text-gray-800">Gerenciar Permissões</span>
+                                                <p class="text-xs text-gray-600">Definir permissões de grupos</p>
+                                            </div>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" data-permission="usuarios.permissions">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Resumo de Permissões -->
+                        <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <div class="flex items-center space-x-2 mb-3">
+                                <i class="fas fa-info-circle text-blue-600"></i>
+                                <h4 class="font-semibold text-blue-800">Resumo das Permissões</h4>
+                            </div>
+                            <div id="resumoPermissoes" class="text-sm text-blue-700">
+                                <span id="totalPermissoes">0</span> permissões ativas de <span id="totalPermissoesDisponiveis">0</span> disponíveis
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variável global para armazenar o grupo atual
+        let grupoAtual = null;
+
+        // Função de login
+        function login(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const email = form.querySelector('input[type="email"]').value.trim();
+            const password = form.querySelector('input[type="password"]').value.trim();
+            
+            if (!email || !password) {
+                showMessage('Por favor, preencha todos os campos', 'error');
+                return false;
+            }
+            
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Entrando...';
+            
+            showMessage('Verificando credenciais...', 'info');
+            
+            setTimeout(() => {
+                showMessage('Login realizado com sucesso!', 'success');
+                
+                setTimeout(() => {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('mainSystem').style.display = 'block';
+                    document.getElementById('mainSystem').classList.remove('hidden');
+                    showScreen('dashboard');
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalText;
+                }, 800);
+                
+            }, 1200);
+            
+            return false;
+        }
+        
+        // Função para mostrar mensagens
+        function showMessage(message, type) {
+            const existingMessage = document.querySelector('.toast-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'toast-message fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg z-50 flex items-center space-x-3 message-enter';
+            
+            let icon = '';
+            if (type === 'success') {
+                messageDiv.className += ' bg-green-500 text-white';
+                icon = '<i class="fas fa-check-circle text-lg"></i>';
+            } else if (type === 'error') {
+                messageDiv.className += ' bg-red-500 text-white';
+                icon = '<i class="fas fa-exclamation-circle text-lg"></i>';
+            } else if (type === 'info') {
+                messageDiv.className += ' bg-blue-500 text-white';
+                icon = '<i class="fas fa-info-circle text-lg"></i>';
+            } else if (type === 'warning') {
+                messageDiv.className += ' bg-yellow-500 text-white';
+                icon = '<i class="fas fa-exclamation-triangle text-lg"></i>';
+            }
+            
+            messageDiv.innerHTML = `
+                ${icon}
+                <span class="font-medium">${message}</span>
+                <button onclick="this.parentElement.remove()" class="ml-2 text-white hover:text-gray-200 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.classList.remove('message-enter');
+                    messageDiv.classList.add('message-exit');
+                    setTimeout(() => {
+                        if (messageDiv.parentNode) {
+                            messageDiv.remove();
+                        }
+                    }, 300);
+                }
+            }, 4000);
+        }
+
+        // Função de logout
+        function logout() {
+            document.getElementById('mainSystem').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+        }
+
+        // Função para alternar visibilidade da senha
+        function togglePassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Função para mostrar telas
+        function showScreen(screenName) {
+            const screens = ['dashboard', 'clientes', 'produtos', 'matriculas', 'cursos', 'disciplinas', 'turmas', 'usuarios', 'grupos', 'permissoes'];
+            screens.forEach(screen => {
+                const element = document.getElementById(screen + 'Content');
+                if (element) {
+                    element.classList.add('hidden');
+                }
+            });
+
+            const targetScreen = document.getElementById(screenName + 'Content');
+            if (targetScreen) {
+                targetScreen.classList.remove('hidden');
+            }
+
+            const titles = {
+                'dashboard': 'Dashboard',
+                'clientes': 'Clientes',
+                'produtos': 'Produtos',
+                'matriculas': 'Matrículas',
+                'cursos': 'Cursos',
+                'disciplinas': 'Disciplinas',
+                'turmas': 'Turmas',
+                'usuarios': 'Usuários',
+                'grupos': 'Grupos de Usuários',
+                'permissoes': 'Gerenciar Permissões'
+            };
+            document.getElementById('pageTitle').textContent = titles[screenName];
+
+            // Atualizar sidebar ativa
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'text-white');
+            });
+            
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            sidebarItems.forEach(item => {
+                const onclick = item.getAttribute('onclick');
+                if (onclick && onclick.includes(screenName)) {
+                    item.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'text-white');
+                }
+            });
+        }
+
+        // Funções para gerenciar grupos
+        function editarGrupo(grupoId) {
+            showMessage(`Editando grupo: ${grupoId}`, 'info');
+        }
+
+        function gerenciarPermissoes(nomeGrupo, grupoId) {
+            grupoAtual = { nome: nomeGrupo, id: grupoId };
+            document.getElementById('nomeGrupoPermissoes').textContent = nomeGrupo;
+            
+            // Carregar permissões do grupo
+            carregarPermissoesGrupo(grupoId);
+            
+            showScreen('permissoes');
+        }
+
+        function excluirGrupo(grupoId) {
+            if (confirm('Tem certeza que deseja excluir este grupo? Esta ação não pode ser desfeita.')) {
+                showMessage(`Grupo ${grupoId} excluído com sucesso!`, 'success');
+            }
+        }
+
+        // Função para carregar permissões do grupo
+        function carregarPermissoesGrupo(grupoId) {
+            // Simular carregamento de permissões baseado no tipo de grupo
+            const permissoesPorGrupo = {
+                'admin': ['dashboard.view', 'dashboard.reports', 'clientes.view', 'clientes.create', 'clientes.edit', 'clientes.delete', 'cursos.view', 'cursos.create', 'cursos.edit', 'matriculas.view', 'matriculas.create', 'matriculas.payments', 'usuarios.view', 'usuarios.create', 'usuarios.groups', 'usuarios.permissions'],
+                'professor': ['dashboard.view', 'clientes.view', 'cursos.view', 'cursos.create', 'cursos.edit', 'matriculas.view'],
+                'aluno': ['dashboard.view', 'cursos.view'],
+                'suporte': ['dashboard.view', 'clientes.view', 'clientes.edit', 'matriculas.view']
+            };
+            
+            const permissoesAtivas = permissoesPorGrupo[grupoId] || [];
+            
+            // Limpar todas as permissões
+            document.querySelectorAll('input[data-permission]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Marcar permissões ativas
+            permissoesAtivas.forEach(permissao => {
+                const checkbox = document.querySelector(`input[data-permission="${permissao}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+            
+            // Atualizar resumo
+            atualizarResumoPermissoes();
+        }
+
+        // Função para expandir/recolher módulos de permissões
+        function toggleModulePermissions(moduleId) {
+            const permissionsDiv = document.getElementById(moduleId + '-permissions');
+            const button = event.target.closest('button');
+            const icon = button.querySelector('i');
+            
+            if (permissionsDiv.classList.contains('hidden')) {
+                permissionsDiv.classList.remove('hidden');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+                button.innerHTML = button.innerHTML.replace('Expandir', 'Recolher');
+            } else {
+                permissionsDiv.classList.add('hidden');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+                button.innerHTML = button.innerHTML.replace('Recolher', 'Expandir');
+            }
+        }
+
+        // Função para marcar/desmarcar todas as permissões
+        function marcarTodasPermissoes(marcar) {
+            document.querySelectorAll('input[data-permission]').forEach(checkbox => {
+                checkbox.checked = marcar;
+            });
+            atualizarResumoPermissoes();
+            
+            if (marcar) {
+                showMessage('Todas as permissões foram marcadas', 'success');
+            } else {
+                showMessage('Todas as permissões foram desmarcadas', 'info');
+            }
+        }
+
+        // Função para atualizar resumo de permissões
+        function atualizarResumoPermissoes() {
+            const totalCheckboxes = document.querySelectorAll('input[data-permission]').length;
+            const checkedCheckboxes = document.querySelectorAll('input[data-permission]:checked').length;
+            
+            document.getElementById('totalPermissoes').textContent = checkedCheckboxes;
+            document.getElementById('totalPermissoesDisponiveis').textContent = totalCheckboxes;
+        }
+
+        // Função para salvar permissões
+        function salvarPermissoes() {
+            if (!grupoAtual) {
+                showMessage('Erro: Grupo não identificado', 'error');
+                return;
+            }
+            
+            // Coletar permissões marcadas
+            const permissoesMarcadas = [];
+            document.querySelectorAll('input[data-permission]:checked').forEach(checkbox => {
+                permissoesMarcadas.push(checkbox.getAttribute('data-permission'));
+            });
+            
+            showMessage('Salvando permissões...', 'info');
+            
+            // Simular salvamento
+            setTimeout(() => {
+                showMessage(`Permissões do grupo "${grupoAtual.nome}" salvas com sucesso!`, 'success');
+                
+                setTimeout(() => {
+                    showScreen('grupos');
+                }, 1000);
+            }, 1500);
+        }
+
+        // Event listeners para atualizar resumo quando checkboxes mudarem
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adicionar event listeners para todos os checkboxes de permissão
+            document.addEventListener('change', function(e) {
+                if (e.target.matches('input[data-permission]')) {
+                    atualizarResumoPermissoes();
+                }
+            });
+            
+            // Inicializar resumo
+            setTimeout(() => {
+                atualizarResumoPermissoes();
+            }, 100);
+        });
+
+        // Função para mostrar formulário de grupo
+        function showGrupoForm() {
+            showMessage('Formulário de grupo será implementado em breve', 'info');
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98191c42e615f3bf',t:'MTc1ODI4NTE5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
