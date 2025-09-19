@@ -46,10 +46,10 @@ class Cadastrar extends Component
             $this->bairro = $data['bairro'] ?? '';
 
             // Busca cidade pelo código IBGE
-            $cidades = Cidades::where('ibge_code', $data['ibge'])->first();
+            $cidade = Cidades::where('ibge_code', $data['ibge'])->first();
 
-            $this->cidade_id = $cidades->id;
-            $this->estado_id = $cidades->estado_id;
+            $this->cidade_id = $cidade->id;
+            $this->estado_id = $cidade->estado_id;
             $this->buscarCidades();
         }
     }
@@ -131,11 +131,8 @@ class Cadastrar extends Component
         User::create([
             'empresa_id' => 1,
             'status_id' => 1,
-            'responsavel_id' => 1,
-            'curso_id' => 1,
-            'turma_id' => 1,
-            'sala_id' => 1,
-            'user_id' => 1,
+            'grupo_usuario_id' => 1,
+            'user_id' => Auth()->user()->id,
             'user_deleted_id' => $this->user_deleted_id,
             'name' => $this->name,
             'email' => $this->email,

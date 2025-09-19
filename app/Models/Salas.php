@@ -26,7 +26,7 @@ class Salas extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'empresa_id','user_id', 'user_deleted_id', 'updated_x','deleted_at','nome', 'limite', 'status_id'];
+    protected $fillable = ['id', 'empresa_id','user_id', 'descricao', 'user_deleted_id', 'updated_x','deleted_at','nome', 'limite', 'status_id'];
 
     
     

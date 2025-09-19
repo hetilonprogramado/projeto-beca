@@ -65,6 +65,15 @@ class MenusSeeder extends Seeder
                 'icone' => 'fas fa-chalkboard-teacher w-5',
 				'user_id' => 1,
             );
+
+            $menus_array[] = array(
+                'nome' => 'Salas',
+                'rota' => 'sala',
+                'status_id' => 1,
+                'tipo' => 1,
+                'icone' => 'fas fa-chalkboard-teacher w-5',
+				'user_id' => 1,
+            );
             //Configurações
             $menus_array[] = array(
                 'nome' => 'Empresa',
@@ -72,6 +81,24 @@ class MenusSeeder extends Seeder
                 'status_id' => 1,
                 'tipo' => 2,
                 'icone' => 'fas fa-school w-5',
+				'user_id' => 1,
+            );
+
+            $menus_array[] = array(
+                'nome' => 'Grupos de Usuário',
+                'rota' => 'grupo-usuario',
+                'status_id' => 1,
+                'tipo' => 2,
+                'icone' => 'fas fa-user-cog w-5',
+				'user_id' => 1,
+            );
+
+            $menus_array[] = array(
+                'nome' => 'Usuários',
+                'rota' => 'usuario',
+                'status_id' => 1,
+                'tipo' => 2,
+                'icone' => 'fas fa-user-cog w-5',
 				'user_id' => 1,
             );
 

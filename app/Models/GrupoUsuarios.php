@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class GrupoUsuarios extends Model
+{
+    protected $table = 'grupo_users';
+
+    protected $fillable = [
+        'nome',
+        'data_inicial',
+        'status_id',
+        'user_id'
+    ];
+
+    public function status()
+    {
+        return $this->belongsTo(Statues::class, 'status_id');
+    }
+}

@@ -67,9 +67,12 @@
             <input type="text" wire:model="salario" id="salario" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="1.000,00">
         </div>
 
-        <div>
+        <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Cargo *</label>
-            <input type="text" wire:model="cargo" id="cargo" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o cargo">
+            <input type="text" id="cargo" wire:model="cargo" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o cargo">
+            @error('cargo')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
 
         <div>
@@ -105,13 +108,17 @@
                             
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">CEP *</label>
-            <input type="text" wire:model="cep" id="cep" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00000-000" maxlength="9">
+            <label class="block text-sm font-medium text-gray-700 mb-2">CEP</label>
+            <input type="text" wire:model="cep" id="cep" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00000-000" maxlength="9"
+            wire:blur="buscarCep">
+            @error('cep')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
-            <select id="estado"wire:change= "buscarCidades" wire:model="estado_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <select id="estado" wire:change= "buscarCidades" wire:model="estado_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione</option>
                 @foreach($estados as $estado)
                     <option value="{{ $estado->id }}" @selected($estado_id == $estado->id)>
@@ -119,6 +126,9 @@
                     </option>
                 @endforeach
             </select>
+            @error('estado_id')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
 
         <div class="lg:col-span-1">
@@ -131,27 +141,35 @@
                     </option>
                 @endforeach
             </select>
+            @error('cidade_id')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
                                 
         <div class="lg:col-span-1">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Logradouro *</label>
-            <input type="text" wire:model="rua" id="logradouro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Rua, Avenida, etc.">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Logradouro</label>
+            <input type="text" wire:model="rua" id="logradouro" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Rua, Avenida, etc.">
+            @error('rua')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
                                 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Número *</label>
-            <input type="text" wire:model="numero" id="numero" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="123">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Número</label>
+            <input type="text" wire:model="numero" id="numero" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="123">
+            @error('numero')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
                                 
-        <div class="lg:col-span-1">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Bairro *</label>
-            <input type="text" wire:model="bairro" id="bairro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome do bairro">
+       <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Bairro</label>
+            <input type="text" wire:model="bairro" id="bairro" required class="w-full uppercase px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome do bairro">
+            @error('bairro')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
                                 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">País</label>
-                <input type="text" id="pais" value="Brasil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50" readonly>
-            </div>
         </div>
     </div>
 

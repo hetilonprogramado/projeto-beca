@@ -27,6 +27,10 @@ Route::middleware('auth')->group(function () {
     Volt::route('curso/cadastrar', 'curso.cadastrar')->name('curso.cadastrar');
     Volt::route('curso/editar/{id}', 'curso.alterar')->name('curso.alterar');
 
+    Volt::route('sala', 'sala.lista')->name('sala');
+    Volt::route('sala/cadastrar', 'sala.cadastrar')->name('sala.cadastrar');
+    Volt::route('sala/editar/{id}', 'sala.alterar')->name('sala.alterar');
+
     Volt::route('turma', 'turma.lista')->name('turma');
     Volt::route('turma/cadastrar', 'turma.cadastrar')->name('turma.cadastrar');
     Volt::route('turma/cadastrar/professor', 'turma.cadastrar-professor')->name('turma.cadastrar.professor');
@@ -35,6 +39,12 @@ Route::middleware('auth')->group(function () {
     Volt::route('usuario', 'usuario.lista')->name('usuario');
     Volt::route('usuario/cadastrar', 'usuario.cadastrar')->name('usuario.cadastrar');
     Volt::route('usuario/editar/{id}', 'usuario.alterar')->name('usuario.alterar');
+
+    Volt::route('grupo-usuario', 'grupo-usuario.lista')->name('grupo-usuario');
+    Volt::route('grupo-usuario/permissoes', 'grupo-usuario.permissoes')->name('grupo-usuario.permissoes');
+    Volt::route('grupo-usuario/cadastrar', 'grupo-usuario.cadastrar')->name('grupo-usuario.cadastrar');
+    Volt::route('grupo-usuario/editar/{id}', 'grupo-usuario.alterar')->name('grupo-usuario.alterar');
+    
 
     Volt::route('dashboard', 'dashboard')->name('dashboard');
 
