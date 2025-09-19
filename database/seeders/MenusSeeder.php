@@ -22,6 +22,7 @@ class MenusSeeder extends Seeder
         }
             //Cadastros
             $menus_array[] = array(
+                'id' => 1,
                 'nome' => 'Alunos',
                 'rota' => 'cliente',
                 'status_id' => 1,
@@ -31,6 +32,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
+                'id' => 2,
                 'nome' => 'Matrículas',
                 'rota' => 'matricula',
                 'status_id' => 1,
@@ -40,6 +42,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
+                'id' => 3,
                 'nome' => 'Cursos',
                 'rota' => 'curso',
                 'status_id' => 1,
@@ -49,6 +52,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
+                'id' => 4,
                 'nome' => 'Turmas',
                 'rota' => 'turma',
                 'status_id' => 1,
@@ -58,15 +62,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
-                'nome' => 'Turmas',
-                'rota' => 'turma',
-                'status_id' => 1,
-                'tipo' => 1,
-                'icone' => 'fas fa-chalkboard-teacher w-5',
-				'user_id' => 1,
-            );
-
-            $menus_array[] = array(
+                'id' => 5,
                 'nome' => 'Salas',
                 'rota' => 'sala',
                 'status_id' => 1,
@@ -76,6 +72,7 @@ class MenusSeeder extends Seeder
             );
             //Configurações
             $menus_array[] = array(
+                'id' => 6,
                 'nome' => 'Empresa',
                 'rota' => 'empresa',
                 'status_id' => 1,
@@ -85,6 +82,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
+                'id' => 7,
                 'nome' => 'Grupos de Usuário',
                 'rota' => 'grupo-usuario',
                 'status_id' => 1,
@@ -94,11 +92,32 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
+                'id' => 8,
                 'nome' => 'Usuários',
                 'rota' => 'usuario',
                 'status_id' => 1,
                 'tipo' => 2,
                 'icone' => 'fas fa-user-cog w-5',
+				'user_id' => 1,
+            );
+            //Estoque
+            $menus_array[] = array(
+                'id' => 9,
+                'nome' => 'Produtos',
+                'rota' => 'produto',
+                'status_id' => 1,
+                'tipo' => 3,
+                'icone' => 'fas fa-box w-5',
+				'user_id' => 1,
+            );
+
+            $menus_array[] = array(
+                'id' => 10,
+                'nome' => 'Grupos de Produtos',
+                'rota' => 'grupo-produto',
+                'status_id' => 1,
+                'tipo' => 3,
+                'icone' => 'fas fa-box w-5',
 				'user_id' => 1,
             );
 

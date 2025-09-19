@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-<<<<<<< HEAD
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Menu extends Model
@@ -32,14 +31,4 @@ class Menu extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-=======
-
-class Menu extends Model
-{
-    protected $table = 'menu';
-
-    protected $fillable = [
-        'nome',
-    ];
->>>>>>> 4709697a6414858230b367e47bbdbd866f03723e
 }
