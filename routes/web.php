@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
     Volt::route('grupo-usuario/permissoes', 'grupo-usuario.permissoes')->name('grupo-usuario.permissoes');
     Volt::route('grupo-usuario/cadastrar', 'grupo-usuario.cadastrar')->name('grupo-usuario.cadastrar');
     Volt::route('grupo-usuario/editar/{id}', 'grupo-usuario.alterar')->name('grupo-usuario.alterar');
+
+    Volt::route('produto', 'produtos.lista')->name('produto');
+    Volt::route('grupo-produto', 'grupo-produto.lista')->name('grupo-produto');
     
 
     Volt::route('dashboard', 'dashboard')->name('dashboard');

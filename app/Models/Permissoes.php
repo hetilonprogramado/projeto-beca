@@ -11,5 +11,6 @@ class Permissoes extends Model
     protected $fillable = [
         'grupos_user_id',
         'menu_id',
+        'status_id',
     ];
 }

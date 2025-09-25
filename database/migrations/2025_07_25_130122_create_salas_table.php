@@ -15,12 +15,8 @@ return new class extends Migration
             $table->increments('id');
             $table->softDeletes();
 			$table->integer('empresa_id')->unsigned();
-<<<<<<< HEAD
             $table->string('nome',100);
-=======
-            $table->string('nome');
             $table->string('descricao')->nullable();
->>>>>>> 4709697a6414858230b367e47bbdbd866f03723e
             $table->integer('limite');
             $table->integer('status_id')->unsigned();
             $table->integer('user_id')->unsigned();

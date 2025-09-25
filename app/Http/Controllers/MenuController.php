@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Livewire\Layout;
+namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Menu;
-use Livewire\Component;
 
-class Sidebar extends Component
+class MenuController extends Controller
 {
     public static function getMenus()
     {
@@ -13,10 +14,5 @@ class Sidebar extends Component
             ->orderBy('tipo')
             ->orderBy('id')
             ->get();
-    }
-
-    public function render()
-    {
-        return view('livewire.layout.sidebar');
     }
 }

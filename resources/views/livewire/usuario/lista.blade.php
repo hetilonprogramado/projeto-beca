@@ -38,7 +38,7 @@
                                             <td class="py-3 px-4">Agora</td>
                                             <td class="py-3 px-4">
                                                 <a href="{{ route('usuario.alterar', $usuario->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></a>
-                                                <button class="text-orange-500 hover:text-orange-700"><i class="fas fa-key"></i></button>
+                                                <a href="{{ route('grupo-usuario.permissoes', $usuario->id) }}" wire:navigate  class="text-orange-500 hover:text-orange-700"><i class="fas fa-key"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
