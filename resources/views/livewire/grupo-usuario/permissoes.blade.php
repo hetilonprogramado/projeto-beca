@@ -35,15 +35,13 @@
                         {{ $abertos[$modulo['id']] ? 'Recolher' : 'Expandir' }}
                     </button>
                 </div>
-
                 @if($abertos[$modulo['id']])
-                    <div class="space-y-4 px-4 pt-4 pb-4">
+                    <div class="space-y-4 px-4 pt-4 pb-4"> {{-- padding em todas as direções --}}
                         @foreach($modulo['permissoes'] as $p)
                             <div class="flex items-center justify-between px-5 py-3 bg-white rounded-lg hover:bg-gray-50 transition shadow-sm">
                                 <div class="flex items-center space-x-3">
-                                    {{-- Fallback de ícone para evitar erro --}}
-                                    <i class="fas fa-lock-open text-gray-700"></i>
-                                    <span class="text-gray-800">{{ $p['nome'] ?? 'Permissão' }}</span>
+                                    <i class="{{ $p['icone'] }} text-gray-700"></i>
+                                    <span class="text-gray-800">{{ $p['nome'] }}</span>
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" wire:model="permissoesMarcadas.{{ $p['id'] }}" class="sr-only peer">
