@@ -111,13 +111,11 @@ class Permissoes extends Component
         ]);
 
         if ($value) {
-            // Quando marcar, cria ou ativa a permissão
-            $permissao->status_id = 1; // 1 = ativo
+            $permissao->status_id = 1; // ativo
             $permissao->save();
         } else {
-            // Quando desmarcar, altera para bloqueado (se já existe)
             if ($permissao->exists) {
-                $permissao->status_id = 2; // 2 = bloqueado
+                $permissao->status_id = 2; // bloqueado
                 $permissao->save();
             }
         }
@@ -128,6 +126,7 @@ class Permissoes extends Component
         foreach ($this->modulos as $modulo) {
             foreach ($modulo['permissoes'] as $p) {
                 $this->permissoesMarcadas[$p['id']] = $status;
+
                 $this->updatedPermissoesMarcadas($status, $p['id']);
             }
         }

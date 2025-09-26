@@ -6,10 +6,16 @@
             <p class="text-sm text-gray-600">Ações rápidas para todas as permissões</p>
         </div>
         <div class="flex space-x-3">
-            <button wire:click="marcarTodas(true)" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-all text-sm">
+            <button 
+                type="button"
+                wire:click="marcarTodas(true)" 
+                class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-all text-sm">
                 <i class="fas fa-check-double mr-1"></i>Marcar Todas
             </button>
-            <button wire:click="marcarTodas(false)" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all text-sm">
+            <button 
+                type="button"
+                wire:click="marcarTodas(false)" 
+                class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all text-sm">
                 <i class="fas fa-times mr-1"></i>Desmarcar Todas
             </button>
         </div>
@@ -29,23 +35,33 @@
                             <p class="text-sm text-gray-600">{{ $modulo['descricao'] ?? '' }}</p>
                         </div>
                     </div>
-                    <button wire:click="toggleModulo('{{ $modulo['id'] }}')" 
+
+                    <button type="button"
+                        wire:click="toggleModulo('{{ $modulo['id'] }}')" 
                         class="text-sm font-medium {{ $abertos[$modulo['id']] ? 'text-red-600 hover:text-red-800' : 'text-blue-600 hover:text-blue-800' }}">
                         <i class="fas {{ $abertos[$modulo['id']] ? 'fa-chevron-up' : 'fa-chevron-down' }} mr-1"></i>
                         {{ $abertos[$modulo['id']] ? 'Recolher' : 'Expandir' }}
                     </button>
                 </div>
+
                 @if($abertos[$modulo['id']])
-                    <div class="space-y-4 px-4 pt-4 pb-4"> {{-- padding em todas as direções --}}
+                    <div class="space-y-4 px-4 pt-4 pb-4">
                         @foreach($modulo['permissoes'] as $p)
                             <div class="flex items-center justify-between px-5 py-3 bg-white rounded-lg hover:bg-gray-50 transition shadow-sm">
                                 <div class="flex items-center space-x-3">
                                     <i class="{{ $p['icone'] }} text-gray-700"></i>
                                     <span class="text-gray-800">{{ $p['nome'] }}</span>
                                 </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" wire:model="permissoesMarcadas.{{ $p['id'] }}" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-300 peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input 
+                                        type="checkbox" 
+                                        wire:model="permissoesMarcadas.{{ $p['id'] }}"
+                                        wire:key="chk-{{ $p['id'] }}"
+                                        class="sr-only peer">
+
+                                    <div class="relative w-11 h-6 bg-gray-300 rounded-full transition peer-focus:ring-2 peer-focus:ring-blue-300 peer-checked:bg-blue-600">
+                                        <div class="absolute top-[2px] left-[2px] w-5 h-5 bg-white border border-gray-300 rounded-full transition-all peer-checked:translate-x-5"></div>
+                                    </div>
                                 </label>
                             </div>
                         @endforeach
