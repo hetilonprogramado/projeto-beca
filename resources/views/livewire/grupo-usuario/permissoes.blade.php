@@ -52,10 +52,13 @@
                                     <i class="{{ $p['icone'] }} text-gray-700"></i>
                                     <span class="text-gray-800">{{ $p['nome'] }}</span>
                                 </div>
+
+                                <!-- Alteração principal: wire:change para salvar no banco -->
                                 <label class="inline-flex items-center cursor-pointer">
                                     <input 
                                         type="checkbox" 
                                         wire:model="permissoesMarcadas.{{ $p['id'] }}"
+                                        wire:change="salvarPermissao('{{ $p['id'] }}', $event.target.checked)"
                                         wire:key="chk-{{ $p['id'] }}"
                                         class="sr-only peer">
 

@@ -37,12 +37,10 @@ class Permissoes extends Component
                 'icone' => $this->getIconeTipo($tipo),
                 'cor' => $this->getCorTipo($tipo),
                 'permissoes' => $itens->map(function ($menu) {
-                    // Checar se já existe no banco
                     $permissao = ModelsPermissoes::where('menu_id', $menu->id)
                         ->where('grupos_user_id', $this->grupoId)
                         ->first();
 
-                    // Agora usa status_id (1 = ativo, 2 = bloqueado)
                     $this->permissoesMarcadas["menu_{$menu->id}"] = $permissao && $permissao->status_id === 1;
 
                     return [
@@ -101,16 +99,19 @@ class Permissoes extends Component
         };
     }
 
-    public function updatedPermissoesMarcadas($value, $key)
+    /**
+     * Novo método que salva a permissão manualmente
+     */
+    public function salvarPermissao($menuId, $checked)
     {
-        $menuId = (int) str_replace('menu_', '', $key);
+        $menuId = (int) str_replace('menu_', '', $menuId);
 
         $permissao = ModelsPermissoes::firstOrNew([
             'grupos_user_id' => $this->grupoId,
             'menu_id' => $menuId,
         ]);
 
-        if ($value) {
+        if ($checked) {
             $permissao->status_id = 1; // ativo
             $permissao->save();
         } else {
@@ -119,15 +120,16 @@ class Permissoes extends Component
                 $permissao->save();
             }
         }
+
+        // Atualiza localmente para manter o estado certo no checkbox
+        $this->permissoesMarcadas["menu_{$menuId}"] = (bool) $checked;
     }
 
     public function marcarTodas($status)
     {
         foreach ($this->modulos as $modulo) {
             foreach ($modulo['permissoes'] as $p) {
-                $this->permissoesMarcadas[$p['id']] = $status;
-
-                $this->updatedPermissoesMarcadas($status, $p['id']);
+                $this->salvarPermissao($p['id'], $status);
             }
         }
     }
