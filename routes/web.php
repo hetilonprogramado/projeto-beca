@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
 
     Volt::route('produtos', 'produtos.lista')->name('produtos');
     Volt::route('produtos/cadastrar', 'produtos.cadastrar')->name('produtos.cadastrar');
+    Volt::route('produtos/editar/{id}', 'produtos.alterar')->name('produtos.alterar');
 
     Volt::route('matricula', 'matricula.lista')->name('matricula');
     Volt::route('matricula/cadastrar', 'matricula.cadastrar')->name('matricula.cadastrar');

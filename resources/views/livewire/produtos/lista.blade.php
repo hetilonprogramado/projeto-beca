@@ -8,36 +8,65 @@
                     </div>
                     
                     <div class="p-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div class="border rounded-lg p-4 hover:shadow-md transition-all">
-                                <div class="w-full h-32 bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg mb-4 flex items-center justify-center">
-                                    <i class="fas fa-laptop-code text-white text-3xl"></i>
-                                </div>
-                                <h3 class="font-semibold text-gray-800 mb-2">Curso de JavaScript</h3>
-                                <p class="text-gray-600 text-sm mb-3">Aprenda JavaScript do básico ao avançado</p>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg font-bold text-blue-600">R$ 299,00</span>
-                                    <div class="space-x-2">
-                                        <button class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
-                                        <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="border rounded-lg p-4 hover:shadow-md transition-all">
-                                <div class="w-full h-32 bg-gradient-to-r from-green-400 to-green-600 rounded-lg mb-4 flex items-center justify-center">
-                                    <i class="fas fa-python text-white text-3xl"></i>
-                                </div>
-                                <h3 class="font-semibold text-gray-800 mb-2">Curso de Python</h3>
-                                <p class="text-gray-600 text-sm mb-3">Domine Python para desenvolvimento web</p>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg font-bold text-green-600">R$ 349,00</span>
-                                    <div class="space-x-2">
-                                        <button class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
-                                        <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="mb-4">
+                            <input type="text" wire:model.live.debounce.500ms="pesquisa" placeholder="Buscar alunos..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Nome</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Estoque</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-700">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- Mensagem de sucesso --}}
+                                    @if (session()->has('success'))
+                                        <div
+                                            x-data="{ show: true }"
+                                            x-init="setTimeout(() => show = false, 4000)"
+                                            x-show="show"
+                                            x-transition
+                                            class="fixed top-5 right-5 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50"
+                                        >
+                                            <i class="fas fa-check-circle mr-2"></i>
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
+
+                                    {{-- Mensagem de erro --}}
+                                    @if (session()->has('error'))
+                                        <div
+                                            x-data="{ show: true }"
+                                            x-init="setTimeout(() => show = false, 4000)"
+                                            x-show="show"
+                                            x-transition
+                                            class="fixed top-5 right-5 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50"
+                                        >
+                                            <i class="fas fa-times-circle mr-2"></i>
+                                            {{ session('error') }}
+                                        </div>
+                                    @endif
+                                    @foreach($produtos as $produto)
+                                        <tr class="border-b hover:bg-gray-50">
+                                            <td class="py-3 px-4">{{ $produto->nome }}</td>
+                                            <td class="py-3 px-4">{{ $produto->estoque_minimo }}</td>
+                                            <td class="py-3 px-4">
+                                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
+                                                    {{ $produto->status}}
+                                                </span>
+                                            </td>
+                                            <td class="py-3 px-4">
+                                                <a href="{{ route('produtos.alterar', $produto->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></a>
+                                                <button wire:click="deletar({{ $produto->id }})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

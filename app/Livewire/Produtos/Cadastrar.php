@@ -56,17 +56,17 @@ class Cadastrar extends Component
         
         Produtos::create([
             'empresa_id' => 1,
-            'grup_prod_id' => $this->grup_prod_id,
+            'grup_prod_id' => 1,
             'nome' => $this->nome,
             'vlr_compra' => $this->vlr_compra,
             'vlr_venda' => $this->vlr_venda,
             'estoque_minimo' => $this->estoque_minimo,
             'codigo_barras' => $this->codigo_barras,
-            'status_id' => $this->status_id,
-            'user_id' => $this->user_id,
+            'status_id' => 1,
+            'user_id' => 1,
             'user_deleted_id' => $this->user_deleted_id,
-            'grupo_fiscal_id' => $this->grupo_fiscal_id,
-            'grupo_produto_id' => $this->grupo_produto_id,
+            'grupo_fiscal_id' => 1,
+            'grupo_produto_id' => 1,
             'utilizacao' => $this->utilizacao,
             'ncm' => $this->ncm,
             'combo' => $this->combo,
@@ -82,5 +82,6 @@ class Cadastrar extends Component
     public function render()
     {
         return view('livewire.produtos.cadastrar');
+        return view('livewire.produtos.form');
     }
 }

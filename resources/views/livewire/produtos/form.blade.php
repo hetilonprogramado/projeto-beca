@@ -8,193 +8,92 @@
     </div>
                             
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de pessoa</label>
-            <select id="tipoDePessoa" wire:model="tipo_pessoa" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                <option value="">Selecione</option>
-                <option value="Fisica">Fisica</option>
-                <option value="Juridica">Juridica</option>
-            </select>
-        </div>
 
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo *</label>
-            <input type="text" id="nomeCompleto" wire:model="rsocial_nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
-            @error('rsocial_nome')
+        <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nome *</label>
+            <input type="text" id="nome" wire:model="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome">
+            @error('nome')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
 
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">nfantasia_apelido *</label>
-            <input type="text" id="Apelido" wire:model="rsocial_nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o nome completo">
-            @error('nfantasia_apelido')
+        <div class="lg:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Código de Barras *</label>
+            <input type="text" id="codigo_barras" wire:model="codigo_barras" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o código de barras">
+            @error('codigo_barras')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
                                 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">CPF *</label>
-            <input type="text" id="cpf" wire:model="cnpj_cpf" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="000.000.000-00" maxlength="14">
-            @error('cnpj_cpf') 
+            <label class="block text-sm font-medium text-gray-700 mb-2">Esstoque Minimo *</label>
+            <input type="text" id="estoque" wire:model="estoque_minimo" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o estoque minimo" maxlength="14">
+            @error('estoque_minimo') 
                 <small class="text-danger">{{ $message }}</small> 
             @enderror
         </div>
                                 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">RG</label>
-            <input type="text" wire:model="ie_rg" id="rg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00.000.000-0">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Grupo Fiscal</label>
+            <input type="text" wire:model="grupo_fiscal" id="grupo_fiscal" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o grupo fiscal">
         </div>
                                 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Data de Nascimento</label>
-            <input type="date" wire:model="data_abert_nasc" id="dataNascimento" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Grupo Produtos</label>
+            <input type="text" wire:model="grupo_produtos_id" id="grupoProdutos" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o grupo de produtos">
         </div>
                                 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Sexo</label>
-            <select id="sexo" wire:model="sexo" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                <option value="">Selecione</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Feminino">Feminino</option>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Utilização</label>
+            <select id="utilizacao" wire:model="utilizacao" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                <option value="Venda">Venda</option>
+                <option value="Consumo">Consumo</option>
             </select>
+            @error('utilizacao')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
-                                
+        
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Estado Civil</label>
-            <select id="estadoCivil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                <option value="">Selecione</option>
-                <option value="solteiro">Solteiro(a)</option>
-                <option value="casado">Casado(a)</option>
-                <option value="divorciado">Divorciado(a)</option>
-                <option value="viuvo">Viúvo(a)</option>
-                <option value="uniao_estavel">União Estável</option>
-            </select>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Valor de Compra</label>
+            <input type="text" id="vlr_compra" wire:model="vlr_compra" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o valor da compra">
         </div>
-                                
+
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Profissão</label>
-            <input type="text" id="profissao" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite a profissão">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Valor da Venda</label>
+            <input type="text" id="vlr_venda" wire:model="vlr_venda" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o valor da venda">
         </div>
+
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Fornecedor</label>
-            <select id="fornecedor" wire:model="fornecedor" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                <option value="">Selecione</option>
-                <option value="Sim">Sim</option>
+            <label class="block text-sm font-medium text-gray-700 mb-2">NCM</label>
+            <input type="text" id="ncm" wire:model="ncm" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o NCM">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Combo</label>
+            <select id="combo" wire:model="combo" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="Nao">Não</option>
+                <option value="Sim">Sim</option>
             </select>
+            @error('combo')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Grup Prod</label>
+            <input type="text" id="grup_prod_id" wire:model="grup_prod_id" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o grupo de produto">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Imagem</label>
+            <input type="text" id="imagem" wire:model="imagem" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Adicione uma imagem">
         </div>
     </div>
 </div>
 
 <!-- Dados de Endereço -->
 <div class="mb-8">
-    <div class="flex items-center space-x-2 mb-4">
-        <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-            <i class="fas fa-map-marker-alt text-green-600"></i>
-        </div>
-        <h3 class="text-lg font-semibold text-gray-800">Dados de Endereço</h3>
-    </div>
-                            
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">CEP *</label>
-            <input type="text" wire:model="cep" id="cep" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="00000-000" maxlength="9">
-        </div>
-                                
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Logradouro *</label>
-            <input type="text" wire:model="rua" id="logradouro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Rua, Avenida, etc.">
-        </div>
-                                
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Número *</label>
-            <input type="text" wire:model="numero" id="numero" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="123">
-        </div>
-                                
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Complemento</label>
-            <input type="text" id="complemento" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Apto, Bloco, etc.">
-        </div>
-                                
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Bairro *</label>
-            <input type="text" wire:model="bairro" id="bairro" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome do bairro">
-        </div>
-                                
-        <div class="lg:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Cidade *</label>
-            <input type="text" wire:model="cidade_id" id="cidade" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Nome da cidade">
-        </div>
-                                
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
-                <select id="estado" wire:model="estado_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                    <option value="">Selecione</option>
-                    <option value="AC">Acre</option>
-                    <option value="AL">Alagoas</option>
-                    <option value="AP">Amapá</option>
-                    <option value="AM">Amazonas</option>
-                    <option value="BA">Bahia</option>
-                    <option value="CE">Ceará</option>
-                    <option value="DF">Distrito Federal</option>
-                    <option value="ES">Espírito Santo</option>
-                    <option value="GO">Goiás</option>
-                    <option value="MA">Maranhão</option>
-                    <option value="MT">Mato Grosso</option>
-                    <option value="MS">Mato Grosso do Sul</option>
-                    <option value="MG">Minas Gerais</option>
-                    <option value="PA">Pará</option>
-                    <option value="PB">Paraíba</option>
-                    <option value="PR">Paraná</option>
-                    <option value="PE">Pernambuco</option>
-                    <option value="PI">Piauí</option>
-                    <option value="RJ">Rio de Janeiro</option>
-                    <option value="RN">Rio Grande do Norte</option>
-                    <option value="RS">Rio Grande do Sul</option>
-                    <option value="RO">Rondônia</option>
-                    <option value="RR">Roraima</option>
-                    <option value="SC">Santa Catarina</option>
-                    <option value="SP">São Paulo</option>
-                    <option value="SE">Sergipe</option>
-                    <option value="TO">Tocantins</option>
-                </select>
-            </div>
-                                
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">País</label>
-                <input type="text" id="pais" value="Brasil" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-gray-50" readonly>
-            </div>
-        </div>
-    </div>
-
-    <!-- Dados de Contato -->
-    <div class="mb-8">
-        <div class="flex items-center space-x-2 mb-4">
-            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                <i class="fas fa-phone text-purple-600"></i>
-            </div>
-            <h3 class="text-lg font-semibold text-gray-800">Dados de Contato</h3>
-        </div>
-                            
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Email Principal *</label>
-                <input type="email" wire:moedl="email" id="emailPrincipal" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="email@exemplo.com">
-            </div>
-                                
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Celular *</label>
-                <input type="text" id="celular" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 00000-0000" maxlength="15">
-            </div>
-                                
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Telefone Fixo</label>
-                <input type="text" id="telefoneFixo" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="(00) 0000-0000" maxlength="14">
-            </div>
-
-        </div>
-    </div>
 
     <!-- Observações -->
     <div class="mb-6">
