@@ -58,7 +58,7 @@
                                         <span class="font-medium">{{$grupo->nome}}</span>
                                     </div>
                                 </td>
-                                <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Ativo</span></td>
+                                <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">{{$grupo->status->nome}}</span></td>
                                 <td class="py-3 px-4">8 usuários</td>
                                 <td class="py-3 px-4">{{$grupo->data_inicial}}</td>
                                 <td class="py-3 px-4">

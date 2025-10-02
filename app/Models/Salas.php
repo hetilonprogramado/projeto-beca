@@ -34,7 +34,8 @@ class Salas extends Model
     
     protected $dates = ['deleted_at'];
     
-    function status() {
-        return $this->belongsTo('App\status','status_id');
+    public function status()
+    {
+        return $this->belongsTo(Statues::class, 'status_id', 'id');
     }
 }

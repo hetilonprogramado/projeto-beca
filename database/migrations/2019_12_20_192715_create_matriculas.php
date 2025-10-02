@@ -14,7 +14,7 @@ class CreateMatriculas extends Migration
     public function up()
     {
         Schema::create('matriculas', function(Blueprint $table) {
-            $table->integer('id');
+            $table->id();
             $table->softDeletes();
 			$table->integer('empresa_id')->unsigned();
             $table->integer('status_id')->unsigned();

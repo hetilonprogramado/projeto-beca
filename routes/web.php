@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
     Volt::route('matricula', 'matricula.lista')->name('matricula');
     Volt::route('matricula/cadastrar', 'matricula.cadastrar')->name('matricula.cadastrar');
+    Volt::route('matricula/editar/{id}', 'matricula.alterar')->name('matricula.alterar');
 
     Volt::route('curso', 'curso.lista')->name('curso');
     Volt::route('curso/cadastrar', 'curso.cadastrar')->name('curso.cadastrar');
@@ -48,6 +49,8 @@ Route::middleware('auth')->group(function () {
 
     Volt::route('produto', 'produtos.lista')->name('produto');
     Volt::route('grupo-produto', 'grupo-produto.lista')->name('grupo-produto');
+    Volt::route('grupo-produto/cadastrar', 'grupo-produto.cadastrar')->name('grupo-produto.cadastrar');
+    Volt::route('grupo-produto/editar/{id}', 'grupo-produto.alterar')->name('grupo-produto.alterar');
     
 
     Volt::route('dashboard', 'dashboard')->name('dashboard');

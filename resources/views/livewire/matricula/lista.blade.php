@@ -21,18 +21,50 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-b hover:bg-gray-50">
-                                        <td class="py-3 px-4">João Silva</td>
-                                        <td class="py-3 px-4">JavaScript Avançado</td>
-                                        <td class="py-3 px-4">10/01/2024</td>
-                                        <td class="py-3 px-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Ativa</span></td>
-                                        <td class="py-3 px-4">R$ 299,00</td>
-                                        <td class="py-3 px-4">
-                                            <button class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-eye"></i></button>
-                                            <button class="text-green-500 hover:text-green-700 mr-2"><i class="fas fa-edit"></i></button>
-                                            <button wire:click="" class="text-red-500 hover:text-red-700"><i class="fas fa-times"></i></button>
-                                        </td>
-                                    </tr>
+                                    {{-- Mensagem de sucesso --}}
+                                    @if (session()->has('success'))
+                                        <div
+                                            x-data="{ show: true }"
+                                            x-init="setTimeout(() => show = false, 4000)"
+                                            x-show="show"
+                                            x-transition
+                                            class="fixed top-5 right-5 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50"
+                                        >
+                                            <i class="fas fa-check-circle mr-2"></i>
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
+
+                                    {{-- Mensagem de erro --}}
+                                    @if (session()->has('error'))
+                                        <div
+                                            x-data="{ show: true }"
+                                            x-init="setTimeout(() => show = false, 4000)"
+                                            x-show="show"
+                                            x-transition
+                                            class="fixed top-5 right-5 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg z-50"
+                                        >
+                                            <i class="fas fa-times-circle mr-2"></i>
+                                            {{ session('error') }}
+                                        </div>
+                                    @endif
+                                    @foreach($matriculas as $matricula)
+                                        <tr class="border-b hover:bg-gray-50">
+                                            <td class="py-3 px-4">{{ $matricula->cliente->nome }}</td>
+                                            <td class="py-3 px-4">{{ $matricula->curso->nome }}</td>
+                                            <td class="py-3 px-4">{{ $matricula->data_cad }}</td>
+                                            <td class="py-3 px-4">
+                                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
+                                                    {{ $matricula->status->nome}}
+                                                </span>
+                                            </td>
+                                            <td class="py-3 px-4">{{ $matricula->valor }}</td>
+                                            <td class="py-3 px-4">
+                                                <a href="{{ route('matricula.alterar', $matricula->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></a>
+                                                <button wire:click="deletar({{ $matricula->id }})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

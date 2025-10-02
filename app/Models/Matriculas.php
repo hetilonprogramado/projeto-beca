@@ -32,33 +32,35 @@ class Matriculas extends Model
     
     protected $dates = ['deleted_at'];
     
-    function clientes() {
-        return $this->belongsTo('App\cliente','cliente_id','id')->whereNull('clientes.deleted_at');
+     // Um aluno pertence a um cliente
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'cliente_id', 'id')
+                    ->whereNull('clientes.deleted_at');
     }
-    
-    // function get_nota($cliente_id,$turma_id,$disciplina_id){
-    //     $nota = lancamentos_nota::where('cliente_id',$cliente_id)->where('turma_id',$turma_id)->where('disciplina_id',$disciplina_id)->get();
-    //     if(count($nota) > 0){
-    //         return $nota[0]->media_final;
-    //     }else{
-    //         return 0;
-    //     }
-    // }
-        
-    function cursos() {
-        return $this->belongsTo('App\curso','curso_id');
+
+    // Uma matrícula pertence a um curso
+    public function curso()
+    {
+        return $this->belongsTo(Curso::class, 'curso_id', 'id');
     }
-    
-    function salas() {
-        return $this->belongsTo('App\sala','sala_id');
+
+    // Uma matrícula pertence a uma sala
+    public function sala()
+    {
+        return $this->belongsTo(Salas::class, 'sala_id', 'id');
     }
-    
-    function turmas() {
-        return $this->belongsTo('App\turma','turma_id')->with('salas');
+
+    // Uma matrícula pertence a uma turma (e turma tem sala)
+    public function turma()
+    {
+        return $this->belongsTo(Turmas::class, 'turma_id', 'id')
+                    ->with('sala');
     }
-    
-    function status() {
-        return $this->belongsTo('App\status','status_id');
+
+    // Status da matrícula
+    public function status()
+    {
+        return $this->belongsTo(Statues::class, 'status_id', 'id');
     }
-    
 }

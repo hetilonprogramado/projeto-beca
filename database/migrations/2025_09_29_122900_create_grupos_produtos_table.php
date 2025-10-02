@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nome',100);
             $table->integer('status_id')->unsigned();
             $table->integer('user_deleted_id')->nullable();
-            $table->integer('lucro');
+            $table->integer('lucro')->nullable();
             $table->integer('user_id')->unsigned();
             $table->integer('empresa_id')->unsigned();
             $table->decimal('comissao')->nullable()->default(0);
