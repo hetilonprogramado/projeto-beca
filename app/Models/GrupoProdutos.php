@@ -17,5 +17,10 @@ class GrupoProdutos extends Model
         'comissao',
         'user_deleted_id'
     ];
+
+    public function status()
+    {
+        return $this->belongsTo(Statues::class, 'status_id');
+    }
 }
 

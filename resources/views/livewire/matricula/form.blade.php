@@ -11,7 +11,7 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Curso *</label>
-            <select id="cursoMatricula" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <select id="cursoMatricula" wire:model="curso_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione o curso</option>
                 @foreach($cursos as $curso)
                     <option value="{{ $curso->id }}">{{ $curso->nome }}</option>
@@ -21,7 +21,7 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Sala *</label>
-            <select id="salasMatricula" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <select id="salasMatricula" wire:model="sala_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione a sala</option>
                 @foreach($salas as $sala)
                     <option value="{{ $sala->id }}">{{ $sala->nome }}</option>
@@ -31,7 +31,7 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Turma *</label>
-            <select id="turmaMatricula" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <select id="turmaMatricula" wire:model="turma_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione a Turma</option>
                 @foreach($turmas as $turma)
                     <option value="{{ $turma->id }}">{{ $turma->nome }}</option>
@@ -41,7 +41,7 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Cliente *</label>
-            <select id="clienteMatricula" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <select id="clienteMatricula" wire:model="cliente_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione o Cliente</option>
                 @foreach($clientes as $cliente)
                     <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>

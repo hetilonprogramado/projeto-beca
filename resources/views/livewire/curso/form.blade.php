@@ -16,7 +16,7 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">Nível do Curso *</label>
             <select id="nivelCurso" wire:model="nivel_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione o nível</option>
-                @foreach($niveis as $nivel)
+                @foreach ($niveis as $nivel)
                     <option value="{{ $nivel->id }}">{{ $nivel->nome }}</option>
                 @endforeach
             </select>

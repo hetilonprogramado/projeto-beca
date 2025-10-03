@@ -26,4 +26,9 @@ class Produtos extends Model
         'combo',
         'imagem'
     ];
+
+    public function status()
+    {
+        return $this->belongsTo(Statues::class, 'status_id');
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Produtos;
 
+use App\Models\GrupoProdutos;
+use App\Models\Matriculas;
 use Livewire\Component;
 use App\Models\Produtos;
 
@@ -23,6 +25,13 @@ class Cadastrar extends Component
     public $ncm;
     public $combo;
     public $imagem;
+
+    public $grupos = [];
+
+    public function mount()
+    {
+        $this->grupos = GrupoProdutos::all();
+    }
 
     protected function validarDados(): array{
         $rules = [

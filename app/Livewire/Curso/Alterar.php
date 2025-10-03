@@ -3,6 +3,7 @@
 namespace App\Livewire\Curso;
 
 use App\Models\Curso;
+use App\Models\Niveis;
 use Livewire\Component;
 
 class Alterar extends Component
@@ -29,6 +30,8 @@ class Alterar extends Component
         'user_deleted_id' => 'nullable|exists:users,id',
     ];
 
+    public $niveis = [];
+
     public function mount($id)
     {
         $curso = Curso::findOrFail($id);
@@ -38,6 +41,7 @@ class Alterar extends Component
         $this->tipo_lancamento = $curso->tipo_lancamento;
         $this->hora_aula = $curso->hora_aula;
         $this->extracurricular = $curso->extracurricular;
+        $this->niveis = Niveis::all();
     }
 
     public function atualizar()
@@ -56,6 +60,8 @@ class Alterar extends Component
 
     public function render()
     {
-        return view('livewire.curso.alterar');
+        return view('livewire.curso.alterar', [
+            'niveis' => $this->niveis
+        ]);
     }
 }

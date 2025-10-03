@@ -37,10 +37,15 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">Grupo Fiscal</label>
             <input type="text" wire:model="grupo_fiscal" id="grupo_fiscal" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o grupo fiscal">
         </div>
-                                
+
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Grupo Produtos</label>
-            <input type="text" wire:model="grupo_produtos_id" id="grupoProdutos" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o grupo de produtos">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Grupo Produtos *</label>
+            <select id="grupoMatricula" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                 <option value="">Selecione</option>
+                @foreach($grupos as $grupo)
+                    <option value="{{ $grupo->id }}">{{ $grupo->nome }}</option>
+                @endforeach
+            </select>
         </div>
                                 
         <div>
