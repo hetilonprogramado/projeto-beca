@@ -37,6 +37,7 @@ class Alterar extends Component
     public $nacionalidade;
     public $naturalidade;
     public $religiao;
+    public $celular;
 
     public function mountCep()
     {
@@ -82,26 +83,26 @@ class Alterar extends Component
     }
 
     protected $rules = [
-        'rsocial_nome' => 'required|min:3',
-        'nfantasia_apelido' => 'required|min:4',
+        'nome' => 'required|min:4',
+        'apelido' => 'required|min:4',
         'status_id' => 'required|exists:statuses,id',
         'rua' => 'required|min:3',
         'numero' => 'required|numeric',
-        'cep' => 'required|regex:/^\d{8}$/',
-        'bairro' => 'required|min:3',
+        'cep' => 'nullable|digits:8',
+        'bairro' => 'nullable|min:3',
         'estado_id' => 'required|exists:estados,id',
         'cidade_id' => 'required|exists:cidades,id',
-        'data_abert_nasc' => 'required|date',
-        'tipo_pessoa' => 'required|in:Fisica,Juridica', //Pessoa Física, Pessoa Jurídica
-        'cnpj_cpf' => 'required|regex:/^(\d{11}|\d{14})$/',// 11 digits for CPF, 14 for CNPJ
-        'ie_rg' => 'required|min:3',
-        'email' => 'required|email',
+        'data_nasc' => 'nullable|date',
+        'cpf' => 'nullable|digits_between:11,14',// 11 digits for CPF, 14 for CNPJ
+        'rg' => 'nullable|min:3',
+        'email' => 'nullable|email',
         'sexo' => 'required|in:Masculino,Feminino', // M for Masculino, F
         'user_deleted_id' => 'nullable|exists:users,id',
-        'registro_nascimento' => 'required',
-        'nacionalidade' => 'required',
-        'naturalidade' => 'required',
-        'religiao' => 'required',
+        'registro_nascimento' => 'nullable',
+        'nacionalidade' => 'nullable',
+        'naturalidade' => 'nullable',
+        'religiao' => 'nullable',
+        'celular' => 'nullable|min:9',
     ];
 
     public function mount($id)
@@ -129,6 +130,7 @@ class Alterar extends Component
         $this->nacionalidade = $cliente->nacionalidade;
         $this->naturalidade = $cliente->naturalidade;
         $this->religiao = $cliente->religiao;
+        $this->celular = $cliente->celular;
 
         $this->estados = Estados::all();
         $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
