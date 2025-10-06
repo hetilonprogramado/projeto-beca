@@ -93,7 +93,7 @@ class Alterar extends Component
         'estado_id' => 'required|exists:estados,id',
         'cidade_id' => 'required|exists:cidades,id',
         'data_nasc' => 'nullable|date',
-        'cpf' => 'nullable|digits_between:11,14',// 11 digits for CPF, 14 for CNPJ
+        'cpf' => 'nullable|digits_between:11',// 11 digits for CPF
         'rg' => 'nullable|min:3',
         'email' => 'nullable|email',
         'sexo' => 'required|in:Masculino,Feminino', // M for Masculino, F

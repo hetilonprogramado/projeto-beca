@@ -11,9 +11,13 @@
                 <button onclick="showScreen('produtos')" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all">
                     <i class="fas fa-times mr-2"></i>Cancelar
                 </button>
-                <button type="submit" wire:click.prevent="atualizar" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
-                    <i class="fas fa-save mr-2"></i>Alterar Produto
-                </button>
+                <div class="flex flex-col">
+                    <button type="submit" wire:click.prevent="atualizar" wire:target="atualizar" wire:loading.attr="disabled" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
+                        <span wire:loading.remove wire:target="atualizar">Salvar</span>
+                        <i class="fas fa-spinner fa-spin mr-2" wire:loading wire:target="atualizar"></i>
+                        <span wire:loading wire:target="atualizar">Salvando...</span>
+                    </button>
+                </div>
             </div>
         </div>
                     

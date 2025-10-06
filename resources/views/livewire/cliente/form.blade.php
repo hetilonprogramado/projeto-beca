@@ -219,6 +219,31 @@
         </div>
     </div>
 
+    <!-- Status do Cliente -->
+    <div class="mb-6">
+        <div class="flex items-center space-x-2 mb-4">
+            <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                <i class="fas fa-toggle-on text-gray-600"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-800">Status</h3>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="radio" name="status" value="ativo" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                <span class="text-sm font-medium text-gray-700">Ativo</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="radio" name="status" value="inativo" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                <span class="text-sm font-medium text-gray-700">Inativo</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="radio" name="status" value="suspenso" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                <span class="text-sm font-medium text-gray-700">Suspenso</span>
+            </label>
+        </div>
+    </div>
+
     <!-- Matrículas do Cliente -->
     <div class="mb-8">
         <div class="flex items-center justify-between mb-4">
@@ -373,30 +398,5 @@
             <p class="text-lg font-medium">Nenhuma matrícula encontrada</p>
             <p class="text-sm">Este cliente ainda não possui matrículas em cursos.</p>
         </div>
-    </div>
-</div>
-
-<!-- Status do Cliente -->
-<div class="mb-6">
-    <div class="flex items-center space-x-2 mb-4">
-        <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-            <i class="fas fa-toggle-on text-gray-600"></i>
-        </div>
-        <h3 class="text-lg font-semibold text-gray-800">Status</h3>
-    </div>
-
-    <div class="flex items-center space-x-4">
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="status" value="ativo" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Ativo</span>
-        </label>
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="status" value="inativo" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Inativo</span>
-        </label>
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="status" value="suspenso" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Suspenso</span>
-        </label>
     </div>
 </div>
