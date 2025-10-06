@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Turma;
 use App\Models\Turmas;
+use App\Models\Curso;
+use App\Models\Salas;
 use Carbon\Carbon;
 
 use Livewire\Component;
@@ -39,7 +41,11 @@ class Alterar extends Component
         'tipo_conta_id' => 'required|exists:tipo_contas,id',
         'data_encerrar_lancamento' => 'nullable|date|after_or_equal:data_inicial',
         'user_deleted_id' => 'nullable|exists:users,id',
+        'turma_id' => 'required|exists:turmas,id',
     ];
+
+    public $cursos = [];
+    public $salas = [];
 
     public function mount($id)
     {
@@ -51,6 +57,17 @@ class Alterar extends Component
         $this->data_inicial = $turma->cep;
         $this->data_final = $turma->rua;
         $this->carga_hr = $turma->bairro;
+        $this->cursos = Curso::all(); // pega todos os cursos
+        $this->salas = Salas::all();
+        $this->empresa_id = $turma->empresa_id;
+        $this->curso_id = $turma->curso_id;
+        $this->sala_id = $turma->sala_id;
+        $this->status_id = $turma->status_id;
+        $this->user_id = $turma->user_id;
+        $this->exibir_data_final = $turma->exibir_data_final;
+        $this->tipo_conta_id = $turma->tipo_conta_id;
+        $this->data_encerrar_lancamento = $turma->data_encerrar_lancamento;
+        $this->user_deleted_id = $turma->user_deleted_id;
     }
 
     public function atualizar()
@@ -58,11 +75,20 @@ class Alterar extends Component
         $this->validate();
 
         Turmas::where('id', $this->turmaId)->update([
+            'empresa_id' => 1,
             'nome' => $this->nome,
+            'curso_id' => 1,
+            'sala_id' => 1,
             'valor' => $this->valor,
             'data_inicial' => $this->data_inicial,
             'data_final' => $this->data_final,
+            'status_id' => 1,
             'carga_hr' => $this->carga_hr,
+            'user_id' => 1,
+            'exibir_data_final' => $this->exibir_data_final,
+            'tipo_conta_id' => 1,
+            'data_encerrar_lancamento' => $this->data_encerrar_lancamento,
+            'user_deleted_id' => $this->user_deleted_id,
         ]);
 
         session()->flash('message', 'Turms atualizado com sucesso!');

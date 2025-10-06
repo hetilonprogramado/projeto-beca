@@ -14,7 +14,7 @@
                                 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Curso *</label>
-            <select id="cursoTurma" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <select id="cursoTurma" wire:model="curso_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione o curso</option>
                 @foreach($cursos as $curso)
                     <option value="{{ $curso->id }}">{{ $curso->nome }}</option>
@@ -50,7 +50,7 @@
                                 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Sala *</label>
-            <select id="salasTurma" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            <select id="salasTurma" wire:model="sala_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
                 <option value="">Selecione a sala</option>
                 @foreach($salas as $sala)
                     <option value="{{ $sala->id }}">{{ $sala->nome }}</option>
