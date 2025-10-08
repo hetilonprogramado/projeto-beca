@@ -3,6 +3,7 @@
 namespace App\Livewire\GrupoProduto;
 
 use App\Models\GrupoProdutos;
+use App\Models\Statues;
 use Livewire\Component;
 
 class Cadastrar extends Component
@@ -13,6 +14,12 @@ class Cadastrar extends Component
     public $user_id;
     public $empresa_id;
     public $comissao;
+    public $statuses = [];
+
+    public function mount()
+    {
+        $this->statuses = Statues::all();
+    }
 
     protected function validarDados(): array{
         $rules = [

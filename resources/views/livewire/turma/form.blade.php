@@ -183,22 +183,12 @@
         <h3 class="text-lg font-semibold text-gray-800">Status da Turma</h3>
     </div>
                             
-    <div class="flex items-center space-x-6">
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="statusTurma" value="planejada" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Planejada</span>
-        </label>
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="statusTurma" value="em_andamento" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Em Andamento</span>
-        </label>
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="statusTurma" value="concluida" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Concluída</span>
-        </label>
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="statusTurma" value="cancelada" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Cancelada</span>
-        </label>
+    <div class="flex items-center space-x-4">
+        @foreach($statuses as $status)
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="radio" wire:model="status_id" name="status" value="{{ $status->id }}" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                <span class="text-sm font-medium text-gray-700">{{$status->nome}}</span>
+            </label>
+        @endforeach
     </div>
 </div>

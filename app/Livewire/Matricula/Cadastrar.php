@@ -5,6 +5,7 @@ use App\Models\Matriculas;
 use App\Models\Curso;
 use App\Models\Cliente;
 use App\Models\Salas;
+use App\Models\Statues;
 use App\Models\Turmas;
 
 
@@ -33,6 +34,7 @@ class Cadastrar extends Component
     public $salas = [];
     public $turmas = [];
     public $clientes = [];
+    public $statuses = [];
 
     public function mount()
     {
@@ -40,6 +42,7 @@ class Cadastrar extends Component
         $this->salas = Salas::all();
         $this->turmas = Turmas::all();
         $this->clientes = Cliente::all();
+        $this->statuses = Statues::all();
     }
 
     protected $rules = [

@@ -229,18 +229,12 @@
         </div>
 
         <div class="flex items-center space-x-4">
-            <label class="flex items-center space-x-2 cursor-pointer">
-                <input type="radio" name="status" value="ativo" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                <span class="text-sm font-medium text-gray-700">Ativo</span>
-            </label>
-            <label class="flex items-center space-x-2 cursor-pointer">
-                <input type="radio" name="status" value="inativo" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                <span class="text-sm font-medium text-gray-700">Inativo</span>
-            </label>
-            <label class="flex items-center space-x-2 cursor-pointer">
-                <input type="radio" name="status" value="suspenso" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                <span class="text-sm font-medium text-gray-700">Suspenso</span>
-            </label>
+            @foreach($statuses as $status)
+                <label class="flex items-center space-x-2 cursor-pointer">
+                    <input type="radio" wire:model="status_id" name="status" value="{{ $status->id }}" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                    <span class="text-sm font-medium text-gray-700">{{$status->nome}}</span>
+                </label>
+            @endforeach
         </div>
     </div>
 

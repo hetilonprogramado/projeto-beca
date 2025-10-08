@@ -49,16 +49,14 @@ class Alterar extends Component
 
     public function mount($id)
     {
-        $turma = Turmas::findOrFail($id);
+            $turma = Turmas::findOrFail($id);
 
         $this->turma_id = $turma->id;
-        $this->nome = $turma->rsocial_nome;
-        $this->valor = $turma->cnpj_cpf;
-        $this->data_inicial = $turma->cep;
-        $this->data_final = $turma->rua;
-        $this->carga_hr = $turma->bairro;
-        $this->cursos = Curso::all(); // pega todos os cursos
-        $this->salas = Salas::all();
+        $this->nome = $turma->nome;
+        $this->valor = $turma->valor;
+        $this->data_inicial = $turma->data_inicial;
+        $this->data_final = $turma->data_final;
+        $this->carga_hr = $turma->carga_hr;
         $this->empresa_id = $turma->empresa_id;
         $this->curso_id = $turma->curso_id;
         $this->sala_id = $turma->sala_id;
@@ -68,6 +66,10 @@ class Alterar extends Component
         $this->tipo_conta_id = $turma->tipo_conta_id;
         $this->data_encerrar_lancamento = $turma->data_encerrar_lancamento;
         $this->user_deleted_id = $turma->user_deleted_id;
+
+        // carregar selects
+        $this->cursos = Curso::all();
+        $this->salas = Salas::all();
     }
 
     public function atualizar()

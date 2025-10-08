@@ -5,7 +5,7 @@ namespace App\Livewire\Curso;
 use App\Models\Curso;
 use Carbon\Carbon;
 use App\Models\Niveis;
-
+use App\Models\Statues;
 use Livewire\Component;
 
 class Cadastrar extends Component
@@ -20,6 +20,7 @@ class Cadastrar extends Component
     public $niveis;
     public $descricao;
     public $user_deleted_id;
+    public $statuses = [];
 
     protected $rules = [
         'nome' => 'required|min:4',
@@ -56,6 +57,7 @@ class Cadastrar extends Component
     public function mount()
     {
         $this->niveis = Niveis::all(); // carrega todos os níveis
+        $this->statuses = Statues::all();
     }
 
     public function render()

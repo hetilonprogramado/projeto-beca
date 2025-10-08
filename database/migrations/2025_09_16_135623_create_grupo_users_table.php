@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('grupo_users', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->date('data_inicial')->nullable();
             $table->integer('status_id')->unsigned();
             $table->integer('user_id');
             $table->timestamps();

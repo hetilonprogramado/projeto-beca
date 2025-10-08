@@ -6,6 +6,7 @@ use App\Models\GrupoProdutos;
 use App\Models\Matriculas;
 use Livewire\Component;
 use App\Models\Produtos;
+use App\Models\Statues;
 
 class Cadastrar extends Component
 {
@@ -27,10 +28,12 @@ class Cadastrar extends Component
     public $imagem;
 
     public $grupos = [];
+    public $statuses = [];
 
     public function mount()
     {
         $this->grupos = GrupoProdutos::all();
+        $this->statuses = Statues::all();
     }
 
     protected function validarDados(): array{
@@ -56,10 +59,21 @@ class Cadastrar extends Component
         return $this->validate($rules);
     }
 
+    public function updatedVlrCompra($value)
+{
+    $this->vlr_compra = number_format((float)str_replace(',', '.', preg_replace('/[^\d,]/', '', $value)), 2, ',', '');
+}
+
+public function updatedVlrVenda($value)
+{
+    $this->vlr_venda = number_format((float)str_replace(',', '.', preg_replace('/[^\d,]/', '', $value)), 2, ',', '');
+}
+
     public function salvar() {
-        // --- Formatação dos campos ---
-        $this->vlr_compra = str_replace(',', '.', str_replace('.', '', $this->vlr_compra));
-        $this->vlr_venda = str_replace(',', '.', str_replace('.', '', $this->vlr_venda));
+        // Converter valores formatados (1.234,56) para float (1234.56)
+        $this->vlr_compra = str_replace(['.', ','], ['', '.'], $this->vlr_compra);
+        $this->vlr_venda = str_replace(['.', ','], ['', '.'], $this->vlr_venda);
+
 
        // $this->validate();
         
@@ -67,8 +81,8 @@ class Cadastrar extends Component
             'empresa_id' => 1,
             'grup_prod_id' => 1,
             'nome' => $this->nome,
-            'vlr_compra' => $this->vlr_compra,
-            'vlr_venda' => $this->vlr_venda,
+            'vlr_compra' => (float) $this->vlr_compra,
+            'vlr_venda' => (float) $this->vlr_venda,
             'estoque_minimo' => $this->estoque_minimo,
             'codigo_barras' => $this->codigo_barras,
             'status_id' => 1,

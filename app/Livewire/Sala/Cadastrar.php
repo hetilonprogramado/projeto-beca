@@ -4,7 +4,7 @@ namespace App\Livewire\Sala;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Salas;
-
+use App\Models\Statues;
 use Livewire\Component;
 
 class Cadastrar extends Component
@@ -15,6 +15,12 @@ class Cadastrar extends Component
     public $descricao;
     public $limite;
     public $user_deleted_id;
+    public $statuses = [];
+
+    public function mount()
+    {
+        $this->statuses = Statues::all();
+    }
 
     protected $rules = [
         'nome' => 'required|min:4',

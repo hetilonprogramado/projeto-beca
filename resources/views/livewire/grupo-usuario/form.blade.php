@@ -16,11 +16,6 @@
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
-
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Data de Início *</label>
-            <input type="date" wire:model="data_inicial" id="dataInicio" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-        </div>
     </div>
 </div>
 
@@ -33,15 +28,13 @@
         <h3 class="text-lg font-semibold text-gray-800">Status do Grupo</h3>
     </div>
                             
-    <div class="flex items-center space-x-6">
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="statusGrupo" value="ativo" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Ativo</span>
-        </label>
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="statusGrupo" value="inativo" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Inativo</span>
-        </label>
+    <div class="flex items-center space-x-4">
+        @foreach($statuses as $status)
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="radio" wire:model="status_id" name="status" value="{{ $status->id }}" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                <span class="text-sm font-medium text-gray-700">{{$status->nome}}</span>
+            </label>
+        @endforeach
     </div>
     <p class="text-xs text-gray-500 mt-2">Grupos inativos não podem ser atribuídos a novos usuários</p>
 </div>

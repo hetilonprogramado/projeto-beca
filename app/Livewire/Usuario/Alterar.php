@@ -2,11 +2,56 @@
 
 namespace App\Livewire\Usuario;
 
+use App\Models\Cidades;
+use App\Models\Estados;
+use App\Models\Statues;
 use App\Models\User;
 use Livewire\Component;
 
 class Alterar extends Component
 {
+    public $cep;
+    public $estado_id;
+    public $cidade_id;
+    public $estados = [];
+    public $cidades = [];
+    public $statuses = [];
+
+    public function mountCep()
+    {
+        $this->estados = Estados::all();
+        $this->cidades = Cidades::where('estado_id', Auth()->user()->estado_id)->get();
+        $this->estado_id = Auth()->user()->estado_id;
+        $this->cidade_id = Auth()->user()->cidade_id;
+        $this->statuses = Statues::all();
+    }
+
+    public function buscarCep()
+    {
+        $cep = preg_replace('/[^0-9]/', '', $this->cep);
+
+        if (strlen($cep) !== 8) {
+            return;
+        }
+
+        $response = Http::get("https://viacep.com.br/ws/{$cep}/json/");
+
+        if ($response->ok() && !$response->json('erro')) {
+            $data = $response->json();
+
+            // Preenche os campos de endereço
+            $this->rua = $data['logradouro'] ?? '';
+            $this->bairro = $data['bairro'] ?? '';
+
+            // Busca cidade pelo código IBGE
+            $cidade = Cidades::where('ibge_code', $data['ibge'])->first();
+
+            $this->cidade_id = $cidade->id;
+            $this->estado_id = $cidade->estado_id;
+            $this->buscarCidades();
+        }
+    }
+
     public $name;
     public $usuario_id;
     public $email;
@@ -23,10 +68,7 @@ class Alterar extends Component
     public $user_id;
     public $rua;
     public $numero;
-    public $cep;
     public $bairro;
-    public $cidade_id;
-    public $estado_id;
     public $data_admissao;
     public $data_demissao;
     public $data_nascimento;
@@ -150,6 +192,14 @@ class Alterar extends Component
 
     public function render()
     {
-        return view('livewire.usuario.alterar');
+        return view('livewire.usuario.alterar', [
+            'estados' => $this->estados,
+            'cidades' => $this->cidades,
+            'statuses' => $this->statuses,
+        ]);
+    }
+
+    public function buscarCidades() {
+        $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Cidades;
 use App\Models\Estados;
+use App\Models\Statues;
 use Illuminate\Support\Facades\Http;
 use Pest\ArchPresets\Custom;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,7 @@ class Cadastrar extends Component
     public $cidade_id;
     public $estados = [];
     public $cidades = [];
+    public $statuses = [];
 
     public function mount()
     {
@@ -27,6 +29,7 @@ class Cadastrar extends Component
         $this->cidades = Cidades::where('estado_id', Auth()->user()->estado_id)->get();
         $this->estado_id = Auth()->user()->estado_id;
         $this->cidade_id = Auth()->user()->cidade_id;
+        $this->statuses = Statues::all();
     }
 
     public function buscarCep()

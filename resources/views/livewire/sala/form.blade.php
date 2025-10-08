@@ -55,18 +55,12 @@
         <h3 class="text-lg font-semibold text-gray-800">Status do Curso</h3>
     </div>
                             
-    <div class="flex items-center space-x-6">
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="statusCurso" value="ativo" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Ativo</span>
-        </label>
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="statusCurso" value="rascunho" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Rascunho</span>
-        </label>
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="statusCurso" value="inativo" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Inativo</span>
-        </label>
+    <div class="flex items-center space-x-4">
+        @foreach($statuses as $status)
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="radio" wire:model="status_id" name="status" value="{{ $status->id }}" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                <span class="text-sm font-medium text-gray-700">{{$status->nome}}</span>
+            </label>
+        @endforeach
     </div>
 </div>

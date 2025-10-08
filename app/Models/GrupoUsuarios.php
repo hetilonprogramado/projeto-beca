@@ -10,7 +10,6 @@ class GrupoUsuarios extends Model
 
     protected $fillable = [
         'nome',
-        'data_inicial',
         'status_id',
         'user_id'
     ];

@@ -4,7 +4,7 @@
         <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
             <i class="fas fa-user text-blue-600"></i>
         </div>
-        <h3 class="text-lg font-semibold text-gray-800">Dados Pessoais</h3>
+        <h3 class="text-lg font-semibold text-gray-800">Dados de Cadastro</h3>
     </div>
                             
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -59,14 +59,46 @@
             @enderror
         </div>
         
-        <div>
+        <!-- Valor de Compra -->
+        <div x-data="{ value: @entangle('vlr_compra').live }">
             <label class="block text-sm font-medium text-gray-700 mb-2">Valor de Compra</label>
-            <input type="text" id="vlr_compra" wire:model="vlr_compra" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o valor da compra">
+            <div class="relative">
+                <span class="absolute left-3 top-3 text-gray-500">R$</span>
+                <input type="text"
+                    x-model="value"
+                    x-on:input="
+                            let num = value.replace(/[^\d]/g, '');
+                            if(num.length > 0) {
+                                num = (parseInt(num) / 100).toFixed(2);
+                                value = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2 }).format(num);
+                            } else {
+                                value = '';
+                            }
+                    "
+                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-right"
+                    placeholder="0,00">
+            </div>
         </div>
-
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Valor da Venda</label>
-            <input type="text" id="vlr_venda" wire:model="vlr_venda" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o valor da venda">
+        
+        <!-- Valor de Venda -->
+        <div x-data="{ value: @entangle('vlr_venda').live }">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Valor de Venda</label>
+            <div class="relative">
+                <span class="absolute left-3 top-3 text-gray-500">R$</span>
+                <input type="text"
+                    x-model="value"
+                    x-on:input="
+                            let num = value.replace(/[^\d]/g, '');
+                            if(num.length > 0) {
+                                num = (parseInt(num) / 100).toFixed(2);
+                                value = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2 }).format(num);
+                            } else {
+                                value = '';
+                            }
+                    "
+                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-right"
+                    placeholder="0,00">
+            </div>
         </div>
 
         <div>
@@ -282,17 +314,11 @@
     </div>
                             
     <div class="flex items-center space-x-4">
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="status" value="ativo" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Ativo</span>
-        </label>
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="status" value="inativo" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Inativo</span>
-        </label>
-        <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="radio" name="status" value="suspenso" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-            <span class="text-sm font-medium text-gray-700">Suspenso</span>
-        </label>
+        @foreach($statuses as $status)
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="radio" wire:model="status_id" name="status" value="{{ $status->id }}" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                <span class="text-sm font-medium text-gray-700">{{$status->nome}}</span>
+            </label>
+        @endforeach
     </div>
 </div>

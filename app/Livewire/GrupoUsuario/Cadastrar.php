@@ -3,19 +3,24 @@
 namespace App\Livewire\GrupoUsuario;
 
 use App\Models\GrupoUsuarios;
+use App\Models\Statues;
 use Livewire\Component;
 
 class Cadastrar extends Component
 {
     public $nome;
-    public $data_inicial;
     public $status_id;
     public $user_id;
+    public $statuses = [];
+
+    public function mount()
+    {
+        $this->statuses = Statues::all();
+    }
 
     protected function validarDados(): array{
         $rules = [
             'nome' => 'required|min:4',
-            'data_inicial' => 'required|date',
             'status_id' => 'required|exists:statuses,id',
             'user_id' => 'required|exists:users,id',
         ];
@@ -30,7 +35,6 @@ class Cadastrar extends Component
         GrupoUsuarios::create([
             'nome' => $this->nome,
             'status_id' => 1,
-            'data_inicial' => $this->data_inicial,
             'user_id' => Auth()->user()->id,
         ]);
         // Limpa os campos do formulário

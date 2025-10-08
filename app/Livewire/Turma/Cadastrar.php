@@ -4,6 +4,7 @@ namespace App\Livewire\Turma;
 use App\Models\Turmas;
 use App\Models\Curso;
 use App\Models\Salas;
+use App\Models\Statues;
 use Carbon\Carbon;
 
 use Livewire\Component;
@@ -12,11 +13,13 @@ class Cadastrar extends Component
 {
     public $cursos = [];
     public $salas = [];
+    public $statuses = [];
 
     public function mount()
     {
         $this->cursos = Curso::all(); // pega todos os cursos
         $this->salas = Salas::all();
+        $this->statuses = Statues::all();
     }
 
     public $empresa_id;
