@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Produtos;
 
+use App\Models\GrupoProdutos;
 use App\Models\Produtos;
+use App\Models\Statues;
 use Livewire\Component;
 
 class Alterar extends Component
@@ -24,6 +26,9 @@ class Alterar extends Component
     public $ncm;
     public $combo;
     public $imagem;
+
+    public $grupos = [];
+    public $statuses = [];
 
     protected $rules = [
         'empresa_id' => 'required',
@@ -66,6 +71,8 @@ class Alterar extends Component
         $this->combo = $produto->combo;
         $this->imagem = $produto->imagem;
 
+        $this->grupos = GrupoProdutos::all();
+        $this->statuses = Statues::all();
     }
 
     public function atualizar()

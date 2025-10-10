@@ -55,7 +55,9 @@
                                         <tr class="border-b hover:bg-gray-50">
                                             <td class="py-3 px-4">{{ $turma->nome }}</td>
                                             <td class="py-3 px-4">{{ $turma->data_inicial }}</td>
-                                            <td class="py-3 px-4">{{ $turma->valor }}</td>
+                                            <td class="py-3 px-4">
+                                                {{ 'R$ ' . number_format($turma->valor, 2, ',', '.') }}
+                                            </td>
                                             <td class="py-3 px-4">
                                                 <a href="{{ route('turma.alterar', $turma->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></a>
                                                 <button wire:click="deletar({{ $turma->id }})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>

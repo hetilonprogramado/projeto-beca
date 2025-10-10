@@ -6,6 +6,7 @@ use App\Models\Cliente;
 use App\Models\Curso;
 use App\Models\Matriculas;
 use App\Models\Salas;
+use App\Models\Statues;
 use App\Models\Turmas;
 use GuzzleHttp\Client;
 use Livewire\Component;
@@ -34,6 +35,7 @@ class Alterar extends Component
     public $salas = [];
     public $turmas = [];
     public $clientes = [];
+    public $statuses = [];
 
     protected $rules = [
         'empresa_id' => 'required|exists:empresas,id',
@@ -80,6 +82,7 @@ class Alterar extends Component
         $this->salas = Salas::all();
         $this->turmas = Turmas::all();
         $this->clientes = Cliente::all();
+        $this->statuses = Statues::all();
     }
 
     public function atualizar()

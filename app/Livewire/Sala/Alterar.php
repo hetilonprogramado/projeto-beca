@@ -3,6 +3,7 @@
 namespace App\Livewire\Sala;
 
 use App\Models\Salas;
+use App\Models\Statues;
 use Livewire\Component;
 
 class Alterar extends Component
@@ -14,6 +15,7 @@ class Alterar extends Component
     public $descricao;
     public $salaId;
     public $user_deleted_id;
+    public $statuses = [];
 
     protected $rules = [
         'nome' => 'required|min:4',
@@ -33,6 +35,8 @@ class Alterar extends Component
         $this->salaId = $sala->id;
         $this->descricao = $sala->descricao;
         $this->user_deleted_id = $sala->user_deleted_id;
+
+        $this->statuses = Statues::all();
     }
 
     public function atualizar()

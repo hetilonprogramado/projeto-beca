@@ -3,6 +3,7 @@
 namespace App\Livewire\GrupoUsuario;
 
 use App\Models\GrupoUsuarios;
+use App\Models\Statues;
 use Livewire\Component;
 
 class Alterar extends Component
@@ -11,6 +12,7 @@ class Alterar extends Component
     public $grupo_id;
     public $status_id;
     public $user_id;
+    public $statuses = [];
 
     protected $rules = [
         'nome' => 'required|min:4',
@@ -24,6 +26,8 @@ class Alterar extends Component
 
         $this->nome = $grupo->nome;
         $this->grupo_id = $grupo->id;
+
+        $this->statuses = Statues::all();
     }
 
     public function atualizar()

@@ -19,7 +19,7 @@
 
         <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Lucro</label>
-            <input type="text" id="Lucro" wire:model="lucro" class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o lucro">
+            <input type="text" id="Lucro" wire:blur="formatarValor('lucro')" wire:model="lucro" class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o lucro">
             @error('lucro')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
@@ -27,7 +27,7 @@
 
         <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Comissão</label>
-            <input type="text" id="Comissao" wire:model="comissao" class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite a comissão">
+            <input type="text" id="Comissao" wire:blur="formatarValor('comissao')" wire:model="comissao" class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite a comissão">
             @error('comissao')
                 <small class="text-danger">{{ $message }}</small>
             @enderror

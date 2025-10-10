@@ -54,6 +54,23 @@ class Cadastrar extends Component
         'user_deleted_id' => 'nullable|exists:users,id',
     ];
 
+    public function formatarValor($campo)
+    {
+        // Remove tudo que não for número
+        $valor = preg_replace('/[^\d]/', '', $this->$campo);
+
+        if ($valor === '' || $valor === null) {
+            $this->$campo = '0,00';
+            return;
+        }
+
+        // Converte para float (divide os centavos)
+        $valor = number_format($valor / 100, 2, ',', '.');
+
+        // Atualiza o campo formatado
+        $this->$campo = $valor;
+    }
+
     public function salvar() {
         // --- Formatação dos campos ---
         $this->data_inicial = Carbon::parse($this->data_inicial)->format('Y-m-d');
@@ -61,13 +78,19 @@ class Cadastrar extends Component
         $this->data_encerrar_lancamento = $this->data_encerrar_lancamento ? Carbon::parse($this->data_encerrar_lancamento)->format('Y-m-d') : null;
 
        // $this->validate();
+
+       $valor = $this->valor;
+
+       // Remove R$, pontos e troca vírgula por ponto
+       $valor = str_replace(['R$', '.', ' '], '', $valor);
+       $valor = str_replace(',', '.', $valor);
         
         Turmas::create([
             'empresa_id' => 1,
             'nome' => $this->nome,
             'curso_id' => 1,
             'sala_id' => 1,
-            'valor' => $this->valor,
+            'valor' => $valor,
             'data_inicial' => $this->data_inicial,
             'data_final' => $this->data_final,
             'status_id' => 1,

@@ -45,6 +45,23 @@ class Cadastrar extends Component
         $this->statuses = Statues::all();
     }
 
+    public function formatarValor($campo)
+    {
+        // Remove tudo que não for número
+        $valor = preg_replace('/[^\d]/', '', $this->$campo);
+
+        if ($valor === '' || $valor === null) {
+            $this->$campo = '0,00';
+            return;
+        }
+
+        // Converte para float (divide os centavos)
+        $valor = number_format($valor / 100, 2, ',', '.');
+
+        // Atualiza o campo formatado
+        $this->$campo = $valor;
+    }
+
     protected $rules = [
         'empresa_id' => 'required|exists:empresas,id',
         'status_id' => 'required|exists:statuses,id',
@@ -69,6 +86,16 @@ class Cadastrar extends Component
         $this->data_cad = preg_replace('/\D/', '', $this->data_cad);
 
        // $this->validate();
+
+       $valor = $this->valor;
+       $desconto = $this->desconto;
+
+       // Remove R$, pontos e troca vírgula por ponto
+       $valor = str_replace(['R$', '.', ' '], '', $valor);
+       $valor = str_replace(',', '.', $valor);
+
+       $desconto = str_replace(['R$', '.', ' '], '', $desconto);
+       $desconto = str_replace(',', '.', $desconto);
         
         Matriculas::create([
             'empresa_id' => 1,
@@ -77,8 +104,8 @@ class Cadastrar extends Component
             'curso_id' => 1,
             'turma_id' => 1,
             'sala_id' => 1,
-            'valor' => $this->valor,
-            'desconto' => $this->desconto,
+            'valor' => $valor,
+            'desconto' => $desconto,
             'data_cad' => $this->data_cad,
             'ordem' => $this->ordem,
             'obs_carteira' => $this->obs_carteira,

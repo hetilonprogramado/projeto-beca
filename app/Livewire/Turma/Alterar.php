@@ -4,6 +4,7 @@ namespace App\Livewire\Turma;
 use App\Models\Turmas;
 use App\Models\Curso;
 use App\Models\Salas;
+use App\Models\Statues;
 use Carbon\Carbon;
 
 use Livewire\Component;
@@ -46,6 +47,7 @@ class Alterar extends Component
 
     public $cursos = [];
     public $salas = [];
+    public $statuses = [];
 
     public function mount($id)
     {
@@ -70,6 +72,7 @@ class Alterar extends Component
         // carregar selects
         $this->cursos = Curso::all();
         $this->salas = Salas::all();
+        $this->statuses = Statues::all();
     }
 
     public function atualizar()

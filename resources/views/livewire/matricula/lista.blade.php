@@ -58,7 +58,9 @@
                                                     {{ $matricula->status->nome}}
                                                 </span>
                                             </td>
-                                            <td class="py-3 px-4">{{ $matricula->valor }}</td>
+                                            <td class="py-3 px-4">
+                                                {{ 'R$ ' . number_format($matricula->valor, 2, ',', '.') }}
+                                            </td>
                                             <td class="py-3 px-4">
                                                 <a href="{{ route('matricula.alterar', $matricula->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></a>
                                                 <button wire:click="deletar({{ $matricula->id }})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>

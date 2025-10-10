@@ -3,7 +3,9 @@
 namespace App\Livewire\GrupoProduto;
 
 use App\Models\GrupoProdutos;
+use App\Models\Statues;
 use Livewire\Component;
+use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 class Alterar extends Component
 {
@@ -14,6 +16,7 @@ class Alterar extends Component
     public $user_id;
     public $empresa_id;
     public $comissao;
+    public $statuses = [];
 
     protected $rules = [
         'nome' => 'required|min:4',
@@ -35,6 +38,8 @@ class Alterar extends Component
         $this->empresa_id = $grupo->empresa_id;
         $this->status_id = $grupo->status_id;
         $this->user_id = $grupo->user_id;
+
+        $this->statuses = Statues::all();
     }
 
     public function atualizar()

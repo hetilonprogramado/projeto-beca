@@ -6,6 +6,7 @@ use App\Models\Empresa;
 use Livewire\Component;
 use App\Models\Cidades;
 use App\Models\Estados;
+use App\Models\Statues;
 use Illuminate\Support\Facades\Http;
 use Pest\ArchPresets\Custom;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,7 @@ class Alterar extends Component
     public $cidade_id;
     public $estados = [];
     public $cidades = [];
+    public $statuses = [];
 
     public function mountCep()
     {
@@ -116,6 +118,7 @@ class Alterar extends Component
         $this->data_lib = $empresa->data_lib;
         $this->tipo_pessoa = $empresa->tipo_pessoa;
 
+        $this->statuses = Statues::all();
     }
 
     public function atualizar()

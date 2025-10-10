@@ -121,6 +121,23 @@ class Cadastrar extends Component
         'token_app' => 'nullable|string|max:255',
     ];
 
+    public function formatarValor($campo)
+    {
+        // Remove tudo que não for número
+        $valor = preg_replace('/[^\d]/', '', $this->$campo);
+
+        if ($valor === '' || $valor === null) {
+            $this->$campo = '0,00';
+            return;
+        }
+
+        // Converte para float (divide os centavos)
+        $valor = number_format($valor / 100, 2, ',', '.');
+
+        // Atualiza o campo formatado
+        $this->$campo = $valor;
+    }
+
     public function salvar() {
         // --- Formatação dos campos ---
         $this->cep = preg_replace('/\D/', '', $this->cep);

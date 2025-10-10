@@ -4,6 +4,7 @@ namespace App\Livewire\Curso;
 
 use App\Models\Curso;
 use App\Models\Niveis;
+use App\Models\Statues;
 use Livewire\Component;
 
 class Alterar extends Component
@@ -18,6 +19,7 @@ class Alterar extends Component
     public $extracurricular;
     public $nivel_id;
     public $user_deleted_id;
+    public $statuses = [];
 
     protected $rules = [
         'empresa_id' => 'required|exists:empresas,id',
@@ -42,6 +44,7 @@ class Alterar extends Component
         $this->hora_aula = $curso->hora_aula;
         $this->extracurricular = $curso->extracurricular;
         $this->niveis = Niveis::all();
+        $this->statuses = Statues::all();
     }
 
     public function atualizar()

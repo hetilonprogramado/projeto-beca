@@ -5,6 +5,7 @@ use App\Models\Cliente;
 use Carbon\Carbon;
 use App\Models\Cidades;
 use App\Models\Estados;
+use App\Models\Statues;
 use Illuminate\Support\Facades\Http;
 use Pest\ArchPresets\Custom;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,8 @@ class Alterar extends Component
     public $naturalidade;
     public $religiao;
     public $celular;
+
+    public $statuses = [];
 
     public function mountCep()
     {
@@ -134,6 +137,7 @@ class Alterar extends Component
 
         $this->estados = Estados::all();
         $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
+        $this->statuses = Statues::all();
 
     }
 

@@ -59,15 +59,22 @@ class Cadastrar extends Component
         return $this->validate($rules);
     }
 
-    public function updatedVlrCompra($value)
-{
-    $this->vlr_compra = number_format((float)str_replace(',', '.', preg_replace('/[^\d,]/', '', $value)), 2, ',', '');
-}
+    public function formatarValor($campo)
+    {
+        // Remove tudo que não for número
+        $valor = preg_replace('/[^\d]/', '', $this->$campo);
 
-public function updatedVlrVenda($value)
-{
-    $this->vlr_venda = number_format((float)str_replace(',', '.', preg_replace('/[^\d,]/', '', $value)), 2, ',', '');
-}
+        if ($valor === '' || $valor === null) {
+            $this->$campo = '0,00';
+            return;
+        }
+
+        // Converte para float (divide os centavos)
+        $valor = number_format($valor / 100, 2, ',', '.');
+
+        // Atualiza o campo formatado
+        $this->$campo = $valor;
+    }
 
     public function salvar() {
         // Converter valores formatados (1.234,56) para float (1234.56)
