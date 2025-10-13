@@ -47,9 +47,32 @@ class Alterar extends Component
 
             // Busca cidade pelo código IBGE
             $cidades = Cidades::where('ibge_code', $data['ibge'])->first();
-            $this->cidade_id = $cidades->id;
-            $this->estado_id = $cidades->estado_id;
-            $this->buscarCidades(); 
+
+            if($cidades) {
+                $this->cidade_id = $cidades->id;
+                $this->estado_id = $cidades->estado_id;
+
+                // garante que a lista de estados esteja carregada
+                if (empty($this->estados)) {
+                    $this->estados = Estados::all();
+                }
+
+                // atualiza lista de cidades para o estado
+                $this->buscarCidades();
+            }$cidades = Cidades::where('ibge_code', $data['ibge'])->first();
+
+            if($cidades) {
+                $this->cidade_id = $cidades->id;
+                $this->estado_id = $cidades->estado_id;
+
+                // garante que a lista de estados esteja carregada
+                if (empty($this->estados)) {
+                    $this->estados = Estados::all();
+                }
+
+                // atualiza lista de cidades para o estado
+                $this->buscarCidades();
+            }
         }
     }
 
@@ -118,35 +141,55 @@ class Alterar extends Component
         $this->data_lib = $empresa->data_lib;
         $this->tipo_pessoa = $empresa->tipo_pessoa;
 
+        $this->estados = Estados::all();
+        $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
+        $this->buscarCidades();
         $this->statuses = Statues::all();
+
+        $this->mountCep();
     }
 
     public function atualizar()
     {
-        $this->validate();
+        $this->validate([
+            'rsocial' => 'required|min:4',
+            'nome_fantasia' => 'required|min:4',
+            'rua' => 'required|min:3',
+            'numero' => 'required|numeric',
+            'bairro' => 'required|min:3',
+            'estado_id' => 'required|exists:estados,id',
+            'cidade_id' => 'required|exists:cidades,id',
+            'cnpj' => 'required',
+        ]);
 
-        Empresa::where('id', $this->empresaId)->update([
+        Empresa::where('id', $this->empresa_id)->update([
             'rsocial' => $this->rsocial,
             'nome_fantasia' => $this->nome_fantasia,
-            'status_id' => 1,
-            'user_id' => 1,
+            'status_id' => $this->status_id,
+            'user_id' => $this->user_id,
             'cnpj' => $this->cnpj,
             'ie' => $this->ie,
+            'cep' => $this->cep,
             'rua' => $this->rua,
             'numero' => $this->numero,
             'bairro' => $this->bairro,
-            'estado_id' => 17,
-            'cidade_id' => 21,
+            'estado_id' => $this->estado_id,
+            'cidade_id' => $this->cidade_id,
             'email' => $this->email,
             'telefone1' => $this->telefone1,
             'telefone2' => $this->telefone2,
             'site' => $this->site,
             'data_lib' => $this->data_lib,
             'tipo_pessoa' => $this->tipo_pessoa,
-            'cep' => $this->cep,
         ]);
 
         session()->flash('message', 'Empresa atualizado com sucesso!');
+    }
+
+    public function cancelar()
+    {
+        $this->reset(); // limpa todos os campos
+        session()->flash('message', 'Alterar cancelado!');
     }
 
     public function render()
@@ -154,6 +197,7 @@ class Alterar extends Component
         return view('livewire.empresa.alterar', [
             'estados' => $this->estados,
             'cidades' => $this->cidades,
+            'statuses' => $this->statuses,
         ]);
     }
 

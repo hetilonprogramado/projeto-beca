@@ -43,6 +43,7 @@ class Alterar extends Component
         $this->tipo_lancamento = $curso->tipo_lancamento;
         $this->hora_aula = $curso->hora_aula;
         $this->extracurricular = $curso->extracurricular;
+        $this->nivel_id = $curso->nivel_id;
         $this->niveis = Niveis::all();
         $this->statuses = Statues::all();
     }
@@ -55,7 +56,9 @@ class Alterar extends Component
             'nome' => $this->nome,
             'tipo_lancamento' => $this->tipo_lancamento,
             'hora_aula' => $this->hora_aula,
-            'extracurricular' => $this->extracurricular
+            'extracurricular' => $this->extracurricular,
+            'nivel_id' => $this->nivel_id,
+            'status_id' => $this->status_id,
         ]);
 
         session()->flash('message', 'Curso atualizado com sucesso!');

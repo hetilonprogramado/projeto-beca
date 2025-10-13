@@ -117,16 +117,14 @@ class Alterar extends Component
         $this->apelido = $cliente->apelido;
         $this->status_id = $cliente->status_id;
         $this->user_id = $cliente->user_id;
-        $this->data_abert_nasc = $cliente->data_abert_nasc;
-        $this->tipo_pessoa = $cliente->tipo_pessoa;
-        $this->cnpj_cpf = $cliente->cnpj_cpf;
+        $this->cpf = $cliente->cpf;
         $this->cep = $cliente->cep;
         $this->rua = $cliente->rua;
         $this->bairro = $cliente->bairro;
         $this->cidade_id = $cliente->cidade_id;
         $this->estado_id = $cliente->estado_id;
         $this->numero = $cliente->numero;
-        $this->ie_rg = $cliente->ie_rg;
+        $this->rg = $cliente->rg;
         $this->email = $cliente->email;
         $this->sexo = $cliente->sexo;
         $this->registro_nascimento = $cliente->registro_nascimento;
@@ -134,6 +132,7 @@ class Alterar extends Component
         $this->naturalidade = $cliente->naturalidade;
         $this->religiao = $cliente->religiao;
         $this->celular = $cliente->celular;
+        $this->data_nasc = $cliente->data_nasc;
 
         $this->estados = Estados::all();
         $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
@@ -157,10 +156,8 @@ class Alterar extends Component
             'bairro' => $this->bairro,
             'estado_id' => $this->estado_id,
             'cidade_id' => $this->cidade_id,
-            'data_abert_nasc' => Carbon::parse($this->data_abert_nasc),
-            'tipo_pessoa' => $this->tipo_pessoa,
-            'cnpj_cpf' => $this->cnpj_cpf,
-            'ie_rg' => $this->ie_rg,
+            'cpf' => $this->cpf,
+            'rg' => $this->rg,
             'email' => $this->email,
             'sexo' => $this->sexo,
             'fornecedor' => $this->fornecedor,
@@ -169,6 +166,7 @@ class Alterar extends Component
             'nacionalidade' => $this->nacionalidade,
             'naturalidade' => $this->naturalidade,
             'religiao' => $this->religiao,
+            'data_nasc' => $this->data_nasc,
         ]);
 
         session()->flash('message', 'Cliente atualizado com sucesso!');
