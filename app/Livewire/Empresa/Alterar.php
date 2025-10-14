@@ -59,19 +59,6 @@ class Alterar extends Component
 
                 // atualiza lista de cidades para o estado
                 $this->buscarCidades();
-            }$cidades = Cidades::where('ibge_code', $data['ibge'])->first();
-
-            if($cidades) {
-                $this->cidade_id = $cidades->id;
-                $this->estado_id = $cidades->estado_id;
-
-                // garante que a lista de estados esteja carregada
-                if (empty($this->estados)) {
-                    $this->estados = Estados::all();
-                }
-
-                // atualiza lista de cidades para o estado
-                $this->buscarCidades();
             }
         }
     }
@@ -143,24 +130,13 @@ class Alterar extends Component
 
         $this->estados = Estados::all();
         $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
-        $this->buscarCidades();
         $this->statuses = Statues::all();
 
-        $this->mountCep();
     }
 
     public function atualizar()
     {
-        $this->validate([
-            'rsocial' => 'required|min:4',
-            'nome_fantasia' => 'required|min:4',
-            'rua' => 'required|min:3',
-            'numero' => 'required|numeric',
-            'bairro' => 'required|min:3',
-            'estado_id' => 'required|exists:estados,id',
-            'cidade_id' => 'required|exists:cidades,id',
-            'cnpj' => 'required',
-        ]);
+        $this->validate();
 
         Empresa::where('id', $this->empresa_id)->update([
             'rsocial' => $this->rsocial,
