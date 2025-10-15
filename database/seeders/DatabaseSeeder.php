@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(StatuesSeeder::class);
         $this->call(MenusSeeder::class);
+        $this->call(GruposUsuariosSeeder::class);
         $this->call(EmpresasSeeder::class);
         $this->call(EstadosSeeder::class);
         $this->call(CidadesSeeder::class);

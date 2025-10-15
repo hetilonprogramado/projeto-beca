@@ -8,6 +8,8 @@ class GrupoUsuarios extends Model
 {
     protected $table = 'grupo_users';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'nome',
         'status_id',
