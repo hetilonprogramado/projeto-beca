@@ -87,7 +87,7 @@ class Alterar extends Component
             'valor' => $this->valor,
             'data_inicial' => $this->data_inicial,
             'data_final' => $this->data_final,
-            'status_id' => 1,
+            'status_id' => $this->status_id,
             'carga_hr' => $this->carga_hr,
             'user_id' => 1,
             'exibir_data_final' => $this->exibir_data_final,

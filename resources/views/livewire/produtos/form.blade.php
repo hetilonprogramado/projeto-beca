@@ -66,8 +66,8 @@
                 type="text" 
                 wire:model.lazy="vlr_compra"
                 wire:blur="formatarValor('vlr_compra')" 
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder="Digite o valor da compra">
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-right"
+                placeholder="180,00">
         </div>
 
         <div>
@@ -76,8 +76,8 @@
                 type="text" 
                 wire:model.lazy="vlr_venda"
                 wire:blur="formatarValor('vlr_venda')" 
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder="Digite o valor da venda">
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-right"
+                placeholder="200,00">
         </div>
 
         <div>

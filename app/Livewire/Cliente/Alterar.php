@@ -148,7 +148,7 @@ class Alterar extends Component
             'empresa_id' => 1,
             'rsocial_nome' => $this->rsocial_nome,
             'nfantasia_apelido' => $this->nfantasia_apelido,
-            'status_id' => 1,
+            'status_id' => $this->status_id,
             'user_id' => 1,
             'rua' => $this->rua,
             'numero' => $this->numero,

@@ -38,7 +38,7 @@ class Cadastrar extends Component
             'user_id' => Auth::id(),
             'empresa_id' => Auth::user()->empresa_id,
             'nome' => $this->nome,
-            'status_id' => 1,
+            'status_id' => $this->status_id,
             'limite' => $this->limite,
             'descricao' => $this->descricao,
             'user_deleted_id' => $this->user_deleted_id

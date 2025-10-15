@@ -40,7 +40,7 @@ class Cadastrar extends Component
         Curso::create([
             'user_id' => 1,
             'nome' => $this->nome,
-            'status_id' => 1,
+            'status_id' => $this->status_id,
             'tipo_lancamento' => $this->tipo_lancamento,
             'hora_aula' => $this->hora_aula,
             'extracurricular' => $this->extracurricular,

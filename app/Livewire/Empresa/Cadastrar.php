@@ -123,7 +123,7 @@ class Cadastrar extends Component
         Empresa::create([
             'rsocial' => $this->rsocial,
             'nome_fantasia' => $this->nome_fantasia,
-            'status_id' => 1,
+            'status_id' => $this->status_id,
             'user_id' => 1,
             'cnpj' => $this->cnpj,
             'ie' => $this->ie,

@@ -64,7 +64,7 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Salario *</label>
-            <input type="text" wire:blur="formatarValor('salario')" wire:model="salario" id="salario" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="1.000,00">
+            <input type="text" wire:blur="formatarValor('salario')" wire:model="salario" id="salario" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-right" placeholder="1.000,00">
         </div>
 
         <div class="lg:col-span-1">

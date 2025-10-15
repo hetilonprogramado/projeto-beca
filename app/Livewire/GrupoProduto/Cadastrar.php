@@ -23,18 +23,42 @@ class Cadastrar extends Component
 
     public function formatarValor($campo)
     {
-        // Remove tudo que não for número
-        $valor = preg_replace('/[^\d]/', '', $this->$campo);
+        if (!property_exists($this, $campo)) {
+            return;
+        }
 
+        $valor = trim($this->$campo ?? '');
+
+        // Remove R$ e espaços
+        $valor = str_replace(['R$', ' '], '', $valor);
+
+        // Se o campo estiver vazio
         if ($valor === '' || $valor === null) {
             $this->$campo = '0,00';
             return;
         }
 
-        // Converte para float (divide os centavos)
-        $valor = number_format($valor / 100, 2, ',', '.');
+        // Substitui ponto por nada e vírgula por ponto apenas para checar se é número
+        $numeroVerificado = str_replace(['.', ','], ['', '.'], $valor);
 
-        // Atualiza o campo formatado
+        // Se não for número, apenas retorna sem mudar
+        if (!is_numeric($numeroVerificado)) {
+            return;
+        }
+
+        // Verifica se já tem vírgula (decimal)
+        if (!str_contains($valor, ',')) {
+            // Se não tem vírgula, adiciona ,00
+            $valor .= ',00';
+        }
+
+        // Remove zeros à esquerda desnecessários
+        $valor = ltrim($valor, '0');
+        if ($valor === '' || $valor[0] === ',') {
+            $valor = '0' . $valor;
+        }
+
+        // Atualiza o campo
         $this->$campo = $valor;
     }
 
@@ -67,7 +91,7 @@ class Cadastrar extends Component
         
         GrupoProdutos::create([
             'nome' => $this->nome,
-            'status_id' => 1,
+            'status_id' =>  $this->status_id,
             'lucro' => $lucro,
             'user_id' => Auth()->user()->id,
             'empresa_id' => Auth()->user()->empresa_id,

@@ -51,7 +51,7 @@
 
         <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Valor *</label>
-            <input type="text" id="valor" wire:blur="formatarValor('valor')" wire:model="valor" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o valor">
+            <input type="text" id="valor" wire:blur="formatarValor('valor')" wire:model="valor" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-right" placeholder="20,00">
             @error('valor')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
@@ -59,7 +59,7 @@
 
         <div class="lg:col-span-1">
             <label class="block text-sm font-medium text-gray-700 mb-2">Desconto *</label>
-            <input type="text" id="desconto" wire:blur="formatarValor('desconto')" wire:model="desconto" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Digite o desconto">
+            <input type="text" id="desconto" wire:blur="formatarValor('desconto')" wire:model="desconto" required class="uppercase w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-right" placeholder="10,00">
             @error('desconto')
                 <small class="text-danger">{{ $message }}</small>
             @enderror

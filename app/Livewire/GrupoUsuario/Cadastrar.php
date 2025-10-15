@@ -34,7 +34,7 @@ class Cadastrar extends Component
         
         GrupoUsuarios::create([
             'nome' => $this->nome,
-            'status_id' => 1,
+            'status_id' => $this->status_id,
             'user_id' => Auth()->user()->id,
         ]);
         // Limpa os campos do formulário

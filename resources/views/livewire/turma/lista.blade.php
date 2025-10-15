@@ -54,7 +54,9 @@
                                     @foreach($turmas as $turma)
                                         <tr class="border-b hover:bg-gray-50">
                                             <td class="py-3 px-4">{{ $turma->nome }}</td>
-                                            <td class="py-3 px-4">{{ $turma->data_inicial }}</td>
+                                            <td class="py-3 px-4">
+                                                {{ \Carbon\Carbon::parse($turma->data_inicial)->format('d/m/Y') }}
+                                            </td>
                                             <td class="py-3 px-4">
                                                 {{ 'R$ ' . number_format($turma->valor, 2, ',', '.') }}
                                             </td>

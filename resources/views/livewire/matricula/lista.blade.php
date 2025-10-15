@@ -52,7 +52,9 @@
                                         <tr class="border-b hover:bg-gray-50">
                                             <td class="py-3 px-4">{{ $matricula->cliente->nome }}</td>
                                             <td class="py-3 px-4">{{ $matricula->curso->nome }}</td>
-                                            <td class="py-3 px-4">{{ $matricula->data_cad }}</td>
+                                            <td class="py-3 px-4">
+                                                {{ \Carbon\Carbon::parse($matricula->data_cad)->format('d/m/Y') }}
+                                            </td>
                                             <td class="py-3 px-4">
                                                 <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
                                                     {{ $matricula->status->nome}}
