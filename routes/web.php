@@ -51,7 +51,14 @@ Route::middleware('auth')->group(function () {
     Volt::route('grupo-produto', 'grupo-produto.lista')->name('grupo-produto');
     Volt::route('grupo-produto/cadastrar', 'grupo-produto.cadastrar')->name('grupo-produto.cadastrar');
     Volt::route('grupo-produto/editar/{id}', 'grupo-produto.alterar')->name('grupo-produto.alterar');
-    
+
+    Volt::route('disciplina', 'disciplina.lista')->name('disciplina');
+    Volt::route('disciplina/cadastrar', 'disciplina.cadastrar')->name('disciplina.cadastrar');
+    Volt::route('disciplina/editar/{id}', 'disciplina.alterar')->name('disciplina.alterar');
+
+    Volt::route('grupo-disciplina/cadastrar', 'grupo-disciplina.cadastrar')->name('grupo-disciplina.cadastrar');
+    Volt::route('grupo-disciplina', 'grupo-disciplina.lista')->name('grupo-disciplina');
+    Volt::route('grupo-disciplina/editar/{id}', 'grupo-disciplina.alterar')->name('grupo-disciplina.alterar');    
 
     Volt::route('dashboard', 'dashboard')->name('dashboard');
 

@@ -70,6 +70,26 @@ class MenusSeeder extends Seeder
                 'icone' => 'fas fa-chalkboard-teacher w-5',
 				'user_id' => 1,
             );
+
+            $menus_array[] = array(
+                'id' => 11,
+                'nome' => 'Disciplinas',
+                'rota' => 'disciplina',
+                'status_id' => 1,
+                'tipo' => 1,
+                'icone' => 'fas fa-file-signature w-5',
+				'user_id' => 1,
+            );
+
+            $menus_array[] = array(
+                'id' => 12,
+                'nome' => 'Grupos da Disciplina',
+                'rota' => 'grupo-disciplina',
+                'status_id' => 1,
+                'tipo' => 1,
+                'icone' => 'fas fa-file-signature w-5',
+				'user_id' => 1,
+            );
             //Configurações
             $menus_array[] = array(
                 'id' => 6,

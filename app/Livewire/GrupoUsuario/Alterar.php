@@ -11,21 +11,20 @@ class Alterar extends Component
     public $nome;
     public $grupo_id;
     public $status_id;
-    public $user_id;
     public $statuses = [];
 
     protected $rules = [
         'nome' => 'required|min:4',
         'status_id' => 'required|exists:statuses,id',
-        'user_id' => 'required|exists:users,id',
     ];
 
     public function mount($id)
     {
         $grupo = GrupoUsuarios::findOrFail($id);
 
-        $this->nome = $grupo->nome;
         $this->grupo_id = $grupo->id;
+        $this->nome = $grupo->nome;
+        $this->status_id = $grupo->status_id;
 
         $this->statuses = Statues::all();
     }
@@ -34,9 +33,16 @@ class Alterar extends Component
     {
         $this->validate();
 
-        GrupoUsuarios::where('id', $this->grupoId)->update([
-            'nome' => $this->nome
-        ]);
+        $grupo = GrupoUsuarios::find($this->grupo_id);
+
+        if (!$grupo) {
+            session()->flash('error', 'Grupo não encontrado.');
+            return;
+        }
+
+        $grupo->nome = $this->nome;
+        $grupo->status_id = $this->status_id;
+        $grupo->save();
 
         session()->flash('message', 'Grupo atualizado com sucesso!');
     }

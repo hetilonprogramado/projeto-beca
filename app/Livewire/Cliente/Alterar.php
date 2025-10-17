@@ -24,7 +24,6 @@ class Alterar extends Component
     public $nome;
     public $apelido;
     public $status_id;
-    public $user_id;
     public $rua;
     public $numero;
     public $bairro;
@@ -116,7 +115,6 @@ class Alterar extends Component
         $this->nome = $cliente->nome;
         $this->apelido = $cliente->apelido;
         $this->status_id = $cliente->status_id;
-        $this->user_id = $cliente->user_id;
         $this->cpf = $cliente->cpf;
         $this->cep = $cliente->cep;
         $this->rua = $cliente->rua;
@@ -144,30 +142,31 @@ class Alterar extends Component
     {
         $this->validate();
 
-        Cliente::where('id', $this->cliente_id)->update([
-            'empresa_id' => 1,
-            'rsocial_nome' => $this->rsocial_nome,
-            'nfantasia_apelido' => $this->nfantasia_apelido,
-            'status_id' => $this->status_id,
-            'user_id' => 1,
-            'rua' => $this->rua,
-            'numero' => $this->numero,
-            'cep' => $this->cep,
-            'bairro' => $this->bairro,
-            'estado_id' => $this->estado_id,
-            'cidade_id' => $this->cidade_id,
-            'cpf' => $this->cpf,
-            'rg' => $this->rg,
-            'email' => $this->email,
-            'sexo' => $this->sexo,
-            'fornecedor' => $this->fornecedor,
-            'user_deleted_id' => $this->user_deleted_id,
-            'registro_nascimento' => $this->registro_nascimento,
-            'nacionalidade' => $this->nacionalidade,
-            'naturalidade' => $this->naturalidade,
-            'religiao' => $this->religiao,
-            'data_nasc' => $this->data_nasc,
-        ]);
+        $cliente = Cliente::find($this->cliente_id);
+        
+        $cliente-> empresa_id = $this->empresa_id;
+        $cliente-> rsocial_nome = $this->rsocial_nome;
+        $cliente-> nfantasia_apelido = $this->nfantasia_apelido;
+        $cliente-> status_id = $this->status_id;
+        $cliente-> user_id = $this->user_id;
+        $cliente->rua = $this->rua;
+        $cliente->numero = $this->numero;
+        $cliente->cep = $this->cep;
+        $cliente->bairro = $this->bairro;
+        $cliente->estado_id = $this->estado_id;
+        $cliente->cidade_id = $this->cidade_id;
+        $cliente->cpf = $this->cpf;
+        $cliente->rg = $this->rg;
+        $cliente->email = $this->email;
+        $cliente->sexo = $this->sexo;
+        $cliente->fornecedor = $this->fornecedor ?? null;
+        $cliente->user_deleted_id = $this->user_deleted_id;
+        $cliente->registro_nascimento = $this->registro_nascimento;
+        $cliente->nacionalidade = $this->nacionalidade;
+        $cliente->naturalidade = $this->naturalidade;
+        $cliente->religiao = $this->religiao;
+        $cliente->data_nasc = $this->data_nasc;
+        $cliente->save();
 
         session()->flash('message', 'Cliente atualizado com sucesso!');
     }
