@@ -60,7 +60,7 @@
                                     <a href="{{ route('grupo-produto.alterar', $grupo->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 mr-2" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('grupo-usuario.permissoes', $grupo->id) }}" wire:navigate class="text-purple-500 hover:text-purple-700 mr-2" title="Permissões">
+                                    <a wire:navigate class="text-purple-500 hover:text-purple-700 mr-2" title="Permissões">
                                         <i class="fas fa-key"></i>
                                     </button>
                                     <button wire:click="deletar({{ $grupo->id }})" class="text-red-500 hover:text-red-700" title="Excluir">
