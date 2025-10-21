@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipos_contas', function (Blueprint $table) {
+        Schema::create('tipo_contas', function (Blueprint $table) {
             $table->increments('id');
             $table->softDeletes();
 			$table->integer('empresa_id')->unsigned();
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipos_contas');
+        Schema::dropIfExists('tipo_contas');
     }
 };

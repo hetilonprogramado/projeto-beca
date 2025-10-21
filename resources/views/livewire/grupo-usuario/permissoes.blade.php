@@ -2,7 +2,12 @@
     <!-- Controles Gerais -->
     <div class="mb-6 p-4 bg-gray-50 rounded-lg flex justify-between items-center">
         <div>
-            <h3 class="font-semibold text-gray-800 mb-1">Controles Gerais</h3>
+            <div class="flex items-center space-x-3">
+                <a href="{{route('grupo-usuario')}}" wire:navigate class="text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fas fa-arrow-left text-xl"></i>
+                </a>
+                <h3 class="font-semibold text-gray-800 mb-1">Controles Gerais</h3>
+            </div> 
             <p class="text-sm text-gray-600">Ações rápidas para todas as permissões</p>
         </div>
         <div class="flex space-x-3">

@@ -35,11 +35,6 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">Descrição da Sala</label>
             <textarea id="descricaoCurso" wire:model="descricao" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none" placeholder="Descreva o que o aluno aprenderá neste curso..."></textarea>
         </div>
-                                    
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Objetivos de Aprendizagem</label>
-            <textarea id="objetivosCurso" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none" placeholder="Liste os principais objetivos e competências que serão desenvolvidas..."></textarea>
-        </div>
     </div>
 </div>
 

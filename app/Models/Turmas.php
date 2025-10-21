@@ -47,4 +47,8 @@ class Turmas extends Model
     function turnos() {
         return $this->belongsTo('App\turnos','turno_id')->withTrashed();
     }
+
+    function tipo_contas() {
+        return $this->belongsTo('App\tipo_contas','tipo_conta_id')->withTrashed();
+    }
 }

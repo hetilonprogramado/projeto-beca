@@ -18,14 +18,14 @@
                             <h3 class="text-lg font-semibold text-gray-800">Selecionar Turma</h3>
                         </div>
                         
-                        <div class="max-w-md">
-                            <select id="turmaSelect" onchange="carregarDisciplinasTurma()" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
-                                <option value="">Selecione uma turma</option>
-                                <option value="js-2024-01">JS-2024-01 - JavaScript Avançado</option>
-                                <option value="py-2024-01">PY-2024-01 - Python para Web</option>
-                                <option value="react-2024-01">REACT-2024-01 - React.js Completo</option>
-                                <option value="node-2024-01">NODE-2024-01 - Node.js Backend</option>
-                                <option value="db-2024-01">DB-2024-01 - Banco de Dados</option>
+                        <div class="w-1/2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Turma *</label>
+                            <select id="turma" wire:model="turma_id" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                                <option value="">Selecione a Turma</option>
+                                @foreach($turmas as $turma)
+                                    <option value="{{ $turma->id }}">{{ $turma->nome }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

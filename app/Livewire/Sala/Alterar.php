@@ -5,6 +5,7 @@ namespace App\Livewire\Sala;
 use App\Models\Salas;
 use App\Models\Statues;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class Alterar extends Component
 {
@@ -13,28 +14,29 @@ class Alterar extends Component
     public $status_id;
     public $limite;
     public $descricao;
-    public $salaId;
+    public $sala_id;
     public $user_deleted_id;
     public $statuses = [];
 
     protected $rules = [
-        'nome' => 'required|min:4',
+        'nome' => 'required|min:3|max:100',
         'status_id' => 'required|exists:statuses,id',
-        'limite' => 'required|numeric|min:1', // Minimum 1
+        'limite' => 'required|numeric|min:1|max:9999',
         'descricao' => 'nullable|string|max:255',
-        'user_deleted_id' => 'nullable|exists:users,id',
     ];
 
     public function mount($id)
     {
         $sala = Salas::findOrFail($id);
 
+        $this->sala_id = $sala->id;
         $this->nome = $sala->nome;
         $this->status_id = $sala->status_id;
         $this->limite = $sala->limite;
-        $this->salaId = $sala->id;
         $this->descricao = $sala->descricao;
-        $this->user_deleted_id = $sala->user_deleted_id;
+
+        // Se quiser guardar quem está alterando
+        $this->user_id = Auth::id();
 
         $this->statuses = Statues::all();
     }
@@ -43,19 +45,28 @@ class Alterar extends Component
     {
         $this->validate();
 
-        Salas::where('id', $this->salaId)->update([
+        $sala = Salas::find($this->sala_id);
+
+        if (!$sala) {
+            session()->flash('error', 'Sala não encontrada.');
+            return;
+        }
+
+        $sala->update([
             'nome' => $this->nome,
             'status_id' => $this->status_id,
             'limite' => $this->limite,
             'descricao' => $this->descricao,
-            'user_deleted_id' => $this->user_deleted_id
+            'user_deleted_id' => $this->user_deleted_id ?? null,
         ]);
 
-        session()->flash('message', 'Sala atualizado com sucesso!');
+        session()->flash('message', 'Sala atualizada com sucesso!');
     }
 
     public function render()
     {
-        return view('livewire.sala.alterar');
+        return view('livewire.sala.alterar', [
+            'statuses' => $this->statuses
+        ]);
     }
 }
