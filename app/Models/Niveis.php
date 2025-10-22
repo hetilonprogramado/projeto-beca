@@ -31,4 +31,9 @@ class Niveis extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+
+    function status()
+    {
+        return $this->belongsTo('App\Status');
+    }
 }

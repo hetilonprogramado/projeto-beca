@@ -26,7 +26,7 @@ class Turmas extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'empresa_id', 'nome', 'curso_id', 'sala_id','valor','data_inicial','data_final','status_id','carga_hr', 'user_id', 'user_deleted_id','exibir_data_final','validar_acesso','recorrente','updated_x', 'tipo_conta_id','data_encerrar_lancamento'];
+    protected $fillable = ['id', 'empresa_id', 'nome', 'curso_id', 'sala_id','valor','data_inicial','data_final','status_id','carga_hr', 'user_id', 'user_deleted_id','exibir_data_final','validar_acesso','recorrente', 'tipo_conta_id','data_encerrar_lancamento'];
     
     use SoftDeletes;
     

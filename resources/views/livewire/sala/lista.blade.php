@@ -39,11 +39,9 @@
                                 <td class="py-3 px-4">{{$sala->nome}}</td>
                                 <td class="py-3 px-4">{{$sala->limite}} horas</td>
                                 <td class="py-3 px-4">
-                                    <td class="py-3 px-4">
-                                        <span class="{{ $classe }} px-2 py-1 rounded-full text-sm">
-                                            {{ ucfirst($sala->status->nome) }}
-                                        </span>
-                                    </td>
+                                    <span class="{{ $classe }} px-2 py-1 rounded-full text-sm">
+                                        {{ ucfirst($sala->status->nome) }}
+                                    </span>
                                 </td>
                                 <td class="py-3 px-4">
                                     <a href="{{ route('sala.alterar', $sala->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 mr-2">

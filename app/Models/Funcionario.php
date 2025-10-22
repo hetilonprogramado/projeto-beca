@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Funcionario extends Model
 {
@@ -34,6 +35,12 @@ class Funcionario extends Model
         'data_nascimento',
         'nome_mae'
     ];
+
+    protected $primaryKey = 'id';
+
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     public function status()
     {

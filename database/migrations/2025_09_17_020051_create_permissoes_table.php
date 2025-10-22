@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('grupos_user_id')->unsigned();
             $table->integer('menu_id')->unsigned();
             $table->integer('status_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('status_id')->references('id')->on('statuses');

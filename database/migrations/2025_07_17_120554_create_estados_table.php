@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nome',100);
             $table->string('uf',10);
             $table->string('pais',100);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

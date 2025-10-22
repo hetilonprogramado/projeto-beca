@@ -26,7 +26,7 @@ class Matriculas extends Model
      *
      * @var array
      */
-    protected $fillable = ['id','empresa_id','status_id','cliente_id','responsavel_id','curso_id','turma_id','sala_id','valor','desconto','data_cad','ordem','obs_carteira','aluno_curso','instituicao_anterior','user_id','ano_letivo','user_deleted_id','updated_x','deleted_at'];
+    protected $fillable = ['id','empresa_id','status_id','cliente_id','responsavel_id','curso_id','turma_id','sala_id','valor','desconto','data_cad','ordem','obs_carteira','aluno_curso','instituicao_anterior','user_id','ano_letivo','user_deleted_id','deleted_at'];
     
     use SoftDeletes;
     

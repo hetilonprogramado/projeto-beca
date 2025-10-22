@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('empresa_id')->unsigned();
             $table->decimal('comissao')->nullable()->default(0);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('empresa_id')->references('id')->on('empresas');

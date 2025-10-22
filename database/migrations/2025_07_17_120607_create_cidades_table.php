@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nome',100);
             $table->string('ibge_code');
             $table->unsignedInteger('estado_id');
+            $table->softDeletes();
 
             $table->foreign('estado_id')
                   ->references('id')

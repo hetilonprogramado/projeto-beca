@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Statues;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Disciplina extends Model
 {
@@ -36,6 +37,10 @@ class Disciplina extends Model
         'sigla',
         'grupo_disciplina_id',
     ];
+
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     /**
      * Relacionamentos

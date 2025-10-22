@@ -26,7 +26,7 @@ class Contas extends Model
      *
      * @var array
      */
-    protected $fillable = ['id','nome', 'user_id', 'status_id','empresa_id','user_deleted_id','updated_x','deleted_at', 'tipo_conta_id'];
+    protected $fillable = ['id','nome', 'user_id', 'status_id','empresa_id','user_deleted_id','deleted_at', 'tipo_conta_id'];
     
     use SoftDeletes;
     

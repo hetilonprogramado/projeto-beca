@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('grupo_disciplina_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('user_deleted_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('empresa_id')->references('id')->on('empresas');

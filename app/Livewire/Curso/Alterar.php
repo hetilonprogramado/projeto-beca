@@ -52,14 +52,20 @@ class Alterar extends Component
     {
         $this->validate();
 
-        Curso::where('id', $this->cursoId)->update([
-            'nome' => $this->nome,
-            'tipo_lancamento' => $this->tipo_lancamento,
-            'hora_aula' => $this->hora_aula,
-            'extracurricular' => $this->extracurricular,
-            'nivel_id' => $this->nivel_id,
-            'status_id' => $this->status_id,
-        ]);
+        $curso = Curso::find($this->curso_id);
+
+        if (!$curso) {
+            session()->flash('error', 'Curso não encontrado.');
+            return;
+        }
+
+        
+        $curso->nome = $this->nome;
+        $curso->tipo_lancamento = $this->tipo_lancamento;
+        $curso->hora_aula = $this->hora_aula;
+        $curso->extracurricular = $this->extracurricular;
+        $curso->nivel_id = $this->nivel_id;
+        $curso->status_id = $this->status_id;
 
         session()->flash('message', 'Curso atualizado com sucesso!');
     }

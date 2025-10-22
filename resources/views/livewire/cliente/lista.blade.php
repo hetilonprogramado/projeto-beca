@@ -66,12 +66,8 @@
                                 <td class="py-3 px-4">{{ $cliente->nome }}</td>
                                 <td class="py-3 px-4">{{ $cliente->email }}</td>
                                 <td class="py-3 px-4">
-                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
-                                        <td class="py-3 px-4">
-                                            <span class="{{ $classe }} px-2 py-1 rounded-full text-sm">
-                                                {{ ucfirst($cliente->status->nome) }}
-                                            </span>
-                                        </td>
+                                    <span class="{{ $classe }} px-2 py-1 rounded-full text-sm">
+                                        {{ ucfirst($cliente->status->nome) }}
                                     </span>
                                 </td>
                                 <td class="py-3 px-4">

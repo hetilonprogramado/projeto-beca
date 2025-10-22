@@ -29,6 +29,7 @@ return new class extends Migration
             $table->enum('combo', ['Nao', 'Sim'])->nullable();
             $table->string('imagem',100);
             $table->integer('grup_prod_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('empresa_id')->references('id')->on('empresas');

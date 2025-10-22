@@ -140,15 +140,17 @@ class Alterar extends Component
 
     public function atualizar()
     {
+        $this->cpf = preg_replace('/\D/', '', $this->cpf);
+
         $this->validate();
 
         $cliente = Cliente::find($this->cliente_id);
         
-        $cliente-> empresa_id = $this->empresa_id;
-        $cliente-> rsocial_nome = $this->rsocial_nome;
-        $cliente-> nfantasia_apelido = $this->nfantasia_apelido;
+        $cliente-> empresa_id = Auth()->user()->empresa_id ?? 1;
+        $cliente-> nome = $this->nome;
+        $cliente-> apelido = $this->apelido;
         $cliente-> status_id = $this->status_id;
-        $cliente-> user_id = $this->user_id;
+        $cliente-> user_id = Auth()->user()->id;
         $cliente->rua = $this->rua;
         $cliente->numero = $this->numero;
         $cliente->cep = $this->cep;
@@ -159,7 +161,6 @@ class Alterar extends Component
         $cliente->rg = $this->rg;
         $cliente->email = $this->email;
         $cliente->sexo = $this->sexo;
-        $cliente->fornecedor = $this->fornecedor ?? null;
         $cliente->user_deleted_id = $this->user_deleted_id;
         $cliente->registro_nascimento = $this->registro_nascimento;
         $cliente->nacionalidade = $this->nacionalidade;

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->integer('status_id')->unsigned();
             $table->integer('user_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

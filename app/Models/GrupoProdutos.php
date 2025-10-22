@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GrupoProdutos extends Model
 {
@@ -17,6 +18,12 @@ class GrupoProdutos extends Model
         'comissao',
         'user_deleted_id'
     ];
+
+    protected $primaryKey = 'id';
+
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     public function status()
     {

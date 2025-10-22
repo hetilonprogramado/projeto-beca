@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Statues;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Empresa extends Model
 {
@@ -34,6 +35,12 @@ class Empresa extends Model
         'user_id',
         'regime_apuracao'
     ];
+
+    protected $primaryKey = 'id';
+
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     public function status()
     {
