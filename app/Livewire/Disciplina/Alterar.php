@@ -27,8 +27,8 @@ class Alterar extends Component
         'empresa_id' => 'required|exists:empresas,id',
         'sigla' => 'required|min:2|max:10',
         'hrs_aula' => 'required|numeric|min:1',
-        'status_id' => 'required|exists:statuses,id',
-        'grupo_disciplina_id' => 'required|exists:grupo_disciplinas,id',
+        'status_id' => 'required|exists:statues,id', // <-- corrigido
+        'grupo_disciplina_id' => 'required|exists:grupos_disciplinas,id', // <-- corrigido nome da tabela
         'user_deleted_id' => 'nullable|exists:users,id',
     ];
 
@@ -36,6 +36,10 @@ class Alterar extends Component
     {
         $disciplina = Disciplina::findOrFail($id);
 
+        // guarda o ID
+        $this->disciplina_id = $disciplina->id;
+
+        // preenche os campos
         $this->nome = $disciplina->nome;
         $this->empresa_id = $disciplina->empresa_id;
         $this->sigla = $disciplina->sigla;
@@ -43,6 +47,8 @@ class Alterar extends Component
         $this->status_id = $disciplina->status_id;
         $this->grupo_disciplina_id = $disciplina->grupo_disciplina_id;
         $this->user_deleted_id = $disciplina->user_deleted_id;
+
+        // carrega opções de selects
         $this->statuses = Statues::all();
         $this->grupo_disciplinas = GrupoDisciplina::all();
     }
@@ -51,17 +57,20 @@ class Alterar extends Component
     {
         $this->validate();
 
-        Disciplina::where('id', $this->disciplina_id)->update([
-            'nome' => $this->nome,
-            'empresa_id' => $this->empresa_id,
-            'sigla' => $this->sigla,
-            'hrs_aula' => $this->hrs_aula,
-            'status_id' => $this->status_id,
-            'grupo_disciplina_id' => $this->grupo_disciplina_id,
-            'user_deleted_id' => $this->user_deleted_id
-        ]);
+        $disciplina = Disciplina::find($this->disciplina_id);
 
-        session()->flash('message', 'Disciplina atualizado com sucesso!');
+
+        $disciplina -> nome = $this->nome;
+        $disciplina -> empresa_id = Auth()->user()->empresa_id ?? 1;
+        $disciplina -> sigla = $this->sigla;
+        $disciplina -> hrs_aula = $this->hrs_aula;
+        $disciplina -> status_id = $this->status_id;
+        $disciplina -> grupo_disciplina_id = $this->grupo_disciplina_id;
+        $disciplina -> user_deleted_id = $this->user_deleted_id;
+        $disciplina -> user_id = Auth()->user()->id;
+        $disciplina->save();
+
+        session()->flash('message', 'Disciplina atualizada com sucesso!');
     }
 
     public function render()

@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Statues;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Statues;
 
 class GrupoDisciplina extends Model
 {
+    use HasFactory, SoftDeletes;
+
     /**
      * Nome da tabela
      *
@@ -34,12 +37,15 @@ class GrupoDisciplina extends Model
         'user_deleted_id',
     ];
 
-    use SoftDeletes;
-
+    /**
+     * Campos de data (para soft delete)
+     *
+     * @var array
+     */
     protected $dates = ['deleted_at'];
 
     /**
-     * Relacionamento com Status
+     * Relacionamento com Statues
      */
     public function status()
     {
