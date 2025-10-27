@@ -53,6 +53,7 @@ class Alterar extends Component
         'sinc' => 'nullable|boolean',
         'empresa_id' => 'required|integer',
         'user_id' => 'required|integer',
+        'status_id' => 'required|integer|exists:statuses,id',
     ];
 
     public function mount($id)

@@ -27,7 +27,7 @@ class Alterar extends Component
     protected $rules = [
         'nome' => 'required|string|max:255',
         'descricao' => 'nullable|string',
-        'status_id' => 'required|integer',
+        'status_id' => 'required|integer|exists:statuses,id',
         'tipo_lancamento' => 'required|string|max:255',
         'hora_aula' => 'nullable|integer',
         'extracurricular' => 'nullable|boolean',

@@ -82,25 +82,24 @@ class Alterar extends Component
     public $tipo_pessoa = 'Juridica';
 
     protected $rules = [
-        'rsocial' => 'required|min:4',
-        'nome_fantasia' => 'required|min:4',
+        'rsocial' => 'required|string|max:255',
+        'nome_fantasia' => 'required|string|max:255',
         'status_id' => 'required|exists:statuses,id',
-        'rua' => 'required|min:3',
-        'numero' => 'required|numeric',
-        'cep' => 'required|regex:/^\d{8}$/',
-        'bairro' => 'required|min:3',
+        'cnpj' => 'nullable|digits_between:11,14',
+        'ie' => 'nullable|string|max:20',
+        'rua' => 'required|string|max:255',
+        'numero' => 'required|string|max:10',
+        'bairro' => 'required|string|max:100',
         'estado_id' => 'required|exists:estados,id',
-        'cidade_id' => 'required|exists:cidades,id',
-        'email' => 'nullable|email',
-        'telefone1' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/',
-        'telefone2' => 'nullable|regex:/^\(\d{2}\) \d{4,5}-\d{4}$/',
-        'site' => 'nullable|url',
+        'cidade_id' => 'required|exists:cidades,id',    
+        'email' => 'nullable|email|max:255',
+        'telefone1' => 'nullable|string|max:20',
+        'telefone2' => 'nullable|string|max:20',
+        'site' => 'nullable|url|max:255',
         'data_lib' => 'nullable|date',
-        'tipo_pessoa' => 'required|in:Fisica,Juridica',
-        'cep' => 'required|regex:/^\d{5}-\d{3}$/',
-        'user_id' => 'required|exists:users,id',
-        'cnpj' => 'required|regex:/^\d{2}\.\d{2}\.\d{3}\/\d{4}-\d{2}$/',
-        'ie' => 'nullable|regex:/^\d{2}\.\d{3}\.\d{3}\.\d{3}$/',
+        'cep' => 'nullable|digits:8',
+        'modulo_id' => 'nullable|exists:modulos,id',
+        'tipo_pessoa' => 'required|in:Juridica,Fisica',
     ];
 
     public function mount($id)
@@ -136,28 +135,31 @@ class Alterar extends Component
 
     public function atualizar()
     {
+        $this->cnpj = preg_replace('/\D/', '', $this->cnpj);
+
         $this->validate();
 
-        Empresa::where('id', $this->empresa_id)->update([
-            'rsocial' => $this->rsocial,
-            'nome_fantasia' => $this->nome_fantasia,
-            'status_id' => $this->status_id,
-            'user_id' => $this->user_id,
-            'cnpj' => $this->cnpj,
-            'ie' => $this->ie,
-            'cep' => $this->cep,
-            'rua' => $this->rua,
-            'numero' => $this->numero,
-            'bairro' => $this->bairro,
-            'estado_id' => $this->estado_id,
-            'cidade_id' => $this->cidade_id,
-            'email' => $this->email,
-            'telefone1' => $this->telefone1,
-            'telefone2' => $this->telefone2,
-            'site' => $this->site,
-            'data_lib' => $this->data_lib,
-            'tipo_pessoa' => $this->tipo_pessoa,
-        ]);
+        $empresa = Empresa::find($this->empresa_id);
+        
+        $empresa-> rsocial = $this->rsocial;
+        $empresa-> nome_fantasia = $this->nome_fantasia;
+        $empresa-> status_id = $this->status_id;
+        $empresa-> cnpj = $this->cnpj;
+        $empresa-> ie = $this->ie;
+        $empresa-> cep = $this->cep;
+        $empresa-> rua = $this->rua;
+        $empresa-> numero = $this->numero;
+        $empresa-> bairro = $this->bairro;
+        $empresa-> estado_id = $this->estado_id;
+        $empresa-> cidade_id = $this->cidade_id;
+        $empresa-> modulo_id = $this->modulo_id;
+        $empresa-> email = $this->email;
+        $empresa-> telefone1 = $this->telefone1;
+        $empresa-> telefone2 = $this->telefone2;
+        $empresa-> site = $this->site;
+        $empresa-> data_lib = $this->data_lib;
+        $empresa-> tipo_pessoa = $this->tipo_pessoa;
+        $empresa-> save();
 
         session()->flash('message', 'Empresa atualizado com sucesso!');
     }

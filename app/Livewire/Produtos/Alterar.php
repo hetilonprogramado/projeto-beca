@@ -31,22 +31,19 @@ class Alterar extends Component
     public $statuses = [];
 
     protected $rules = [
-        'empresa_id' => 'required',
-        'grup_prod_id' => 'required',
         'nome' => 'required|string|max:255',
         'vlr_compra' => 'nullable|numeric',
         'vlr_venda' => 'nullable|numeric',
         'estoque_minimo' => 'nullable|integer',
-        'codigo_barras' => 'nullable|string|max:255',
-        'status_id' => 'required|integer',
-        'user_id' => 'required|integer',
-        'user_deleted_id' => 'nullable|integer',
-        'grupo_fiscal_id' => 'nullable|integer',
-        'grupo_produto_id' => 'nullable|integer',
+        'codigo_barras' => 'nullable|string|max:100',
+        'status_id' => 'required|exists:statuses,id',
         'utilizacao' => 'nullable|string|max:255',
-        'ncm' => 'nullable|string|max:255',
+        'ncm' => 'nullable|string|max:20',
         'combo' => 'nullable|boolean',
         'imagem' => 'nullable|string|max:255',
+        'user_deleted_id' => 'nullable|exists:users,id',
+        'grupo_fiscal_id' => 'nullable|integer',
+        'grupo_produto_id' => 'nullable|integer',
     ];
 
     public function mount($id)
@@ -54,51 +51,53 @@ class Alterar extends Component
         $produto = Produtos::findOrFail($id);
 
         $this->produto_id = $produto->id;
-        $this->empresa_id = $produto->empresa_id;
-        $this->grup_prod_id = $produto->grup_prod_id;
         $this->nome = $produto->nome;
-        $this->vlr_compra = $produto->vlr_compra;
-        $this->vlr_venda = $produto->vlr_venda;
-        $this->estoque_minimo = $produto->estoque_minimo;
         $this->codigo_barras = $produto->codigo_barras;
         $this->status_id = $produto->status_id;
-        $this->user_id = $produto->user_id;
         $this->user_deleted_id = $produto->user_deleted_id;
+        $this->user_id = $produto->user_id;
+        $this->empresa_id = $produto->empresa_id;
+        $this->estoque_minimo = $produto->estoque_minimo;
         $this->grupo_fiscal_id = $produto->grupo_fiscal_id;
         $this->grupo_produto_id = $produto->grupo_produto_id;
         $this->utilizacao = $produto->utilizacao;
+        $this->vlr_compra = $produto->vlr_compra;
+        $this->vlr_venda = $produto->vlr_venda;
         $this->ncm = $produto->ncm;
         $this->combo = $produto->combo;
         $this->imagem = $produto->imagem;
+        $this->grup_prod_id = $produto->grup_prod_id;
 
-        $this->grupos = GrupoProdutos::all();
         $this->statuses = Statues::all();
+        $this->grupos = GrupoProdutos::all();
+
     }
 
     public function atualizar()
     {
         $this->validate();
 
-        Produtos::where('id', $this->produto_id_id)->update([
-            'empresa_id' => $this->empresa_id,
-            'grup_prod_id' => $this->grup_prod_id,
-            'nome' => $this->nome,
-            'vlr_compra' => $this->vlr_compra,
-            'vlr_venda' => $this->vlr_venda,
-            'estoque_minimo' => $this->estoque_minimo,
-            'codigo_barras' => $this->codigo_barras,
-            'status_id' => $this->status_id,
-            'user_id' => $this->user_id,
-            'user_deleted_id' => $this->user_deleted_id,
-            'grupo_fiscal_id' => $this->grupo_fiscal_id,
-            'grupo_produto_id' => $this->grupo_produto_id,
-            'utilizacao' => $this->utilizacao,
-            'ncm' => $this->ncm,
-            'combo' => $this->combo,
-            'imagem' => $this->imagem,
-        ]);
+        $produto = Produtos::find($this->produto_id);
+        
+        $produto-> nome = $this->nome;
+        $produto-> codigo_barras = $this->codigo_barras;
+        $produto-> status_id = $this->status_id;
+        $produto-> user_deleted_id = $this->user_deleted_id;
+        $produto-> user_id = Auth()->user()->id;
+        $produto-> empresa_id = $this->empresa_id;
+        $produto-> estoque_minimo = $this->estoque_minimo;
+        $produto-> grupo_fiscal_id = $this->grupo_fiscal_id;
+        $produto-> grupo_produto_id = $this->grupo_produto_id;
+        $produto-> utilizacao = $this->utilizacao;
+        $produto-> vlr_compra = $this->vlr_compra;
+        $produto-> vlr_venda = $this->vlr_venda;
+        $produto-> ncm = $this->ncm;
+        $produto-> combo = $this->combo;    
+        $produto-> imagem = $this->imagem;
+        $produto-> grup_prod_id = $this->grup_prod_id;
+        $produto-> save();
 
-        session()->flash('message', 'Produto atualizado com sucesso!');
+        session()->flash('message', 'Produtos atualizado com sucesso!');
     }
 
     public function cancelar()

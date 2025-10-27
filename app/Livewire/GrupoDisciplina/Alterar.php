@@ -23,21 +23,31 @@ class Alterar extends Component
     {
         $grupo = GrupoDisciplina::findOrFail($id);
 
+        $this->grupo_disciplina_id = $grupo->id;
         $this->nome = $grupo->nome;
         $this->status_id = $grupo->status_id;
+
         $this->statuses = Statues::all();
+
     }
 
     public function atualizar()
     {
         $this->validate();
 
-        GrupoDisciplina::where('id', $this->grupo_disciplina_id)->update([
-            'nome' => $this->nome,
-            'status_id' => $this->status_id,
-        ]);
+        $grupo = GrupoDisciplina::find($this->grupo_disciplina_id);
+        
+        $grupo->nome = $this->nome;
+        $grupo->status_id = $this->status_id;
+        $grupo->save();
 
-        session()->flash('message', 'Grupo Disciplina atualizado com sucesso!');
+        session()->flash('message', 'Grupo atualizado com sucesso!');
+    }
+
+    public function cancelar()
+    {
+        $this->reset(); // limpa todos os campos
+        session()->flash('message', 'Alterar cancelado!');
     }
 
     public function render()

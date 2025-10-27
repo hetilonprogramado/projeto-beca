@@ -36,6 +36,6 @@ class Salas extends Model
     
     public function status()
     {
-        return $this->belongsTo(Statues::class, 'status_id', 'id');
+        return $this->belongsTo(Statues::class, 'status_id');
     }
 }

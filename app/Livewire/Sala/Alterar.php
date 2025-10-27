@@ -19,10 +19,13 @@ class Alterar extends Component
     public $statuses = [];
 
     protected $rules = [
-        'nome' => 'required|min:3|max:100',
-        'status_id' => 'required|exists:statuses,id',
-        'limite' => 'required|numeric|min:1|max:9999',
-        'descricao' => 'nullable|string|max:255',
+        'nome' => 'required|string|max:255',
+        'status_id' => 'required|integer|exists:statuses,id',
+        'limite' => 'required|integer|min:1',
+        'descricao' => 'nullable|string',
+        'user_deleted_id' => 'nullable|integer|exists:users,id',
+        'user_id' => 'required|integer|exists:users,id',
+        'sala_id' => 'required|integer|exists:salas,id',
     ];
 
     public function mount($id)
@@ -34,11 +37,11 @@ class Alterar extends Component
         $this->status_id = $sala->status_id;
         $this->limite = $sala->limite;
         $this->descricao = $sala->descricao;
-
-        // Se quiser guardar quem está alterando
-        $this->user_id = Auth::id();
+        $this->user_deleted_id = $sala->user_deleted_id;
+        $this->user_id = $sala->user_id;
 
         $this->statuses = Statues::all();
+
     }
 
     public function atualizar()
@@ -46,21 +49,22 @@ class Alterar extends Component
         $this->validate();
 
         $sala = Salas::find($this->sala_id);
+        
+        $sala-> nome = $this->nome;
+        $sala-> status_id = $this->status_id;
+        $sala-> limite = $this->limite;
+        $sala-> descricao = $this->descricao;
+        $sala-> user_deleted_id = $this->user_deleted_id;
+        $sala-> user_id = $this->user_id;
+        $sala->save();
 
-        if (!$sala) {
-            session()->flash('error', 'Sala não encontrada.');
-            return;
-        }
+        session()->flash('message', 'Sala atualizado com sucesso!');
+    }
 
-        $sala->update([
-            'nome' => $this->nome,
-            'status_id' => $this->status_id,
-            'limite' => $this->limite,
-            'descricao' => $this->descricao,
-            'user_deleted_id' => $this->user_deleted_id ?? null,
-        ]);
-
-        session()->flash('message', 'Sala atualizada com sucesso!');
+    public function cancelar()
+    {
+        $this->reset(); // limpa todos os campos
+        session()->flash('message', 'Alterar cancelado!');
     }
 
     public function render()

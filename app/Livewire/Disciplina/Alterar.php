@@ -27,7 +27,7 @@ class Alterar extends Component
         'empresa_id' => 'required|exists:empresas,id',
         'sigla' => 'required|min:2|max:10',
         'hrs_aula' => 'required|numeric|min:1',
-        'status_id' => 'required|exists:statues,id', // <-- corrigido
+        'status_id' => 'required|exists:statuses,id', // <-- corrigido
         'grupo_disciplina_id' => 'required|exists:grupos_disciplinas,id', // <-- corrigido nome da tabela
         'user_deleted_id' => 'nullable|exists:users,id',
     ];

@@ -85,35 +85,34 @@ class Alterar extends Component
 
     protected $rules = [
         'name' => 'required|string|max:255',
-        'usuario_id' => 'required|exists:users,id',
-        'email' => 'required|email|max:255|unique:users,email',
-        'password' => 'required|string|min:8|confirmed',
-        'empresa_id' => 'required|exists:empresas,id',
-        'grupo_usuario_id' => 'required|exists:grupo_usuarios,id',
+        'email' => 'required|email|max:255',
+        'password' => 'nullable|string|min:6',
         'codigo_acesso' => 'nullable|string|max:50',
+        'status_id' => 'required|integer',
         'cpf' => 'nullable|string|max:14',
         'rg' => 'nullable|string|max:20',
-        'sexo' => 'required|in:Masculino,Feminino',
-        'status_id' => 'required|exists:statuses,id',
-        'user_system' => 'nullable|in:Sim,Nao',
-        'user_deleted_id' => 'nullable|exists:users,id',
-        'user_id' => 'required|exists:users,id',
+        'sexo' => 'nullable|string|max:10',
+        'user_system' => 'nullable|boolean',
+        'user_deleted_id' => 'nullable|integer',
         'rua' => 'nullable|string|max:255',
-        'numero' => 'nullable|string|max:10',
+        'numero' => 'nullable|string|max:20',
         'cep' => 'nullable|string|max:10',
         'bairro' => 'nullable|string|max:100',
-        'cidade_id' => 'required|exists:cidades,id',
-        'estado_id' => 'required|exists:estados,id',
+        'cidade_id' => 'nullable|integer',
+        'estado_id' => 'nullable|integer',
         'data_admissao' => 'nullable|date',
         'data_demissao' => 'nullable|date',
         'data_nascimento' => 'nullable|date',
-        'telefone1' => 'nullable|string|max:15',
-        'telefone2' => 'nullable|string|max:15',
-        'salario' => 'nullable|numeric|min:0',
-        'perc_compra' => 'nullable|numeric|min:0|max:100',
+        'telefone1' => 'nullable|string|max:20',
+        'telefone2' => 'nullable|string|max:20',
+        'salario' => 'nullable|numeric',
+        'perc_compra' => 'nullable|numeric',
         'cargo' => 'nullable|string|max:100',
         'pis' => 'nullable|string|max:20',
         'ctps' => 'nullable|string|max:20',
+        'empresa_id' => 'nullable|integer',
+        'grupo_usuario_id' => 'nullable|integer',
+        'user_id' => 'nullable|integer',
     ];
 
     public function mount($id)
@@ -123,6 +122,7 @@ class Alterar extends Component
         $this->usuario_id = $usuario->id;
         $this->name = $usuario->name;
         $this->email = $usuario->email;
+        $this->password = $usuario->password;
         $this->empresa_id = $usuario->empresa_id;
         $this->grupo_usuario_id = $usuario->grupo_usuario_id;
         $this->codigo_acesso = $usuario->codigo_acesso;
@@ -142,52 +142,66 @@ class Alterar extends Component
         $this->data_admissao = $usuario->data_admissao;
         $this->data_demissao = $usuario->data_demissao;
         $this->data_nascimento = $usuario->data_nascimento;
-        $this->telefone1 = $usuario->telefone01;
-        $this->telefone2 = $usuario->telefone02;
+        $this->telefone1 = $usuario->telefone1;
+        $this->telefone2 = $usuario->telefone2;
         $this->salario = $usuario->salario;
         $this->perc_compra = $usuario->perc_compra;
         $this->cargo = $usuario->cargo;
         $this->pis = $usuario->pis;
         $this->ctps = $usuario->ctps;
+
+        $this->estados = Estados::all();
+        $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
+        $this->statuses = Statues::all();
+
     }
 
     public function atualizar()
     {
+        $this->cpf = preg_replace('/\D/', '', $this->cpf);
+
         $this->validate();
 
-        User::where('id', $this->usuarioId)->update([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => bcrypt($this->password),
-            'empresa_id' => $this->empresa_id,
-            'grupo_usuario_id' => $this->grupo_usuario_id,
-            'codigo_acesso' => $this->codigo_acesso,
-            'cpf' => $this->cpf,
-            'rg' => $this->rg,
-            'sexo' => $this->sexo,
-            'status_id' => $this->status_id,
-            'user_system' => $this->user_system,
-            'user_deleted_id' => $this->user_deleted_id,
-            'user_id' => $this->user_id,
-            'rua' => $this->rua,
-            'numero' => $this->numero,
-            'cep' => $this->cep,
-            'bairro' => $this->bairro,
-            'cidade_id' => $this->cidades,
-            'estado_id' => $this->estado_id,
-            'data_admissao' => $this->data_admissao,
-            'data_demissao' => $this->data_demissao,
-            'data_nascimento' => $this->data_nascimento,
-            'telefone1' => $this->telefone1,
-            'telefone2' => $this->telefone2,
-            'salario' => $this->salario,
-            'perc_compra' => $this->perc_compra,
-            'cargo' => $this->cargo,
-            'pis' => $this->pis,
-            'ctps' => $this->ctps
-        ]);
+        $usuario = User::find($this->usuario_id);
+        
+        $usuario-> name = $this->name;
+        $usuario-> email = $this->email;
+        $usuario-> password= $this->password;
+        $usuario-> empresa_id = Auth()->user()->empresa_id ?? 1;
+        $usuario-> grupo_usuario_id = $this->grupo_usuario_id;
+        $usuario-> codigo_acesso = $this->codigo_acesso;
+        $usuario-> cpf = $this->cpf;
+        $usuario-> rg = $this->rg;
+        $usuario-> sexo = $this->sexo;
+        $usuario-> status_id = $this->status_id;
+        $usuario-> user_system = $this->user_system;
+        $usuario-> user_deleted_id = $this->user_deleted_id;
+        $usuario-> user_id = Auth()->user()->id;
+        $usuario->rua = $this->rua;
+        $usuario->numero = $this->numero;
+        $usuario->cep = $this->cep;
+        $usuario->bairro = $this->bairro;
+        $usuario->estado_id = $this->estado_id;
+        $usuario->cidade_id = $this->cidade_id;
+        $usuario->data_admissao = $this->data_admissao;
+        $usuario->data_demissao = $this->data_demissao;
+        $usuario->data_nascimento = $this->data_nascimento;
+        $usuario->telefone1 = $this->telefone1;
+        $usuario->telefone2 = $this->telefone2;
+        $usuario->salario = $this->salario;
+        $usuario->perc_compra = $this->perc_compra;
+        $usuario->cargo = $this->cargo;
+        $usuario->pis = $this->pis;
+        $usuario->ctps = $this->ctps;
+        $usuario->save();
 
         session()->flash('message', 'Usuario atualizado com sucesso!');
+    }
+
+    public function cancelar()
+    {
+        $this->reset(); // limpa todos os campos
+        session()->flash('message', 'Alterar cancelado!');
     }
 
     public function render()
