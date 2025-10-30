@@ -38,14 +38,15 @@ class Alterar extends Component
     public $statuses = [];
 
     protected $rules = [
+        'status_id' => 'required|exists:statuses,id',
         'cliente_id' => 'required|integer',
         'curso_id' => 'required|integer',
         'turma_id' => 'required|integer',
         'sala_id' => 'required|integer',
-        'valor' => 'required|numeric',
-        'desconto' => 'nullable|numeric',
+        'valor' => 'nullable|numeric|min:0|max:100',
+        'desconto' => 'nullable|numeric|min:0|max:100',
         'data_cad' => 'required|date',
-        'ordem' => 'nullable|string|max:255',
+        'ordem' => 'required|integer',
         'obs_carteira' => 'nullable|string',
         'aluno_curso' => 'nullable|string|max:255',
         'instituicao_anterior' => 'nullable|string|max:255',
@@ -53,7 +54,6 @@ class Alterar extends Component
         'sinc' => 'nullable|boolean',
         'empresa_id' => 'required|integer',
         'user_id' => 'required|integer',
-        'status_id' => 'required|integer|exists:statuses,id',
     ];
 
     public function mount($id)
@@ -61,7 +61,6 @@ class Alterar extends Component
         $matricula = Matriculas::findOrFail($id);
 
         $this->matricula_id = $matricula->id;
-        $this->empresa_id = $matricula->empresa_id;
         $this->status_id = $matricula->status_id;
         $this->cliente_id = $matricula->cliente_id;
         $this->curso_id = $matricula->curso_id;
@@ -74,44 +73,101 @@ class Alterar extends Component
         $this->obs_carteira = $matricula->obs_carteira;
         $this->aluno_curso = $matricula->aluno_curso;
         $this->instituicao_anterior = $matricula->instituicao_anterior;
+        $this->empresa_id = $matricula->empresa_id;
         $this->user_id = $matricula->user_id;
         $this->user_deleted_id = $matricula->user_deleted_id;
         $this->sinc = $matricula->sinc;
-        
-        $this->statuses = Statues::all();
+
         $this->clientes = Cliente::all();
         $this->cursos = Curso::all();
         $this->turmas = Turmas::all();
         $this->salas = Salas::all();
+        $this->statuses = Statues::all();
 
+    }
+
+    public function formatarValor($campo)
+    {
+        if (!property_exists($this, $campo)) {
+            return;
+        }
+
+        $valor = trim($this->$campo ?? '');
+
+        // Remove R$ e espaços
+        $valor = str_replace(['R$', ' '], '', $valor);
+
+        // Se o campo estiver vazio
+        if ($valor === '' || $valor === null) {
+            $this->$campo = '0,00';
+            return;
+        }
+
+        // Substitui ponto por nada e vírgula por ponto apenas para checar se é número
+        $numeroVerificado = str_replace(['.', ','], ['', '.'], $valor);
+
+        // Se não for número, apenas retorna sem mudar
+        if (!is_numeric($numeroVerificado)) {
+            return;
+        }
+
+        // Verifica se já tem vírgula (decimal)
+        if (!str_contains($valor, ',')) {
+            // Se não tem vírgula, adiciona ,00
+            $valor .= ',00';
+        }
+
+        // Remove zeros à esquerda desnecessários
+        $valor = ltrim($valor, '0');
+        if ($valor === '' || $valor[0] === ',') {
+            $valor = '0' . $valor;
+        }
+
+        // Atualiza o campo
+        $this->$campo = $valor;
     }
 
     public function atualizar()
     {
+        // Ajusta data
+        $this->data_cad = date('Y-m-d', strtotime($this->data_cad));
+
+        // Garante empresa e usuário antes da validação
+        $this->empresa_id = Auth()->user()->empresa_id ?? 1;
+        $this->user_id = Auth()->user()->id;
+
+        // Formata valor e desconto para float
+        $valor = str_replace(['R$', '.', ' '], '', $this->valor);
+        $valor = str_replace(',', '.', $valor);
+
+        $desconto = str_replace(['R$', '.', ' '], '', $this->desconto);
+        $desconto = str_replace(',', '.', $desconto);
+
         $this->validate();
 
-        $matricula = Matriculas::find($this->matricula_id);
-        
+        $matricula = Matriculas::findOrFail($this->matricula_id);
+
         $matricula->status_id = $this->status_id;
         $matricula->cliente_id = $this->cliente_id;
         $matricula->curso_id = $this->curso_id;
         $matricula->turma_id = $this->turma_id;
         $matricula->sala_id = $this->sala_id;
-        $matricula->valor = $this->valor;
-        $matricula->desconto = $this->desconto;
+        $matricula->valor = $valor;
+        $matricula->desconto = $desconto;
         $matricula->data_cad = $this->data_cad;
         $matricula->ordem = $this->ordem;
         $matricula->obs_carteira = $this->obs_carteira;
         $matricula->aluno_curso = $this->aluno_curso;
         $matricula->instituicao_anterior = $this->instituicao_anterior;
+        $matricula->empresa_id = $this->empresa_id;
+        $matricula->user_id = $this->user_id;
         $matricula->user_deleted_id = $this->user_deleted_id;
         $matricula->sinc = $this->sinc;
-        $matricula->user_id = Auth()->user()->id;
-        $matricula->empresa_id = Auth()->user()->empresa_id ?? 1;
         $matricula->save();
 
-        session()->flash('message', 'Matricula atualizado com sucesso!');
+        session()->flash('message', 'Matrícula atualizada com sucesso!');
     }
+
 
     public function cancelar()
     {

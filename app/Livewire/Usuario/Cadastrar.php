@@ -174,7 +174,7 @@ class Cadastrar extends Component
        // $this->validate();
         
         User::create([
-            'empresa_id' => 1,
+            'empresa_id' =>Auth()->user()->empresa_id ?? 1,
             'status_id' => $this->status_id,
             'grupo_usuario_id' => 1,
             'user_id' => Auth()->user()->id,

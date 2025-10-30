@@ -27,7 +27,7 @@ class Curso extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'empresa_id','user_id', 'user_deleted_id','deleted_at', 'nome', 'status_id','tipo_lancamento','hora_aula','extracurricular', 'nivel_id'];
+    protected $fillable = ['id','user_id', 'user_deleted_id','deleted_at', 'nome', 'status_id','tipo_lancamento','hora_aula','extracurricular', 'nivel_id', 'descricao'];
     
     use SoftDeletes;
     

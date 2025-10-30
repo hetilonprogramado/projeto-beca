@@ -25,16 +25,14 @@ class Alterar extends Component
     public $niveis = [];
 
     protected $rules = [
-        'nome' => 'required|string|max:255',
+        'nome' => 'required|min:4',
+        'status_id' => 'required|exists:statuses,id',
+        'tipo_lancamento' => 'required|string|max:100',
+        'hora_aula' => 'required|integer|min:0',
+        'extracurricular' => 'required|in:0,1',
+        'nivel_id' => 'required|integer|exists:niveis,id',
         'descricao' => 'nullable|string',
-        'status_id' => 'required|integer|exists:statuses,id',
-        'tipo_lancamento' => 'required|string|max:255',
-        'hora_aula' => 'nullable|integer',
-        'extracurricular' => 'nullable|boolean',
-        'nivel_id' => 'required|integer',
-        'user_deleted_id' => 'nullable|integer',
-        'user_id' => 'required|integer',
-        'curso_id' => 'required|integer',
+        'user_deleted_id' => 'nullable|integer|exists:users,id',
     ];
 
     public function mount($id)
@@ -50,39 +48,36 @@ class Alterar extends Component
         $this->extracurricular = $curso->extracurricular;
         $this->nivel_id = $curso->nivel_id;
         $this->user_deleted_id = $curso->user_deleted_id;
-        $this->user_id = Auth()->user()->id;
-        $this->empresa_id = Auth()->user()->empresa_id ?? 1;
 
         $this->statuses = Statues::all();
         $this->niveis = Niveis::all();
-
     }
 
     public function atualizar()
     {
         $this->validate();
 
-        $curso = Curso::find($this->curso_id);
+        $curso = Curso::findOrFail($this->curso_id);
         
-        $curso-> empresa_id = Auth()->user()->empresa_id ?? 1;
-        $curso-> nome = $this->nome;
-        $curso-> descricao = $this->descricao;
-        $curso-> status_id = $this->status_id;
-        $curso-> tipo_lancamento = $this->tipo_lancamento;
-        $curso-> hora_aula = $this->hora_aula;
-        $curso-> extracurricular = $this->extracurricular;
-        $curso-> nivel_id = $this->nivel_id;
-        $curso-> user_deleted_id = $this->user_deleted_id;
-        $curso-> user_id = Auth()->user()->id;
-        $curso-> save();
+        $curso->nome = $this->nome;
+        $curso->descricao = $this->descricao;
+        $curso->status_id = $this->status_id;
+        $curso->tipo_lancamento = $this->tipo_lancamento;
+        $curso->hora_aula = $this->hora_aula;
+        $curso->extracurricular = $this->extracurricular;
+        $curso->nivel_id = $this->nivel_id;
+        $curso->user_id = Auth()->user()->id;
+        $curso->user_deleted_id = $this->user_deleted_id;
+
+        $curso->save();
 
         session()->flash('message', 'Curso atualizado com sucesso!');
     }
 
     public function cancelar()
     {
-        $this->reset(); // limpa todos os campos
-        session()->flash('message', 'Alterar cancelado!');
+        $this->reset();
+        session()->flash('message', 'Alteração cancelada!');
     }
 
     public function render()

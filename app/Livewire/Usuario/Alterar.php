@@ -119,41 +119,44 @@ class Alterar extends Component
     {
         $usuario = User::findOrFail($id);
 
-        $this->usuario_id = $usuario->id;
-        $this->name = $usuario->name;
-        $this->email = $usuario->email;
-        $this->password = $usuario->password;
-        $this->empresa_id = $usuario->empresa_id;
-        $this->grupo_usuario_id = $usuario->grupo_usuario_id;
-        $this->codigo_acesso = $usuario->codigo_acesso;
-        $this->cpf = $usuario->cpf;
-        $this->rg = $usuario->rg;
-        $this->sexo = $usuario->sexo;
-        $this->status_id = $usuario->status_id;
-        $this->user_system = $usuario->user_system;
-        $this->user_deleted_id = $usuario->user_deleted_id;
-        $this->user_id = $usuario->user_id;
-        $this->rua = $usuario->rua;
-        $this->numero = $usuario->numero;
-        $this->cep = $usuario->cep;
-        $this->bairro = $usuario->bairro;
-        $this->cidade_id = $usuario->cidade_id;
-        $this->estado_id = $usuario->estado_id;
-        $this->data_admissao = $usuario->data_admissao;
-        $this->data_demissao = $usuario->data_demissao;
-        $this->data_nascimento = $usuario->data_nascimento;
-        $this->telefone1 = $usuario->telefone1;
-        $this->telefone2 = $usuario->telefone2;
-        $this->salario = $usuario->salario;
-        $this->perc_compra = $usuario->perc_compra;
-        $this->cargo = $usuario->cargo;
-        $this->pis = $usuario->pis;
-        $this->ctps = $usuario->ctps;
+        // Popula todas as propriedades com os dados do usuário
+        $this->fill([
+            'usuario_id' => $usuario->id,
+            'name' => $usuario->name,
+            'email' => $usuario->email,
+            'password' => '', // nunca exibe senha real
+            'empresa_id' => $usuario->empresa_id,
+            'grupo_usuario_id' => $usuario->grupo_usuario_id,
+            'codigo_acesso' => $usuario->codigo_acesso,
+            'cpf' => $usuario->cpf,
+            'rg' => $usuario->rg,
+            'sexo' => $usuario->sexo,
+            'status_id' => $usuario->status_id,
+            'user_system' => $usuario->user_system,
+            'user_deleted_id' => $usuario->user_deleted_id,
+            'user_id' => $usuario->user_id,
+            'rua' => $usuario->rua,
+            'numero' => $usuario->numero,
+            'cep' => $usuario->cep,
+            'bairro' => $usuario->bairro,
+            'cidade_id' => $usuario->cidade_id,
+            'estado_id' => $usuario->estado_id,
+            'data_admissao' => $usuario->data_admissao,
+            'data_demissao' => $usuario->data_demissao,
+            'data_nascimento' => $usuario->data_nascimento,
+            'telefone1' => $usuario->telefone1,
+            'telefone2' => $usuario->telefone2,
+            'salario' => $usuario->salario,
+            'perc_compra' => $usuario->perc_compra,
+            'cargo' => $usuario->cargo,
+            'pis' => $usuario->pis,
+            'ctps' => $usuario->ctps,
+        ]);
 
+        // Carrega listas de apoio
         $this->estados = Estados::all();
-        $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
+        $this->cidades = Cidades::where('estado_id', $usuario->estado_id)->get();
         $this->statuses = Statues::all();
-
     }
 
     public function atualizar()
@@ -211,7 +214,10 @@ class Alterar extends Component
             'cidades' => $this->cidades,
             'statuses' => $this->statuses,
         ]);
+
+        return view('livewire.usuario.foem');
     }
+
 
     public function buscarCidades() {
         $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();

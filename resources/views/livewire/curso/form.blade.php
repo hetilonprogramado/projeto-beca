@@ -21,6 +21,24 @@
                 @endforeach
             </select>
         </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo Lançamento *</label>
+            <select id="nivelCurso" wire:model="tipo_lancamento" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                <option value="">Selecione o nível</option>
+                <option value="Nota">Nota</option>
+                <option value="Conceito">Conceito</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Extracurricular *</label>
+            <select id="nivelCurso" wire:model="extracurricular" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                <option value="">Selecione o nível</option>
+                <option value="Sim">Sim</option>
+                <option value="Nao">Nao</option>
+            </select>
+        </div>
                                 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Carga Horária *</label>
