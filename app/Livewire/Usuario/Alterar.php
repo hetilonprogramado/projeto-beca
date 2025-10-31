@@ -7,6 +7,8 @@ use App\Models\Estados;
 use App\Models\Statues;
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class Alterar extends Component
 {
@@ -53,7 +55,7 @@ class Alterar extends Component
     }
 
     public $name;
-    public $usuario_id;
+    public $id;
     public $email;
     public $password;
     public $empresa_id;
@@ -119,41 +121,8 @@ class Alterar extends Component
     {
         $usuario = User::findOrFail($id);
 
-        // Popula todas as propriedades com os dados do usuário
-        $this->fill([
-            'usuario_id' => $usuario->id,
-            'name' => $usuario->name,
-            'email' => $usuario->email,
-            'password' => '', // nunca exibe senha real
-            'empresa_id' => $usuario->empresa_id,
-            'grupo_usuario_id' => $usuario->grupo_usuario_id,
-            'codigo_acesso' => $usuario->codigo_acesso,
-            'cpf' => $usuario->cpf,
-            'rg' => $usuario->rg,
-            'sexo' => $usuario->sexo,
-            'status_id' => $usuario->status_id,
-            'user_system' => $usuario->user_system,
-            'user_deleted_id' => $usuario->user_deleted_id,
-            'user_id' => $usuario->user_id,
-            'rua' => $usuario->rua,
-            'numero' => $usuario->numero,
-            'cep' => $usuario->cep,
-            'bairro' => $usuario->bairro,
-            'cidade_id' => $usuario->cidade_id,
-            'estado_id' => $usuario->estado_id,
-            'data_admissao' => $usuario->data_admissao,
-            'data_demissao' => $usuario->data_demissao,
-            'data_nascimento' => $usuario->data_nascimento,
-            'telefone1' => $usuario->telefone1,
-            'telefone2' => $usuario->telefone2,
-            'salario' => $usuario->salario,
-            'perc_compra' => $usuario->perc_compra,
-            'cargo' => $usuario->cargo,
-            'pis' => $usuario->pis,
-            'ctps' => $usuario->ctps,
-        ]);
-
-        // Carrega listas de apoio
+        $this->id = $id;
+        $this->getDados();
         $this->estados = Estados::all();
         $this->cidades = Cidades::where('estado_id', $usuario->estado_id)->get();
         $this->statuses = Statues::all();
@@ -163,14 +132,18 @@ class Alterar extends Component
     {
         $this->cpf = preg_replace('/\D/', '', $this->cpf);
 
-        $this->validate();
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Usuário: '.Auth::id().' Erro ao validar o Matricula: ' . $e->getMessage());
+        }
 
-        $usuario = User::find($this->usuario_id);
+        $usuario = User::findOrFail($this->id);
         
         $usuario-> name = $this->name;
         $usuario-> email = $this->email;
         $usuario-> password= $this->password;
-        $usuario-> empresa_id = Auth()->user()->empresa_id ?? 1;
+        $usuario-> empresa_id = $this->empresa_id;
         $usuario-> grupo_usuario_id = $this->grupo_usuario_id;
         $usuario-> codigo_acesso = $this->codigo_acesso;
         $usuario-> cpf = $this->cpf;
@@ -179,7 +152,7 @@ class Alterar extends Component
         $usuario-> status_id = $this->status_id;
         $usuario-> user_system = $this->user_system;
         $usuario-> user_deleted_id = $this->user_deleted_id;
-        $usuario-> user_id = Auth()->user()->id;
+        $usuario-> user_id = $this->user_id;
         $usuario->rua = $this->rua;
         $usuario->numero = $this->numero;
         $usuario->cep = $this->cep;
@@ -198,6 +171,8 @@ class Alterar extends Component
         $usuario->ctps = $this->ctps;
         $usuario->save();
 
+        $this->getDados();
+
         session()->flash('message', 'Usuario atualizado com sucesso!');
     }
 
@@ -214,12 +189,44 @@ class Alterar extends Component
             'cidades' => $this->cidades,
             'statuses' => $this->statuses,
         ]);
-
-        return view('livewire.usuario.foem');
     }
 
 
     public function buscarCidades() {
         $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
+    }
+
+    public function getDados(){
+        $usuario = User::findOrFail($this->id);
+        $this->id = $usuario->id;
+        $this->name = $usuario->name;
+        $this->email = $usuario->email;
+        $this->password = $usuario->password;
+        $this->empresa_id = $usuario->empresa_id;
+        $this->grupo_usuario_id = $usuario->grupo_usuario_id;
+        $this->codigo_acesso = $usuario->codigo_acesso;
+        $this->cpf = $usuario->cpf;
+        $this->rg = $usuario->rg;
+        $this->sexo = $usuario->sexo;
+        $this->status_id = $usuario->status_id;
+        $this->user_system = $usuario->user_system;
+        $this->user_deleted_id = $usuario->user_deleted_id;
+        $this->user_id = $usuario->user_id;
+        $this->rua = $usuario->rua;
+        $this->numero = $usuario->numero;
+        $this->cep = $usuario->cep;
+        $this->bairro = $usuario->bairro;
+        $this->estado_id = $usuario->estado_id;
+        $this->cidade_id = $usuario->cidade_id;
+        $this->data_admissao = $usuario->data_admissao;
+        $this->data_demissao = $usuario->data_demissao;
+        $this->data_nascimento = $usuario->data_nascimento;
+        $this->telefone1 = $usuario->telefone1;
+        $this->telefone2 = $usuario->telefone2;
+        $this->salario = $usuario->salario;
+        $this->perc_compra = $usuario->perc_compra;
+        $this->cargo = $usuario->cargo;
+        $this->pis = $usuario->pis;
+        $this->ctps = $usuario->ctps;
     }
 }

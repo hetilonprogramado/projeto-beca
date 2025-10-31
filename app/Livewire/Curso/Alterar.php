@@ -7,10 +7,11 @@ use App\Models\Niveis;
 use App\Models\Statues;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class Alterar extends Component
 {
-    public $curso_id;
+    public $id;
     public $user_id;
     public $nome;
     public $descricao;
@@ -37,27 +38,21 @@ class Alterar extends Component
 
     public function mount($id)
     {
-        $curso = Curso::findOrFail($id);
-
-        $this->curso_id = $curso->id;
-        $this->nome = $curso->nome;
-        $this->descricao = $curso->descricao;
-        $this->status_id = $curso->status_id;
-        $this->tipo_lancamento = $curso->tipo_lancamento;
-        $this->hora_aula = $curso->hora_aula;
-        $this->extracurricular = $curso->extracurricular;
-        $this->nivel_id = $curso->nivel_id;
-        $this->user_deleted_id = $curso->user_deleted_id;
-
+        $this->id = $id;
+        $this->getDados();
         $this->statuses = Statues::all();
         $this->niveis = Niveis::all();
     }
 
     public function atualizar()
     {
-        $this->validate();
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Usuário: '.Auth::id().' Erro ao validar o Matricula: ' . $e->getMessage());
+        }
 
-        $curso = Curso::findOrFail($this->curso_id);
+        $curso = Curso::findOrFail($this->id);
         
         $curso->nome = $this->nome;
         $curso->descricao = $this->descricao;
@@ -66,10 +61,11 @@ class Alterar extends Component
         $curso->hora_aula = $this->hora_aula;
         $curso->extracurricular = $this->extracurricular;
         $curso->nivel_id = $this->nivel_id;
-        $curso->user_id = Auth()->user()->id;
+        $curso->user_id = $this->user_id;
         $curso->user_deleted_id = $this->user_deleted_id;
-
         $curso->save();
+
+        $this->getDados();
 
         session()->flash('message', 'Curso atualizado com sucesso!');
     }
@@ -86,5 +82,20 @@ class Alterar extends Component
             'niveis' => $this->niveis,
             'statuses' => $this->statuses,
         ]);
+    }
+
+    public function getDados(){
+        $curso = Curso::findOrFail($this->id);
+        $this->id = $curso->id;
+        $this->nome = $curso->nome;
+        $this->descricao = $curso->descricao;
+        $this->status_id = $curso->status_id;
+        $this->tipo_lancamento = $curso->tipo_lancamento;
+        $this->hora_aula = $curso->hora_aula;
+        $this->extracurricular = $curso->extracurricular;
+        $this->nivel_id = $curso->nivel_id;
+        $this->user_id = $curso->user_id;
+        $this->user_deleted_id = $curso->user_deleted_id;
+        
     }
 }
