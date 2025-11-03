@@ -111,17 +111,10 @@ class Permissoes extends Component
             'menu_id' => $menuId,
         ]);
 
-        if ($checked) {
-            $permissao->status_id = 1; // ativo
-            $permissao->save();
-        } else {
-            if ($permissao->exists) {
-                $permissao->status_id = 2; // bloqueado
-                $permissao->save();
-            }
-        }
+        $permissao->status_id = $checked ? 1 : 2; // 1 = ativo, 2 = bloqueado
+        $permissao->save();
 
-        // Atualiza localmente para manter o estado certo no checkbox
+        // Atualiza apenas o checkbox, sem recarregar a lista inteira
         $this->permissoesMarcadas["menu_{$menuId}"] = (bool) $checked;
     }
 
