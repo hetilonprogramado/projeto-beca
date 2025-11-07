@@ -252,72 +252,74 @@
             </button>
         </div>
 
-        <div id="matriculasContainer" class="space-y-4">
-            <!-- Matrícula Exemplo 1 -->
-            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                <div class="flex items-center justify-between mb-3">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-laptop-code text-blue-600"></i>
-                        </div>
+        @foreach($cursos as $curso)
+            <div id="matriculasContainer" class="space-y-4">
+                <!-- Matrícula Exemplo 1 -->
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-laptop-code text-blue-600"></i>
+                            </div>
+                        <div>
+                        <h4 class="font-semibold text-gray-800">{{ $curso->nome }}</h4>
+                        <p class="text-sm text-gray-600">Turma JS-2024-01 • Matrícula: #2024001</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Ativa</span>
+                        <button onclick="editarMatricula(this)" class="text-blue-500 hover:text-blue-700 p-1">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="removerMatricula(this)" class="text-red-500 hover:text-red-700 p-1">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                     <div>
-                    <h4 class="font-semibold text-gray-800">Curso de JavaScript Avançado</h4>
-                    <p class="text-sm text-gray-600">Turma JS-2024-01 • Matrícula: #2024001</p>
+                        <span class="text-gray-600">Data Matrícula:</span>
+                        <p class="font-medium text-gray-800">15/01/2024</p>
+                    </div>
+                    <div>
+                        <span class="text-gray-600">Valor:</span>
+                        <p class="font-medium text-gray-800">R$ 299,00</p>
+                    </div>
+                    <div>
+                        <span class="text-gray-600">Forma Pagamento:</span>
+                        <p class="font-medium text-gray-800">Cartão 3x</p>
+                    </div>
+                    <div>
+                        <span class="text-gray-600">Situação Pagamento:</span>
+                        <p class="font-medium text-green-600">Em Dia</p>
+                    </div>
                 </div>
-            </div>
-            <div class="flex items-center space-x-2">
-                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Ativa</span>
-                    <button onclick="editarMatricula(this)" class="text-blue-500 hover:text-blue-700 p-1">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button onclick="removerMatricula(this)" class="text-red-500 hover:text-red-700 p-1">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-                <div>
-                    <span class="text-gray-600">Data Matrícula:</span>
-                    <p class="font-medium text-gray-800">15/01/2024</p>
-                </div>
-                <div>
-                    <span class="text-gray-600">Valor:</span>
-                    <p class="font-medium text-gray-800">R$ 299,00</p>
-                </div>
-                <div>
-                    <span class="text-gray-600">Forma Pagamento:</span>
-                    <p class="font-medium text-gray-800">Cartão 3x</p>
-                </div>
-                <div>
-                    <span class="text-gray-600">Situação Pagamento:</span>
-                    <p class="font-medium text-green-600">Em Dia</p>
-                </div>
-            </div>
-
-            <div class="mt-3 pt-3 border-t border-gray-200">
-                <div class="flex items-center justify-between">
-                    <div class="text-sm text-gray-600">
-                        <span>Progresso do Curso:</span>
-                        <span class="font-medium text-gray-800 ml-1">65%</span>
+                <div class="mt-3 pt-3 border-t border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-gray-600">
+                            <span>Progresso do Curso:</span>
+                            <span class="font-medium text-gray-800 ml-1">50%</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-sm">
+                            <span class="text-gray-600">Início:</span>
+                            <span class="font-medium text-gray-800">20/01/2024</span>
+                            <span class="text-gray-600 ml-3">Previsão Término:</span>
+                            <span class="font-medium text-gray-800">20/03/2024</span>
+                        </div>
                     </div>
-                    <div class="flex items-center space-x-2 text-sm">
-                        <span class="text-gray-600">Início:</span>
-                        <span class="font-medium text-gray-800">20/01/2024</span>
-                        <span class="text-gray-600 ml-3">Previsão Término:</span>
-                        <span class="font-medium text-gray-800">20/03/2024</span>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-blue-500 h-2 rounded-full" style="width: 65%"></div>
+                    <div class="mt-2">
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 50%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endforeach
 
         <!-- Matrícula Exemplo 2 -->
-        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <!-- <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
@@ -384,7 +386,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Mensagem quando não há matrículas -->
         <div id="semMatriculas" class="hidden text-center py-8 text-gray-500">

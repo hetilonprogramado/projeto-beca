@@ -61,8 +61,8 @@ class Alterar extends Component
         $this->grupo_fiscal_id = $produto->grupo_fiscal_id;
         $this->grupo_produto_id = $produto->grupo_produto_id;
         $this->utilizacao = $produto->utilizacao;
-        $this->vlr_compra = $produto->vlr_compra;
-        $this->vlr_venda = $produto->vlr_venda;
+        $this->vlr_compra = number_format($produto->vlr_compra, 2, ',', '.');;
+        $this->vlr_venda = number_format($produto->vlr_venda, 2, ',', '.');;
         $this->ncm = $produto->ncm;
         $this->combo = $produto->combo;
         $this->imagem = $produto->imagem;
@@ -73,8 +73,46 @@ class Alterar extends Component
 
     }
 
+    public function formatarValor($campo)
+    {
+        if (!property_exists($this, $campo)) {
+            return;
+        }
+
+        $vlr_compra = trim($this->$campo ?? '');
+
+        // Remove "R$", espaços e pontos de milhar
+        $vlr_compra = str_replace(['R$', ' ', '.'], '', $vlr_compra);
+
+        // Substitui vírgula por ponto para tratar como número
+        $vlr_compra = str_replace(',', '.', $vlr_compra);
+
+        // Se não for número, ignora
+        if (!is_numeric($vlr_compra)) {
+            $this->$campo = '0,00';
+            return;
+        }
+
+        // Converte para float e formata no padrão brasileiro
+        $valorFormatado = number_format((float) $vlr_compra, 2, ',', '.');
+
+        // Atualiza o campo
+        $this->$campo = $valorFormatado;
+    }
+
     public function atualizar()
     {
+        // Remove R$, pontos e troca vírgula por ponto
+        $vlr_compra = str_replace(['R$', '.', ' '], '', $this->vlr_compra);
+        $vlr_compra = str_replace(',', '.', $vlr_compra);
+
+        $this->vlr_compra = number_format((float) $vlr_compra, 2, '.', '');
+
+        $vlr_venda = str_replace(['R$', '.', ' '], '', $this->vlr_venda);
+        $vlr_venda = str_replace(',', '.', $vlr_venda);
+        $this->vlr_venda = number_format((float) $vlr_venda, 2, '.', '');
+
+
         $this->validate();
 
         $produto = Produtos::find($this->produto_id);
@@ -89,8 +127,8 @@ class Alterar extends Component
         $produto-> grupo_fiscal_id = $this->grupo_fiscal_id;
         $produto-> grupo_produto_id = $this->grupo_produto_id;
         $produto-> utilizacao = $this->utilizacao;
-        $produto-> vlr_compra = $this->vlr_compra;
-        $produto-> vlr_venda = $this->vlr_venda;
+        $produto-> vlr_compra = $vlr_compra;
+        $produto-> vlr_venda = $vlr_venda;
         $produto-> ncm = $this->ncm;
         $produto-> combo = $this->combo;    
         $produto-> imagem = $this->imagem;

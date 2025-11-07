@@ -62,37 +62,23 @@ class Cadastrar extends Component
 
         $valor = trim($this->$campo ?? '');
 
-        // Remove R$ e espaços
-        $valor = str_replace(['R$', ' '], '', $valor);
+        // Remove "R$", espaços e pontos de milhar
+        $valor = str_replace(['R$', ' ', '.'], '', $valor);
 
-        // Se o campo estiver vazio
-        if ($valor === '' || $valor === null) {
+        // Substitui vírgula por ponto para tratar como número
+        $valor = str_replace(',', '.', $valor);
+
+        // Se não for número, ignora
+        if (!is_numeric($valor)) {
             $this->$campo = '0,00';
             return;
         }
 
-        // Substitui ponto por nada e vírgula por ponto apenas para checar se é número
-        $numeroVerificado = str_replace(['.', ','], ['', '.'], $valor);
-
-        // Se não for número, apenas retorna sem mudar
-        if (!is_numeric($numeroVerificado)) {
-            return;
-        }
-
-        // Verifica se já tem vírgula (decimal)
-        if (!str_contains($valor, ',')) {
-            // Se não tem vírgula, adiciona ,00
-            $valor .= ',00';
-        }
-
-        // Remove zeros à esquerda desnecessários
-        $valor = ltrim($valor, '0');
-        if ($valor === '' || $valor[0] === ',') {
-            $valor = '0' . $valor;
-        }
+        // Converte para float e formata no padrão brasileiro
+        $valorFormatado = number_format((float) $valor, 2, ',', '.');
 
         // Atualiza o campo
-        $this->$campo = $valor;
+        $this->$campo = $valorFormatado;
     }
 
     public function salvar() {
@@ -103,11 +89,11 @@ class Cadastrar extends Component
 
        // $this->validate();
 
-       $valor = $this->valor;
-
        // Remove R$, pontos e troca vírgula por ponto
-       $valor = str_replace(['R$', '.', ' '], '', $valor);
-       $valor = str_replace(',', '.', $valor);
+        $valor = str_replace(['R$', '.', ' '], '', $this->valor);
+        $valor = str_replace(',', '.', $valor);
+
+        $this->valor = number_format((float) $valor, 2, '.', '');
         
         Turmas::create([
             'empresa_id' => 1,

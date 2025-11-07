@@ -128,9 +128,47 @@ class Alterar extends Component
         $this->statuses = Statues::all();
     }
 
+    public function formatarValor($campo)
+    {
+        if (!property_exists($this, $campo)) {
+            return;
+        }
+
+        $salario = trim($this->$campo ?? '');
+
+        // Remove "R$", espaços e pontos de milhar
+        $salario = str_replace(['R$', ' ', '.'], '', $salario);
+
+        // Substitui vírgula por ponto para tratar como número
+        $salario = str_replace(',', '.', $salario);
+
+        // Se não for número, ignora
+        if (!is_numeric($salario)) {
+            $this->$campo = '0,00';
+            return;
+        }
+
+        // Converte para float e formata no padrão brasileiro
+        $valorFormatado = number_format((float) $salario, 2, ',', '.');
+
+        // Atualiza o campo
+        $this->$campo = $valorFormatado;
+    }
+
     public function atualizar()
     {
         $this->cpf = preg_replace('/\D/', '', $this->cpf);
+
+        // Remove R$, pontos e troca vírgula por ponto
+        $salario = str_replace(['R$', '.', ' '], '', $this->salario);
+        $salario = str_replace(',', '.', $salario);
+
+        $this->salario = number_format((float) $salario, 2, '.', '');
+
+        $perc_compra = str_replace(['R$', '.', ' '], '', $this->perc_compra);
+        $perc_compra = str_replace(',', '.', $perc_compra);
+
+        $this->perc_compra = number_format((float) $perc_compra, 2, '.', '');
 
         try {
             $this->validate();
@@ -164,8 +202,8 @@ class Alterar extends Component
         $usuario->data_nascimento = $this->data_nascimento;
         $usuario->telefone1 = $this->telefone1;
         $usuario->telefone2 = $this->telefone2;
-        $usuario->salario = $this->salario;
-        $usuario->perc_compra = $this->perc_compra;
+        $usuario->salario = $salario;
+        $usuario->perc_compra = $perc_compra;
         $usuario->cargo = $this->cargo;
         $usuario->pis = $this->pis;
         $usuario->ctps = $this->ctps;
@@ -223,8 +261,8 @@ class Alterar extends Component
         $this->data_nascimento = $usuario->data_nascimento;
         $this->telefone1 = $usuario->telefone1;
         $this->telefone2 = $usuario->telefone2;
-        $this->salario = $usuario->salario;
-        $this->perc_compra = $usuario->perc_compra;
+        $this->salario = number_format($usuario->salario, 2, ',', '.');
+        $this->perc_compra = number_format($usuario->perc_compra, 2, ',', '.');
         $this->cargo = $usuario->cargo;
         $this->pis = $usuario->pis;
         $this->ctps = $usuario->ctps;

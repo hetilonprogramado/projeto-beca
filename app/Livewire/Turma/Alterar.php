@@ -56,37 +56,23 @@ class Alterar extends Component
 
         $valor = trim($this->$campo ?? '');
 
-        // Remove R$ e espaços
-        $valor = str_replace(['R$', ' '], '', $valor);
+        // Remove "R$", espaços e pontos de milhar
+        $valor = str_replace(['R$', ' ', '.'], '', $valor);
 
-        // Se o campo estiver vazio
-        if ($valor === '' || $valor === null) {
+        // Substitui vírgula por ponto para tratar como número
+        $valor = str_replace(',', '.', $valor);
+
+        // Se não for número, ignora
+        if (!is_numeric($valor)) {
             $this->$campo = '0,00';
             return;
         }
 
-        // Substitui ponto por nada e vírgula por ponto apenas para checar se é número
-        $numeroVerificado = str_replace(['.', ','], ['', '.'], $valor);
-
-        // Se não for número, apenas retorna sem mudar
-        if (!is_numeric($numeroVerificado)) {
-            return;
-        }
-
-        // Verifica se já tem vírgula (decimal)
-        if (!str_contains($valor, ',')) {
-            // Se não tem vírgula, adiciona ,00
-            $valor .= ',00';
-        }
-
-        // Remove zeros à esquerda desnecessários
-        $valor = ltrim($valor, '0');
-        if ($valor === '' || $valor[0] === ',') {
-            $valor = '0' . $valor;
-        }
+        // Converte para float e formata no padrão brasileiro
+        $valorFormatado = number_format((float) $valor, 2, ',', '.');
 
         // Atualiza o campo
-        $this->$campo = $valor;
+        $this->$campo = $valorFormatado;
     }
 
     public function mount($id)
@@ -97,7 +83,7 @@ class Alterar extends Component
         $this->nome = $turma->nome;
         $this->curso_id = $turma->curso_id;
         $this->sala_id = $turma->sala_id;
-        $this->valor = $turma->valor;
+        $this->valor = number_format($turma->valor, 2, ',', '.');
         $this->data_inicial = $turma->data_inicial;
         $this->data_final = $turma->data_final;
         $this->status_id = $turma->status_id;
@@ -117,11 +103,11 @@ class Alterar extends Component
 
     public function atualizar()
     {
-       $valor = $this->valor;
-
        // Remove R$, pontos e troca vírgula por ponto
-       $valor = str_replace(['R$', '.', ' '], '', $valor);
-       $valor = str_replace(',', '.', $valor);
+        $valor = str_replace(['R$', '.', ' '], '', $this->valor);
+        $valor = str_replace(',', '.', $valor);
+
+        $this->valor = number_format((float) $valor, 2, '.', '');
 
         $this->validate();
 
@@ -130,7 +116,7 @@ class Alterar extends Component
         $turma->nome = $this->nome;
         $turma->curso_id = $this->curso_id;
         $turma->sala_id = $this->sala_id;
-        $turma->valor = $this->valor;
+        $turma->valor = $valor;
         $turma->data_inicial = $this->data_inicial;
         $turma->data_final = $this->exibir_data_final ? $this->data_final : null;
         $turma->status_id = $this->status_id;

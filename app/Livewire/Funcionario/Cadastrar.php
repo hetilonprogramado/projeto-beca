@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Livewire\Usuario;
+namespace App\Livewire\Funcionario;
 
-use App\Models\User;
-use Carbon\Carbon;
-use Livewire\Component;
 use App\Models\Cidades;
 use App\Models\Estados;
+use App\Models\Funcionario;
 use App\Models\Statues;
+use Carbon\Carbon;
+use Livewire\Component;
 use Illuminate\Support\Facades\Http;
-use Pest\ArchPresets\Custom;
 use Illuminate\Support\Facades\Auth;
-use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 class Cadastrar extends Component
 {
-    
     public $cep;
     public $estado_id;
     public $cidade_id;
@@ -50,20 +47,16 @@ class Cadastrar extends Component
             $this->bairro = $data['bairro'] ?? '';
 
             // Busca cidade pelo código IBGE
-            $cidade = Cidades::where('ibge_code', $data['ibge'])->first();
+            $cidades = Cidades::where('ibge_code', $data['ibge'])->first();
 
-            $this->cidade_id = $cidade->id;
-            $this->estado_id = $cidade->estado_id;
+            $this->cidade_id = $cidades->id;
+            $this->estado_id = $cidades->estado_id;
             $this->buscarCidades();
         }
     }
 
-    public $name;
-    public $email;
-    public $password;
     public $empresa_id;
-    public $grupo_usuario_id;
-    public $codigo_acesso;
+    public $nome;
     public $cpf;
     public $rg;
     public $sexo;
@@ -71,55 +64,53 @@ class Cadastrar extends Component
     public $user_system;
     public $user_deleted_id;
     public $user_id;
+    public $senha_compra;
     public $rua;
     public $numero;
     public $bairro;
     public $data_admissao;
     public $data_demissao;
-    public $data_nascimento;
     public $telefone1;
     public $telefone2;
     public $salario;
-    public $perc_compra;
     public $cargo;
     public $pis;
     public $ctps;
-    public $token_app;
-    public $foto;
-    public $deleted_at;
+    public $data_nascimento;
+    public $nome_mae;
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255|unique:users,email',
-        'password' => 'required|string|min:8|confirmed',
-        'empresa_id' => 'required|exists:empresas,id',
-        'grupo_usuario_id' => 'required|exists:grupo_usuarios,id',
-        'codigo_acesso' => 'nullable|string|max:50',
-        'cpf' => 'nullable|string|max:14',
-        'rg' => 'nullable|string|max:20',
-        'sexo' => 'required|in:Masculino,Feminino',
-        'status_id' => 'required|exists:statuses,id',
-        'user_system' => 'nullable|in:Sim,Nao',
-        'user_deleted_id' => 'nullable|exists:users,id',
-        'user_id' => 'required|exists:users,id',
-        'rua' => 'nullable|string|max:255',
-        'numero' => 'nullable|string|max:10',
-        'cep' => 'nullable|string|max:10',
-        'bairro' => 'nullable|string|max:100',
-        'cidade_id' => 'required|exists:cidades,id',
-        'estado_id' => 'required|exists:estados,id',
-        'data_admissao' => 'nullable|date',
-        'data_demissao' => 'nullable|date',
-        'data_nascimento' => 'nullable|date',
-        'telefone1' => 'nullable|string|max:15',
-        'telefone2' => 'nullable|string|max:15',
-        'salario' => 'nullable|numeric|min:0',
-        'perc_compra' => 'nullable|numeric|min:0|max:100',
-        'cargo' => 'nullable|string|max:100',
-        'pis' => 'nullable|string|max:20',
-        'ctps' => 'nullable|string|max:20',
-        'token_app' => 'nullable|string|max:255',
-    ];
+    protected function validarDados(): array{
+        $rules = [
+            'empresa_id' => 'required|exists:empresas,id',
+            'nome' => 'required|min:4',
+            'cpf' => 'nullable|digits_between:11,14',
+            'rg' => 'nullable|min:3',
+            'sexo' => 'required|in:Masculino,Feminino',
+            'status_id' => 'required|exists:statuses,id',
+            'user_system' => 'required|exists:users,id',
+            'user_deleted_id' => 'nullable|exists:users,id',
+            'user_id' => 'required|exists:users,id',
+            'senha_compra' => 'nullable|min:4',
+            'rua' => 'required|min:3',
+            'numero' => 'required|numeric',
+            'cep' => 'nullable|digits:8',
+            'bairro' => 'nullable|min:3',
+            'cidade_id' => 'required|exists:cidades,id',
+            'estado_id' => 'required|exists:estados,id',
+            'data_admissao' => 'nullable|date',
+            'data_demissao' => 'nullable|date',
+            'telefone1' => 'nullable|min:9',
+            'telefone2' => 'nullable|min:9',
+            'salario' => 'nullable|numeric',
+            'cargo' => 'nullable|min:3',
+            'pis' => 'nullable|min:11',
+            'ctps' => 'nullable|min:3',
+            'data_nascimento' => 'nullable|date',
+            'nome_mae' => 'nullable|min:4',
+        ];
+
+        return $this->validate($rules);
+    }
 
     public function formatarValor($campo)
     {
@@ -152,10 +143,9 @@ class Cadastrar extends Component
         // --- Formatação dos campos ---
         $this->cep = preg_replace('/\D/', '', $this->cep);
         $this->cpf = preg_replace('/\D/', '', $this->cpf);
-        $this->rg = preg_replace('/\s+/', '', trim($this->rg));
-        $this->data_nascimento = Carbon::parse($this->data_nascimento)->format('Y-m-d');
         $this->data_admissao = Carbon::parse($this->data_admissao)->format('Y-m-d');
-        $this->data_demissao = $this->data_demissao ? Carbon::parse($this->data_demissao)->format('Y-m-d') : null;
+        $this->data_demissao = Carbon::parse($this->data_demissao)->format('Y-m-d');
+        $this->data_nascimento = Carbon::parse($this->data_nascimento)->format('Y-m-d');
 
         // Remove R$, pontos e troca vírgula por ponto
         $salario = str_replace(['R$', '.', ' '], '', $this->salario);
@@ -165,20 +155,17 @@ class Cadastrar extends Component
 
        // $this->validate();
         
-        User::create([
+        Funcionario::create([
             'empresa_id' =>Auth()->user()->empresa_id ?? 1,
-            'status_id' => $this->status_id,
-            'grupo_usuario_id' => 1,
-            'user_id' => Auth()->user()->id,
-            'user_deleted_id' => $this->user_deleted_id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => bcrypt($this->password),
-            'codigo_acesso' => $this->codigo_acesso,
+            'nome' => $this->nome,
             'cpf' => $this->cpf,
             'rg' => $this->rg,
             'sexo' => $this->sexo,
+            'status_id' => $this->status_id,
             'user_system' => $this->user_system,
+            'user_deleted_id' => $this->user_deleted_id,
+            'user_id' => Auth()->user()->id,
+            'senha_compra' => $this->senha_compra,
             'rua' => $this->rua,
             'numero' => $this->numero,
             'cep' => $this->cep,
@@ -187,27 +174,24 @@ class Cadastrar extends Component
             'estado_id' => $this->estado_id,
             'data_admissao' => $this->data_admissao,
             'data_demissao' => $this->data_demissao,
-            'data_nascimento' => $this->data_nascimento,
             'telefone1' => $this->telefone1,
             'telefone2' => $this->telefone2,
             'salario' => $this->salario,
-            'perc_compra' => $this->perc_compra,
             'cargo' => $this->cargo,
             'pis' => $this->pis,
-            'ctps' => $this->ctps
+            'ctps' => $this->ctps,
+            'data_nascimento' => $this->data_nascimento,
+            'nome_mae' => $this->nome_mae
         ]);
         // Limpa os campos do formulário
         $this->reset();
-        session()->flash('message', 'Usuario cadastrado com sucesso!');
+        session()->flash('message', 'Funcionario cadastrado com sucesso!');
 
     }
 
     public function render()
     {
-        return view('livewire.usuario.cadastrar', [
-            'estados' => $this->estados,
-            'cidades' => $this->cidades,
-        ]);
+        return view('livewire.funcionario.cadastrar');
     }
 
     public function buscarCidades() {

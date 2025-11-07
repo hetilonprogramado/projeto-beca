@@ -65,45 +65,37 @@ class Cadastrar extends Component
             return;
         }
 
-        $valor = trim($this->$campo ?? '');
+        $vlr_compra = trim($this->$campo ?? '');
 
-        // Remove R$ e espaços
-        $valor = str_replace(['R$', ' '], '', $valor);
+        // Remove "R$", espaços e pontos de milhar
+        $vlr_compra = str_replace(['R$', ' ', '.'], '', $vlr_compra);
 
-        // Se o campo estiver vazio
-        if ($valor === '' || $valor === null) {
+        // Substitui vírgula por ponto para tratar como número
+        $vlr_compra = str_replace(',', '.', $vlr_compra);
+
+        // Se não for número, ignora
+        if (!is_numeric($vlr_compra)) {
             $this->$campo = '0,00';
             return;
         }
 
-        // Substitui ponto por nada e vírgula por ponto apenas para checar se é número
-        $numeroVerificado = str_replace(['.', ','], ['', '.'], $valor);
-
-        // Se não for número, apenas retorna sem mudar
-        if (!is_numeric($numeroVerificado)) {
-            return;
-        }
-
-        // Verifica se já tem vírgula (decimal)
-        if (!str_contains($valor, ',')) {
-            // Se não tem vírgula, adiciona ,00
-            $valor .= ',00';
-        }
-
-        // Remove zeros à esquerda desnecessários
-        $valor = ltrim($valor, '0');
-        if ($valor === '' || $valor[0] === ',') {
-            $valor = '0' . $valor;
-        }
+        // Converte para float e formata no padrão brasileiro
+        $valorFormatado = number_format((float) $vlr_compra, 2, ',', '.');
 
         // Atualiza o campo
-        $this->$campo = $valor;
+        $this->$campo = $valorFormatado;
     }
 
     public function salvar() {
-        // Converter valores formatados (1.234,56) para float (1234.56)
-        $this->vlr_compra = str_replace(['.', ','], ['', '.'], $this->vlr_compra);
-        $this->vlr_venda = str_replace(['.', ','], ['', '.'], $this->vlr_venda);
+        // Remove R$, pontos e troca vírgula por ponto
+        $vlr_compra = str_replace(['R$', '.', ' '], '', $this->vlr_compra);
+        $vlr_compra = str_replace(',', '.', $vlr_compra);
+
+        $this->vlr_compra = number_format((float) $vlr_compra, 2, '.', '');
+
+        $vlr_venda = str_replace(['R$', '.', ' '], '', $this->vlr_venda);
+        $vlr_venda = str_replace(',', '.', $vlr_venda);
+        $this->vlr_venda = number_format((float) $vlr_venda, 2, '.', '');
 
 
        // $this->validate();

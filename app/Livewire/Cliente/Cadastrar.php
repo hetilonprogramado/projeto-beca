@@ -7,6 +7,7 @@ use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Cidades;
+use App\Models\Curso;
 use App\Models\Estados;
 use App\Models\Statues;
 use Illuminate\Support\Facades\Http;
@@ -30,6 +31,7 @@ class Cadastrar extends Component
         $this->estado_id = Auth()->user()->estado_id;
         $this->cidade_id = Auth()->user()->cidade_id;
         $this->statuses = Statues::all();
+        $this->cursos = Curso::all();
     }
 
     public function buscarCep()
@@ -79,6 +81,8 @@ class Cadastrar extends Component
     public $religiao;
     public $celular;
 
+    public $cursos = [];
+
     protected function validarDados(): array{
         $rules = [
             'empresa_id' => 'required|exists:empresas,id',
@@ -116,7 +120,7 @@ class Cadastrar extends Component
        // $this->validate();
         
         Cliente::create([
-            'empresa_id' => 1,
+            'empresa_id' => $this->empresa_id,
             'nome' => $this->nome,
             'apelido' => $this->apelido,
             'status_id' => $this->status_id,
@@ -141,7 +145,7 @@ class Cadastrar extends Component
         ]);
         // Limpa os campos do formulário
         $this->reset();
-        session()->flash('message', 'Empresa cadastrado com sucesso!');
+        session()->flash('message', 'Cliente cadastrado com sucesso!');
 
     }
 
@@ -149,6 +153,8 @@ class Cadastrar extends Component
         return view('livewire.cliente.cadastrar', [
             'estados' => $this->estados,
             'cidades' => $this->cidades,
+            'statuses' => $this->statuses,
+            'cursos' => $this->cursos,
         ]);
         return view('livewire.cliente.form');
     }

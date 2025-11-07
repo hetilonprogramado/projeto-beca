@@ -3,6 +3,7 @@
 namespace App\Livewire\Curso;
 
 use App\Models\Curso;
+use App\Models\Matriculas;
 use Carbon\Carbon;
 use App\Models\Niveis;
 use App\Models\Statues;
@@ -21,6 +22,7 @@ class Cadastrar extends Component
     public $descricao;
     public $user_deleted_id;
     public $statuses = [];
+    public $matriculas = [];
 
     protected $rules = [
         'nome' => 'required|min:4',
@@ -58,12 +60,15 @@ class Cadastrar extends Component
     {
         $this->niveis = Niveis::all(); // carrega todos os níveis
         $this->statuses = Statues::all();
+        $this->matriculas = Matriculas::all();
     }
 
     public function render()
     {
-        return view('livewire.curso.cadastrar');
-
-        return view('livewire.curso.form');
+        return view('livewire.curso.cadastrar', [
+            'niveis' => $this->niveis,
+            'statuses' => $this->statuses,
+            'matriculas' => $this->matriculas,
+        ]);
     }
 }

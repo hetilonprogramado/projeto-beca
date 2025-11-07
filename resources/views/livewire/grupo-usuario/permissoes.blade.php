@@ -65,10 +65,19 @@
                                         wire:model="permissoesMarcadas.{{ $p['id'] }}"
                                         wire:click="salvarPermissao('{{ $p['id'] }}', $event.target.checked)"
                                         wire:key="chk-{{ $p['id'] }}"
-                                        class="sr-only peer">
+                                        class="sr-only peer"
+                                    >
 
-                                    <div class="relative w-11 h-6 bg-gray-300 rounded-full transition-colors duration-300 ease-in-out peer-focus:ring-2 peer-focus:ring-blue-300 peer-checked:bg-blue-600">
-                                        <div class="absolute top-[2px] left-[2px] w-5 h-5 bg-white border border-gray-300 rounded-full shadow-md transform transition-transform duration-300 ease-in-out peer-checked:translate-x-5"></div>
+                                    <div class="relative w-11 h-6 bg-gray-300 rounded-full 
+                                        transition-colors duration-300 ease-in-out 
+                                        peer-focus:ring-2 peer-focus:ring-blue-300 
+                                        peer-checked:bg-blue-600">
+
+                                        <div class="absolute top-[2px] left-[2px] 
+                                            w-5 h-5 bg-white border border-gray-300 rounded-full shadow-md 
+                                            transform transition-all duration-500 ease-out 
+                                            peer-checked:translate-x-5 peer-checked:scale-110">
+                                        </div>
                                     </div>
                                 </label>
                             </div>

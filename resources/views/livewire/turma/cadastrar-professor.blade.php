@@ -53,125 +53,30 @@
                                 
                                 <!-- Lista de Professores -->
                                 <div id="listaProfessores" class="space-y-3 max-h-96 overflow-y-auto">
-                                    <!-- Professor 1 -->
-                                    <div class="professor-item border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-all" onclick="selecionarProfessor(this)" data-nome="Carlos Silva" data-especialidades="JavaScript, React, Node.js">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-user-tie text-blue-600 text-lg"></i>
-                                            </div>
-                                            <div class="flex-1">
-                                                <h4 class="font-semibold text-gray-800">Carlos Silva</h4>
-                                                <p class="text-sm text-gray-600">JavaScript, React, Node.js</p>
-                                                <div class="flex items-center space-x-4 mt-1">
-                                                    <span class="text-xs text-gray-500">
-                                                        <i class="fas fa-envelope mr-1"></i>carlos@escola.com
-                                                    </span>
-                                                    <span class="text-xs text-gray-500">
-                                                        <i class="fas fa-phone mr-1"></i>(11) 99999-1111
-                                                    </span>
+                                    @foreach($funcionarios as $funcionario)
+                                        <div class="professor-item border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-all" data-nome="{{ $funcionario->nome }}" data-id="{{ $funcionario->id }}" data-email="{{ $funcionario->email }}" data-telefone="{{ $funcionario->telefone1 }}">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                                    <i class="fas fa-user-tie text-blue-600 text-lg"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-gray-800">{{ $funcionario->nome }}</h4>
+                                                    <p class="text-sm text-gray-600">JavaScript, React, Node.js</p>
+                                                    <div class="flex items-center space-x-4 mt-1">
+                                                        <span class="text-xs text-gray-500">
+                                                            <i class="fas fa-envelope mr-1"></i>{{ $funcionario->email }}
+                                                        </span>
+                                                        <span class="text-xs text-gray-500">
+                                                            <i class="fas fa-phone mr-1"></i>{{ $funcionario->telefone1 }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Disponível</span>
                                                 </div>
                                             </div>
-                                            <div class="flex items-center">
-                                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Disponível</span>
-                                            </div>
                                         </div>
-                                    </div>
-                                    
-                                    <!-- Professor 2 -->
-                                    <div class="professor-item border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-all" onclick="selecionarProfessor(this)" data-nome="Ana Costa" data-especialidades="Python, Django, Flask">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-user-tie text-purple-600 text-lg"></i>
-                                            </div>
-                                            <div class="flex-1">
-                                                <h4 class="font-semibold text-gray-800">Ana Costa</h4>
-                                                <p class="text-sm text-gray-600">Python, Django, Flask</p>
-                                                <div class="flex items-center space-x-4 mt-1">
-                                                    <span class="text-xs text-gray-500">
-                                                        <i class="fas fa-envelope mr-1"></i>ana@escola.com
-                                                    </span>
-                                                    <span class="text-xs text-gray-500">
-                                                        <i class="fas fa-phone mr-1"></i>(11) 99999-2222
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Disponível</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Professor 3 -->
-                                    <div class="professor-item border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-all" onclick="selecionarProfessor(this)" data-nome="Roberto Santos" data-especialidades="Java, Spring, Microservices">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-user-tie text-orange-600 text-lg"></i>
-                                            </div>
-                                            <div class="flex-1">
-                                                <h4 class="font-semibold text-gray-800">Roberto Santos</h4>
-                                                <p class="text-sm text-gray-600">Java, Spring, Microservices</p>
-                                                <div class="flex items-center space-x-4 mt-1">
-                                                    <span class="text-xs text-gray-500">
-                                                        <i class="fas fa-envelope mr-1"></i>roberto@escola.com
-                                                    </span>
-                                                    <span class="text-xs text-gray-500">
-                                                        <i class="fas fa-phone mr-1"></i>(11) 99999-3333
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">Ocupado</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Professor 4 -->
-                                    <div class="professor-item border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-all" onclick="selecionarProfessor(this)" data-nome="Maria Oliveira" data-especialidades="PHP, Laravel, WordPress">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-user-tie text-pink-600 text-lg"></i>
-                                            </div>
-                                            <div class="flex-1">
-                                                <h4 class="font-semibold text-gray-800">Maria Oliveira</h4>
-                                                <p class="text-sm text-gray-600">PHP, Laravel, WordPress</p>
-                                                <div class="flex items-center space-x-4 mt-1">
-                                                    <span class="text-xs text-gray-500">
-                                                        <i class="fas fa-envelope mr-1"></i>maria@escola.com
-                                                    </span>
-                                                    <span class="text-xs text-gray-500">
-                                                        <i class="fas fa-phone mr-1"></i>(11) 99999-4444
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Disponível</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Professor 5 -->
-                                    <div class="professor-item border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-all" onclick="selecionarProfessor(this)" data-nome="João Ferreira" data-especialidades="C#, .NET, Azure">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-user-tie text-indigo-600 text-lg"></i>
-                                            </div>
-                                            <div class="flex-1">
-                                                <h4 class="font-semibold text-gray-800">João Ferreira</h4>
-                                                <p class="text-sm text-gray-600">C#, .NET, Azure</p>
-                                                <div class="flex items-center space-x-4 mt-1">
-                                                    <span class="text-xs text-gray-500">
-                                                        <i class="fas fa-envelope mr-1"></i>joao@escola.com
-                                                    </span>
-                                                    <span class="text-xs text-gray-500">
-                                                        <i class="fas fa-phone mr-1"></i>(11) 99999-5555
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Disponível</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                                 
                                 <!-- Professor Selecionado -->

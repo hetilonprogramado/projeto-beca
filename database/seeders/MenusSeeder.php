@@ -33,6 +33,16 @@ class MenusSeeder extends Seeder
 
             $menus_array[] = array(
                 'id' => 2,
+                'nome' => 'Funcionários',
+                'rota' => 'funcionario',
+                'status_id' => 1,
+                'tipo' => 1,
+                'icone' => 'fas fa-users w-5',
+				'user_id' => 1,
+            );
+
+            $menus_array[] = array(
+                'id' => 3,
                 'nome' => 'Matrículas',
                 'rota' => 'matricula',
                 'status_id' => 1,
@@ -42,7 +52,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
-                'id' => 3,
+                'id' => 4,
                 'nome' => 'Cursos',
                 'rota' => 'curso',
                 'status_id' => 1,
@@ -52,7 +62,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
-                'id' => 4,
+                'id' => 5,
                 'nome' => 'Turmas',
                 'rota' => 'turma',
                 'status_id' => 1,
@@ -62,7 +72,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
-                'id' => 5,
+                'id' => 6,
                 'nome' => 'Salas',
                 'rota' => 'sala',
                 'status_id' => 1,
@@ -72,7 +82,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
-                'id' => 11,
+                'id' => 12,
                 'nome' => 'Disciplinas',
                 'rota' => 'disciplina',
                 'status_id' => 1,
@@ -82,7 +92,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
-                'id' => 12,
+                'id' => 13,
                 'nome' => 'Grupos da Disciplina',
                 'rota' => 'grupo-disciplina',
                 'status_id' => 1,
@@ -92,7 +102,7 @@ class MenusSeeder extends Seeder
             );
             //Configurações
             $menus_array[] = array(
-                'id' => 6,
+                'id' => 7,
                 'nome' => 'Empresa',
                 'rota' => 'empresa',
                 'status_id' => 1,
@@ -102,7 +112,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
-                'id' => 7,
+                'id' => 8,
                 'nome' => 'Grupos de Usuário',
                 'rota' => 'grupo-usuario',
                 'status_id' => 1,
@@ -112,7 +122,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
-                'id' => 8,
+                'id' => 9,
                 'nome' => 'Usuários',
                 'rota' => 'usuario',
                 'status_id' => 1,
@@ -122,7 +132,7 @@ class MenusSeeder extends Seeder
             );
             //Estoque
             $menus_array[] = array(
-                'id' => 9,
+                'id' => 10,
                 'nome' => 'Produtos',
                 'rota' => 'produto',
                 'status_id' => 1,
@@ -132,7 +142,7 @@ class MenusSeeder extends Seeder
             );
 
             $menus_array[] = array(
-                'id' => 10,
+                'id' => 11,
                 'nome' => 'Grupos de Produtos',
                 'rota' => 'grupo-produto',
                 'status_id' => 1,

@@ -27,39 +27,25 @@ class Cadastrar extends Component
             return;
         }
 
-        $valor = trim($this->$campo ?? '');
+        $lucro = trim($this->$campo ?? '');
 
-        // Remove R$ e espaços
-        $valor = str_replace(['R$', ' '], '', $valor);
+        // Remove "R$", espaços e pontos de milhar
+        $lucro = str_replace(['R$', ' ', '.'], '', $lucro);
 
-        // Se o campo estiver vazio
-        if ($valor === '' || $valor === null) {
+        // Substitui vírgula por ponto para tratar como número
+        $lucro = str_replace(',', '.', $lucro);
+
+        // Se não for número, ignora
+        if (!is_numeric($lucro)) {
             $this->$campo = '0,00';
             return;
         }
 
-        // Substitui ponto por nada e vírgula por ponto apenas para checar se é número
-        $numeroVerificado = str_replace(['.', ','], ['', '.'], $valor);
-
-        // Se não for número, apenas retorna sem mudar
-        if (!is_numeric($numeroVerificado)) {
-            return;
-        }
-
-        // Verifica se já tem vírgula (decimal)
-        if (!str_contains($valor, ',')) {
-            // Se não tem vírgula, adiciona ,00
-            $valor .= ',00';
-        }
-
-        // Remove zeros à esquerda desnecessários
-        $valor = ltrim($valor, '0');
-        if ($valor === '' || $valor[0] === ',') {
-            $valor = '0' . $valor;
-        }
+        // Converte para float e formata no padrão brasileiro
+        $valorFormatado = number_format((float) $lucro, 2, ',', '.');
 
         // Atualiza o campo
-        $this->$campo = $valor;
+        $this->$campo = $valorFormatado;
     }
 
     protected function validarDados(): array{
@@ -79,15 +65,15 @@ class Cadastrar extends Component
 
        // $this->validate();
 
-       $lucro = $this->lucro;
-       $comissao = $this->comissao;
-
        // Remove R$, pontos e troca vírgula por ponto
-       $lucro = str_replace(['R$', '.', ' '], '', $lucro);
-       $lucro = str_replace(',', '.', $lucro);
+        $lucro = str_replace(['R$', '.', ' '], '', $this->lucro);
+        $lucro = str_replace(',', '.', $lucro);
 
-       $comissao = str_replace(['R$', '.', ' '], '', $comissao);
-       $comissao = str_replace(',', '.', $comissao);
+        $this->lucro = number_format((float) $lucro, 2, '.', '');
+
+        $comissao = str_replace(['R$', '.', ' '], '', $this->comissao);
+        $comissao = str_replace(',', '.', $comissao);
+        $this->comissao = number_format((float) $comissao, 2, '.', '');
         
         GrupoProdutos::create([
             'nome' => $this->nome,
