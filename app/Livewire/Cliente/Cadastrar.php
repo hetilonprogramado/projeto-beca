@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\Cidades;
 use App\Models\Curso;
 use App\Models\Estados;
+use App\Models\Matriculas;
 use App\Models\Statues;
 use Illuminate\Support\Facades\Http;
 use Pest\ArchPresets\Custom;
@@ -31,7 +32,7 @@ class Cadastrar extends Component
         $this->estado_id = Auth()->user()->estado_id;
         $this->cidade_id = Auth()->user()->cidade_id;
         $this->statuses = Statues::all();
-        $this->cursos = Curso::all();
+        $this->matriculas = Matriculas::all();
     }
 
     public function buscarCep()
@@ -81,7 +82,7 @@ class Cadastrar extends Component
     public $religiao;
     public $celular;
 
-    public $cursos = [];
+    public $matriculas = [];
 
     protected function validarDados(): array{
         $rules = [
@@ -120,7 +121,7 @@ class Cadastrar extends Component
        // $this->validate();
         
         Cliente::create([
-            'empresa_id' => $this->empresa_id,
+            'empresa_id' => 1,
             'nome' => $this->nome,
             'apelido' => $this->apelido,
             'status_id' => $this->status_id,
@@ -154,7 +155,7 @@ class Cadastrar extends Component
             'estados' => $this->estados,
             'cidades' => $this->cidades,
             'statuses' => $this->statuses,
-            'cursos' => $this->cursos,
+            'matriculas' => $this->matriculas,
         ]);
         return view('livewire.cliente.form');
     }

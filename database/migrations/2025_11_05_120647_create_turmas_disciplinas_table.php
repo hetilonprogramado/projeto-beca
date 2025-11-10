@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grupos_turmas_disciplinas', function (Blueprint $table) {
+        Schema::create('turmas_disciplinas', function (Blueprint $table) {
             $table->id();
             $table->integer('empresa_id')->unsigned();
             $table->integer('turma_id')->unsigned();

@@ -252,7 +252,7 @@
             </button>
         </div>
 
-        @foreach($cursos as $curso)
+        @foreach($matriculas as $matricula)
             <div id="matriculasContainer" class="space-y-4">
                 <!-- Matrícula Exemplo 1 -->
                 <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
@@ -262,8 +262,8 @@
                                 <i class="fas fa-laptop-code text-blue-600"></i>
                             </div>
                         <div>
-                        <h4 class="font-semibold text-gray-800">{{ $curso->nome }}</h4>
-                        <p class="text-sm text-gray-600">Turma JS-2024-01 • Matrícula: #2024001</p>
+                        <h4 class="font-semibold text-gray-800">{{ $matricula->curso->nome }}</h4>
+                        <p class="text-sm text-gray-600">Turma {{ $matricula->turma->nome }} • Matrícula: {{ $matricula->id }}</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
@@ -284,7 +284,7 @@
                     </div>
                     <div>
                         <span class="text-gray-600">Valor:</span>
-                        <p class="font-medium text-gray-800">R$ 299,00</p>
+                        <p class="font-medium text-gray-800">R$ {{ number_format($matricula->valor, 2, ',', '.') }}</p>
                     </div>
                     <div>
                         <span class="text-gray-600">Forma Pagamento:</span>
