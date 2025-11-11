@@ -5,6 +5,7 @@ use App\Models\Cliente;
 use Carbon\Carbon;
 use App\Models\Cidades;
 use App\Models\Estados;
+use App\Models\Matriculas;
 use App\Models\Statues;
 use Illuminate\Support\Facades\Http;
 use Pest\ArchPresets\Custom;
@@ -40,6 +41,7 @@ class Alterar extends Component
     public $celular;
 
     public $statuses = [];
+    public $matriculas = [];
 
     public function mountCep()
     {
@@ -135,6 +137,10 @@ class Alterar extends Component
         $this->estados = Estados::all();
         $this->cidades = Cidades::where('estado_id', $this->estado_id)->get();
         $this->statuses = Statues::all();
+        
+        $this->matriculas = Matriculas::where('cliente_id', $cliente->id)
+            ->with(['curso','turma']) // se quiser já carregar os relacionamentos
+            ->get();
 
     }
 
@@ -167,6 +173,7 @@ class Alterar extends Component
         $cliente->naturalidade = $this->naturalidade;
         $cliente->religiao = $this->religiao;
         $cliente->data_nasc = $this->data_nasc;
+        $cliente->celular = $this->celular;
         $cliente->save();
 
         session()->flash('message', 'Cliente atualizado com sucesso!');

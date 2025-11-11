@@ -32,7 +32,13 @@ class Cadastrar extends Component
         $this->estado_id = Auth()->user()->estado_id;
         $this->cidade_id = Auth()->user()->cidade_id;
         $this->statuses = Statues::all();
-        $this->matriculas = Matriculas::all();
+    }
+
+    public function updatedClienteId($value)
+    {
+        $this->matriculas = Matriculas::where('cliente_id', $value)
+            ->with(['curso', 'turma']) // se quiser trazer relações
+            ->get();
     }
 
     public function buscarCep()

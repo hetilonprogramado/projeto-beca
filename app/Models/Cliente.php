@@ -22,7 +22,7 @@ class Cliente extends Model
         'bairro',
         'estado_id',
         'cidade_id',
-        'data_abert_nasc',
+        'data_nasc',
         'tipo_pessoa',
         'cpf',
         'rg',
@@ -34,7 +34,8 @@ class Cliente extends Model
         'registro_nascimento',
         'nacionalidade',
         'naturalidade',
-        'religiao'
+        'religiao',
+        'celular'
     ];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];

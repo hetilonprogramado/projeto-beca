@@ -12,8 +12,7 @@ Route::middleware('auth')->group(function () {
     Volt::route('cliente', 'cliente.lista')->name('cliente');
     Volt::route('cliente/cadastrar', 'cliente.cadastrar')->name('cliente.cadastrar');
     Volt::route('cliente/editar/{id}', 'cliente.alterar')->name('cliente.alterar');
-    Route::get('/cliente/{id}/matriculas', \App\Livewire\Matricula\Cadastrar::class);
-
+    
     Volt::route('empresa', 'empresa.lista')->name('empresa');
     Volt::route('empresa/cadastrar', 'empresa.cadastrar')->name('empresa.cadastrar');
     Volt::route('empresa/editar/{id}', 'empresa.alterar')->name('empresa.alterar');

@@ -55,7 +55,7 @@ class Matriculas extends Model
     public function turma()
     {
         return $this->belongsTo(Turmas::class, 'turma_id', 'id')
-                    ->with('sala');
+                    ->with('salas');
     }
 
     // Status da matrícula

@@ -41,7 +41,7 @@ class Turmas extends Model
     }
     
     function salas() {
-        return $this->belongsTo('App\sala','sala_id','id')->withTrashed();
+        return $this->belongsTo('\App\Models\Salas','sala_id','id')->withTrashed();
     }
     
     function turnos() {
