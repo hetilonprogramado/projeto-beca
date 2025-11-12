@@ -51,6 +51,17 @@ class Alterar extends Component
         $this->cidade_id = Auth()->user()->cidade_id;
     }
 
+    public function deletar($id){
+        $matricula = Matriculas::find($id);
+
+        if ($matricula) {
+            $matricula->delete();
+            session()->flash('message', 'Matricula deletado com sucesso!');
+        } else {
+            session()->flash('message', 'Matricula não encontrado!');
+        }
+    }
+
     public function buscarCep()
     {
         $cep = preg_replace('/[^0-9]/', '', $this->cep);

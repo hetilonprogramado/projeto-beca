@@ -247,9 +247,9 @@
                 </div>
                 <h3 class="text-lg font-semibold text-gray-800">Matrículas</h3>
             </div>
-            <button href="{{route('matricula.cadastrar')}}" class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition-all text-sm">
+            <a href="{{ route('matricula.cadastrar') }}" wire:navigate class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition-all text-sm">
                 <i class="fas fa-plus mr-2"></i>Nova Matrícula
-            </button>
+            </a>
         </div>
 
         @foreach($matriculas as $matricula)
@@ -268,9 +268,9 @@
                 </div>
                 <div class="flex items-center space-x-2">
                     <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Ativa</span>
-                        <button href="{{ route('matricula.alterar', $matricula->id) }}" class="text-blue-500 hover:text-blue-700 p-1">
+                        <a href="{{ route('matricula.alterar', $matricula->id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 p-1">
                             <i class="fas fa-edit"></i>
-                        </button>
+                        </a>
                         <button wire:click="deletar({{ $matricula->id }})" class="text-red-500 hover:text-red-700 p-1">
                             <i class="fas fa-trash"></i>
                         </button>
