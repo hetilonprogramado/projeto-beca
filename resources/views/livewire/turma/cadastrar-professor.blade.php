@@ -72,7 +72,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex items-center">
-                                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Disponível</span>
+                                                    <button 
+                                                        onclick="selecionarProfessor('{{ $funcionario->id }}', '{{ $funcionario->nome }}')" 
+                                                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                                                        <i class="fas fa-plus mr-1"></i> Adicionar
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
