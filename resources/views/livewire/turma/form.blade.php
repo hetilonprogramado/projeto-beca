@@ -125,43 +125,45 @@
                             
     <div id="professoresContainer" class="space-y-4">
         <!-- Professor Exemplo -->
-        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-            <div class="flex items-center justify-between mb-3">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-user-tie text-green-600"></i>
+        @foreach($professores as $professor)
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-user-tie text-green-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">{{ $professor->funcionario->nome }}</h4>
+                            <p class="text-sm text-gray-600">Professor Principal</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">Ativo</span>
+                        <button type="button" onclick="editarProfessor(this)" class="text-blue-500 hover:text-blue-700 p-1">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" onclick="removerProfessor(this)" class="text-red-500 hover:text-red-700 p-1">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                                        
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <span class="text-gray-600">Telefone:</span>
+                        <p class="font-medium text-gray-800">{{ $professor->funcionario->telefone1 }}</p>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-gray-800">Carlos Silva</h4>
-                        <p class="text-sm text-gray-600">Professor Principal</p>
+                        <span class="text-gray-600">Especialidade:</span>
+                        <p class="font-medium text-gray-800">JavaScript, React</p>
+                    </div>
+                    <div>
+                        <span class="text-gray-600">Carga Horária:</span>
+                        <p class="font-medium text-gray-800">40h/semana</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">Ativo</span>
-                    <button type="button" onclick="editarProfessor(this)" class="text-blue-500 hover:text-blue-700 p-1">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button type="button" onclick="removerProfessor(this)" class="text-red-500 hover:text-red-700 p-1">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
             </div>
-                                    
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div>
-                    <span class="text-gray-600">Email:</span>
-                    <p class="font-medium text-gray-800">carlos@escola.com</p>
-                </div>
-                <div>
-                    <span class="text-gray-600">Especialidade:</span>
-                    <p class="font-medium text-gray-800">JavaScript, React</p>
-                </div>
-                <div>
-                    <span class="text-gray-600">Carga Horária:</span>
-                    <p class="font-medium text-gray-800">40h/semana</p>
-                </div>
-            </div>
-        </div>
+        @endforeach
 
         <!-- Mensagem quando não há professores -->
         <div id="semProfessores" class="hidden text-center py-8 text-gray-500">

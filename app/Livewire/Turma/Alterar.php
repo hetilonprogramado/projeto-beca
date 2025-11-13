@@ -6,6 +6,7 @@ use App\Models\Turmas;
 use App\Models\Curso;
 use App\Models\Salas;
 use App\Models\Statues;
+use App\Models\TurmaDisciplina;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,6 +31,8 @@ class Alterar extends Component
     public $cursos = [];
     public $salas = [];
     public $statuses = [];
+
+    public $professores = [];
 
     protected $rules = [
         'nome' => 'required|string|max:255',
@@ -98,6 +101,10 @@ class Alterar extends Component
         $this->statuses = Statues::all();
         $this->cursos = Curso::all();
         $this->salas = Salas::all();
+
+        $this->professores = TurmaDisciplina::where('turma_id', $turma->id)
+            ->with(['funcionario']) // se quiser já carregar os relacionamentos
+            ->get();
 
     }
 
