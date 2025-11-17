@@ -33,7 +33,7 @@ class CadastrarProfessor extends Component
 
     public function adicionarProfessor($funcionarioId)
     {
-        $empresaId = auth()->user()->empresa_id ?? 1; // coloca 1 como fallback se quiser
+        $empresaId = auth()->user()->empresa_id;
 
         $existe = TurmaDisciplina::where('turma_id', $this->turma_id)
             ->where('disciplina_id', $this->disciplina_id)
@@ -47,8 +47,8 @@ class CadastrarProfessor extends Component
 
         TurmaDisciplina::create([
             'empresa_id' => $empresaId,
-            'turma_id' => auth()->user()->turma_id ?? 1,
-            'disciplina_id' => auth()->user()->disciplina_id ?? 1,
+            'turma_id' => $this->turma_id,
+            'disciplina_id' => $this->disciplina_id,
             'funcionario_id' => $funcionarioId,
             'user_id' => auth()->id(),
             'sinc' => 'sim',

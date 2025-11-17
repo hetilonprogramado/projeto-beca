@@ -1,3 +1,4 @@
+<livewire:turma.cadastrar-professor :id="$turma->id" />
 <div id="adicionarProfessorContent" class="p-6">
                 <div class="bg-white rounded-xl shadow-sm">
                     <div class="p-6 border-b flex justify-between items-center">

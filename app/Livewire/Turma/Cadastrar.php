@@ -5,6 +5,7 @@ use App\Models\Turmas;
 use App\Models\Curso;
 use App\Models\Salas;
 use App\Models\Statues;
+use App\Models\TurmaDisciplina;
 use Carbon\Carbon;
 
 use Livewire\Component;
@@ -15,11 +16,20 @@ class Cadastrar extends Component
     public $salas = [];
     public $statuses = [];
 
+    public $professores = [];
+
     public function mount()
     {
         $this->cursos = Curso::all(); // pega todos os cursos
         $this->salas = Salas::all();
         $this->statuses = Statues::all();
+    }
+
+    public function updatedClienteId($value)
+    {
+        $this->professores = TurmaDisciplina::where('turma_id', $value->id)
+            ->with(['funcionario']) // se quiser já carregar os relacionamentos
+            ->get();
     }
 
     public $empresa_id;

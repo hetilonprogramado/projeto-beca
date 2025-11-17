@@ -51,6 +51,17 @@ class Alterar extends Component
         'exibir_data_final' => 'nullable|boolean',
     ];
 
+    public function deletar($id){
+        $professor = TurmaDisciplina::find($id);
+
+        if ($professor) {
+            $professor->delete();
+            session()->flash('message', 'Professor deletado com sucesso!');
+        } else {
+            session()->flash('message', 'Professor não encontrado!');
+        }
+    }
+
     public function formatarValor($campo)
     {
         if (!property_exists($this, $campo)) {

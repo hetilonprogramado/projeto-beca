@@ -142,7 +142,7 @@
                         <button type="button" onclick="editarProfessor(this)" class="text-blue-500 hover:text-blue-700 p-1">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button type="button" onclick="removerProfessor(this)" class="text-red-500 hover:text-red-700 p-1">
+                        <button wire:click="deletar({{ $professor->id }})" class="text-red-500 hover:text-red-700 p-1">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
