@@ -31,6 +31,7 @@ class Alterar extends Component
     public $cursos = [];
     public $salas = [];
     public $statuses = [];
+    public $turma;
 
     public $professores = [];
 
@@ -112,6 +113,7 @@ class Alterar extends Component
         $this->statuses = Statues::all();
         $this->cursos = Curso::all();
         $this->salas = Salas::all();
+        $this->turma = Turmas::findOrFail($id);
 
         $this->professores = TurmaDisciplina::where('turma_id', $turma->id)
             ->with(['funcionario']) // se quiser já carregar os relacionamentos
@@ -161,6 +163,7 @@ class Alterar extends Component
             'cursos' => $this->cursos,
             'salas' => $this->salas,
             'statuses' => $this->statuses,
+            'professores' => $this->professores ?? [],
         ]);
     }
 }

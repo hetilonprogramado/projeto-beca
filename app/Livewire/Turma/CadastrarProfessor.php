@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Turma;
 
+use App\Models\Disciplina;
 use App\Models\Funcionario;
 use App\Models\TurmaDisciplina;
 use App\Models\Turmas;
@@ -12,6 +13,8 @@ class CadastrarProfessor extends Component
     public $turmas = [];
     public $funcionarios;
     public $turmaDiciplinas = [];
+    public $disciplinas = [];
+    public $disciplinasProfessor = [];
 
     public $empresa_id;
     public $turma_id;
@@ -35,8 +38,16 @@ class CadastrarProfessor extends Component
     {
         $empresaId = auth()->user()->empresa_id;
 
+        // disciplina selecionada para aquele professor
+        $disciplinaId = $this->disciplinasProfessor[$funcionarioId] ?? null;
+
+        if (!$disciplinaId) {
+            session()->flash('error', 'Selecione uma disciplina antes de adicionar.');
+            return;
+        }
+
         $existe = TurmaDisciplina::where('turma_id', $this->turma_id)
-            ->where('disciplina_id', $this->disciplina_id)
+            ->where('disciplina_id', $disciplinaId)
             ->where('funcionario_id', $funcionarioId)
             ->exists();
 
@@ -48,7 +59,7 @@ class CadastrarProfessor extends Component
         TurmaDisciplina::create([
             'empresa_id' => $empresaId,
             'turma_id' => $this->turma_id,
-            'disciplina_id' => $this->disciplina_id,
+            'disciplina_id' => $disciplinaId,
             'funcionario_id' => $funcionarioId,
             'user_id' => auth()->id(),
             'sinc' => 'sim',
@@ -58,12 +69,14 @@ class CadastrarProfessor extends Component
         $this->turmaDiciplinas = TurmaDisciplina::all();
     }
 
-    public function mount()
+    public function mount($turma_id)
     {
+        $this->turma_id = $turma_id;
         $this->empresa_id = auth()->user()->empresa_id ?? 1;
         $this->turmas = Turmas::all();
         $this->funcionarios = Funcionario::all();
         $this->turmaDiciplinas = TurmaDisciplina::all();
+        $this->disciplinas = Disciplina::all();
     }
 
     public function render()
@@ -72,6 +85,7 @@ class CadastrarProfessor extends Component
             'turmas' => $this->turmas,
             'funcionarios' => $this->funcionarios,
             'turmaDiciplinas' => $this->turmaDiciplinas,
+            'disciplinas' => $this->disciplinas,
         ]);
     }
 }

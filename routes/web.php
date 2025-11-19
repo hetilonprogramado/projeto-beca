@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use Livewire\Livewire;
+use App\Livewire\Turma\CadastrarProfessor;
 
 Livewire::setUpdateRoute(function ($handle) {
     return Route::post(env('LIVEWIRE_UPDATE_URI'), $handle);
@@ -39,7 +40,8 @@ Route::middleware('auth')->group(function () {
 
     Volt::route('turma', 'turma.lista')->name('turma');
     Volt::route('turma/cadastrar', 'turma.cadastrar')->name('turma.cadastrar');
-    Volt::route('turma/cadastrar/professor', 'turma.cadastrar-professor')->name('turma.cadastrar.professor');
+    Volt::route('/turma/cadastrar/professor/{turma_id}', CadastrarProfessor::class)
+    ->name('turma.cadastrar.professor');
     Volt::route('turma/editar/{id}', 'turma.alterar')->name('turma.alterar');
 
     Volt::route('usuario', 'usuario.lista')->name('usuario');

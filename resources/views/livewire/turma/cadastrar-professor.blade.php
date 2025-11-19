@@ -61,15 +61,12 @@
                                                 </div>
                                                 <div class="flex-1">
                                                     <h4 class="font-semibold text-gray-800">{{ $funcionario->nome }}</h4>
-                                                    <p class="text-sm text-gray-600">JavaScript, React, Node.js</p>
-                                                    <div class="flex items-center space-x-4 mt-1">
-                                                        <span class="text-xs text-gray-500">
-                                                            <i class="fas fa-envelope mr-1"></i>{{ $funcionario->email }}
-                                                        </span>
-                                                        <span class="text-xs text-gray-500">
-                                                            <i class="fas fa-phone mr-1"></i>{{ $funcionario->telefone1 }}
-                                                        </span>
-                                                    </div>
+                                                    <select id="turma"  wire:model="disciplinasProfessor.{{ $funcionario->id }}" class="w-full px- py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                                                        <option value="">Selecione a Disciplina</option>
+                                                        @foreach($disciplinas as $disciplina)
+                                                            <option value="{{ $disciplina->id }}">{{ $disciplina->nome }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                                 <div class="flex items-center">
                                                     <button 
