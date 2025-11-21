@@ -37,8 +37,6 @@ class CadastrarProfessor extends Component
     public function adicionarProfessor($funcionarioId)
     {
         $empresaId = auth()->user()->empresa_id;
-
-        // disciplina selecionada para aquele professor
         $disciplinaId = $this->disciplinasProfessor[$funcionarioId] ?? null;
 
         if (!$disciplinaId) {
@@ -47,9 +45,9 @@ class CadastrarProfessor extends Component
         }
 
         $existe = TurmaDisciplina::where('turma_id', $this->turma_id)
-            ->where('disciplina_id', $disciplinaId)
-            ->where('funcionario_id', $funcionarioId)
-            ->exists();
+                                ->where('disciplina_id', $disciplinaId)
+                                ->where('funcionario_id', $funcionarioId)
+                                ->exists();
 
         if ($existe) {
             session()->flash('error', 'Esse professor já foi adicionado nessa turma/disciplina.');
@@ -66,16 +64,34 @@ class CadastrarProfessor extends Component
         ]);
 
         session()->flash('message', 'Professor adicionado com sucesso!');
-        $this->turmaDiciplinas = TurmaDisciplina::all();
+
+        // Atualiza a lista de adicionados (somente dessa turma)
+        $this->turmaDiciplinas = TurmaDisciplina::where('turma_id', $this->turma_id)->get();
+
+        // REMOVE o professor da lista de disponíveis
+        $this->funcionarios = Funcionario::whereNotIn(
+            'id',
+            $this->turmaDiciplinas->pluck('funcionario_id')
+        )->get();
     }
+
 
     public function mount($turma_id)
     {
         $this->turma_id = $turma_id;
         $this->empresa_id = auth()->user()->empresa_id ?? 1;
-        $this->turmas = Turmas::all();
-        $this->funcionarios = Funcionario::all();
-        $this->turmaDiciplinas = TurmaDisciplina::all();
+        $this->turmas = Turmas::where('empresa_id', $this->empresa_id)->get();
+
+        // Professores já atribuídos à turma
+        $jaAdicionados = TurmaDisciplina::where('turma_id', $this->turma_id)
+                                        ->pluck('funcionario_id');
+
+        // Lista de professores disponíveis
+        $this->funcionarios = Funcionario::whereNotIn('id', $jaAdicionados)->get();
+
+        // Apenas itens dessa turma
+        $this->turmaDiciplinas = TurmaDisciplina::where('turma_id', $this->turma_id)->get();
+
         $this->disciplinas = Disciplina::all();
     }
 

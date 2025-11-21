@@ -118,7 +118,7 @@
             </div>
             <h3 class="text-lg font-semibold text-gray-800">Professores</h3>
         </div>
-        <a href="{{ route('turma.cadastrar.professor', $turma->id) }}" wire:navigate class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-all text-sm">
+        <a href="{{ route('turma.cadastrar.professor', $turma->id ?? null) }}" wire:navigate class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-all text-sm">
             <i class="fas fa-plus mr-2"></i>Adicionar Professor
         </a>
     </div>
@@ -138,10 +138,10 @@
                         </div>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">Ativo</span>
-                        <button type="button" onclick="editarProfessor(this)" class="text-blue-500 hover:text-blue-700 p-1">
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">{{ $professor->funcionario->status->nome }}</span>
+                        <a href="{{ route('funcionario.alterar', $professor->funcionario_id) }}" wire:navigate class="text-blue-500 hover:text-blue-700 p-1">
                             <i class="fas fa-edit"></i>
-                        </button>
+                        </a>
                         <button wire:click="deletar({{ $professor->id }})" class="text-red-500 hover:text-red-700 p-1">
                             <i class="fas fa-trash"></i>
                         </button>

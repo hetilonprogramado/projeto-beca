@@ -46,6 +46,7 @@ class Cadastrar extends Component
     public $tipo_conta_id;
     public $data_encerrar_lancamento;
     public $user_deleted_id;
+    public $turma;
 
     protected $rules = [
         'empresa_id' => 'required|exists:empresas,id',

@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
 
     Volt::route('turma', 'turma.lista')->name('turma');
     Volt::route('turma/cadastrar', 'turma.cadastrar')->name('turma.cadastrar');
-    Volt::route('/turma/cadastrar/professor/{turma_id}', CadastrarProfessor::class)
+    Volt::route('/turma/cadastrar/professor/{turma_id?}', CadastrarProfessor::class)
     ->name('turma.cadastrar.professor');
     Volt::route('turma/editar/{id}', 'turma.alterar')->name('turma.alterar');
 
