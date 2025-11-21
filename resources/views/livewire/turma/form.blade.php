@@ -155,7 +155,7 @@
                     </div>
                     <div>
                         <span class="text-gray-600">Especialidade:</span>
-                        <p class="font-medium text-gray-800">JavaScript, React</p>
+                        <p class="font-medium text-gray-800">{{ $professor->disciplina->nome }}</p>
                     </div>
                     <div>
                         <span class="text-gray-600">Carga Horária:</span>

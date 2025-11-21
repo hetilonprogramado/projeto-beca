@@ -40,7 +40,7 @@ class TurmaDisciplina extends Model
 
     public function disciplina()
     {
-        return $this->belongsTo('App\Models\Disciplinas', 'disciplina_id');
+        return $this->belongsTo(Disciplina::class, 'disciplina_id');
     }
 
     public function funcionario()
