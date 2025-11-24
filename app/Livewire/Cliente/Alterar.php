@@ -201,6 +201,7 @@ class Alterar extends Component
         return view('livewire.cliente.alterar',[
             'estados' => $this->estados,
             'cidades' => $this->cidades,
+            'cliente' => Cliente::find($this->cliente_id),
         ]);
     }
 

@@ -71,7 +71,7 @@ class Cadastrar extends Component
     public $empresa_id;
     public $nome;
     public $apelido;
-    public $status_id;
+    public $status_id = 1;
     public $user_id;
     public $rua;
     public $numero;
@@ -126,7 +126,7 @@ class Cadastrar extends Component
 
        // $this->validate();
         
-        Cliente::create([
+        $aluno = Cliente::create([
             'empresa_id' => 1,
             'nome' => $this->nome,
             'apelido' => $this->apelido,
@@ -151,8 +151,32 @@ class Cadastrar extends Component
             'user_id' => Auth()->user()->id,
         ]);
         // Limpa os campos do formulário
-        $this->reset();
+        $this->reset([
+            'nome',
+            'apelido',
+            'rua',
+            'numero',
+            'cep',
+            'bairro',
+            'estado_id',
+            'cidade_id',
+            'data_nasc',
+            'cpf',
+            'rg',
+            'email',
+            'sexo',
+            'registro_nascimento',
+            'nacionalidade',
+            'naturalidade',
+            'religiao',
+            'celular',
+            'status_id',
+        ]);
         session()->flash('message', 'Cliente cadastrado com sucesso!');
+
+        return redirect()->route('matricula.cadastrar', [
+            'cliente_id' => $aluno->id
+        ]);
 
     }
 

@@ -36,13 +36,15 @@ class Cadastrar extends Component
     public $clientes = [];
     public $statuses = [];
 
-    public function mount()
+    public function mount($cliente_id)
     {
         $this->cursos = Curso::all(); 
         $this->salas = Salas::all();
         $this->turmas = Turmas::all();
         $this->clientes = Cliente::all();
         $this->statuses = Statues::all();
+
+        $this->cliente_id = $cliente_id;
     }
 
     public function formatarValor($campo)

@@ -247,9 +247,11 @@
                 </div>
                 <h3 class="text-lg font-semibold text-gray-800">Matrículas</h3>
             </div>
-            <a href="{{ route('matricula.cadastrar') }}" wire:navigate class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition-all text-sm">
-                <i class="fas fa-plus mr-2"></i>Nova Matrícula
-            </a>
+            @if (!empty($cliente_id))
+                <a href="{{ route('matricula.cadastrar') }}" wire:navigate class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition-all text-sm">
+                    <i class="fas fa-plus mr-2"></i>Nova Matrícula
+                </a>
+            @endif
         </div>
 
         @foreach($matriculas as $matricula)
