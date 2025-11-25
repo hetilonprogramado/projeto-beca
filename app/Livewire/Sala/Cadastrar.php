@@ -11,7 +11,7 @@ class Cadastrar extends Component
 {
     public $user_id;
     public $nome;
-    public $status_id;
+    public $status_id = 1;
     public $descricao;
     public $limite;
     public $user_deleted_id;

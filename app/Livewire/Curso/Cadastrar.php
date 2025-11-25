@@ -13,7 +13,7 @@ class Cadastrar extends Component
 {
     public $user_id;
     public $nome;
-    public $status_id;
+    public $status_id = 1;
     public $tipo_lancamento;
     public $hora_aula;
     public $extracurricular;

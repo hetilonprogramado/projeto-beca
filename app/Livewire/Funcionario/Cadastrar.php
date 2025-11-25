@@ -60,7 +60,7 @@ class Cadastrar extends Component
     public $cpf;
     public $rg;
     public $sexo;
-    public $status_id;
+    public $status_id = 1;
     public $user_system;
     public $user_deleted_id;
     public $user_id;

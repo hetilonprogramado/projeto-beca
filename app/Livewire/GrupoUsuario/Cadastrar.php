@@ -9,7 +9,7 @@ use Livewire\Component;
 class Cadastrar extends Component
 {
     public $nome;
-    public $status_id;
+    public $status_id = 1;
     public $user_id;
     public $statuses = [];
 

@@ -17,7 +17,7 @@ class Cadastrar extends Component
     public $vlr_venda;
     public $estoque_minimo;
     public $codigo_barras;
-    public $status_id;
+    public $status_id = 1;
     public $user_id;
     public $user_deleted_id;
     public $grupo_fiscal_id;

@@ -39,7 +39,7 @@ class Cadastrar extends Component
     public $valor;
     public $data_inicial;
     public $data_final;
-    public $status_id;
+    public $status_id = 1;
     public $carga_hr;
     public $user_id;
     public $exibir_data_final;

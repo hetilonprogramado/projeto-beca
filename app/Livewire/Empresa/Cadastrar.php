@@ -57,7 +57,7 @@ class Cadastrar extends Component
 
     public $rsocial;
     public $nome_fantasia;
-    public $status_id;
+    public $status_id = 1;
     public $user_id;
     public $cnpj;
     public $ie;

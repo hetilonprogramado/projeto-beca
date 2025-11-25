@@ -15,7 +15,7 @@ use Livewire\Component;
 class Cadastrar extends Component
 {
     public $empresa_id;
-    public $status_id;
+    public $status_id = 1;
     public $cliente_id;
     public $curso_id;
     public $turma_id;
