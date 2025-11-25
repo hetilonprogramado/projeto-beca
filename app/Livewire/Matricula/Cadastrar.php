@@ -7,6 +7,7 @@ use App\Models\Cliente;
 use App\Models\Salas;
 use App\Models\Statues;
 use App\Models\Turmas;
+use Illuminate\Http\Request;
 
 
 use Livewire\Component;
@@ -36,7 +37,7 @@ class Cadastrar extends Component
     public $clientes = [];
     public $statuses = [];
 
-    public function mount($cliente_id)
+    public function mount(Request $request)
     {
         $this->cursos = Curso::all(); 
         $this->salas = Salas::all();
@@ -44,7 +45,7 @@ class Cadastrar extends Component
         $this->clientes = Cliente::all();
         $this->statuses = Statues::all();
 
-        $this->cliente_id = $cliente_id;
+        $this->cliente_id = $request->cliente_id;
     }
 
     public function formatarValor($campo)
