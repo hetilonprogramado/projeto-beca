@@ -40,4 +40,14 @@ class Curso extends Model
     function nivel() {
         return $this->belongsTo('App\nivel');
     }
+
+    public function salas()
+    {
+        return $this->hasMany(Salas::class);
+    }
+
+    public function turmas()
+    {
+        return $this->hasMany(Turmas::class);
+    }
 }

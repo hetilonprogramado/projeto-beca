@@ -41,11 +41,17 @@ class Cadastrar extends Component
     {
         $this->cursos = Curso::all(); 
         $this->salas = Salas::all();
-        $this->turmas = Turmas::all();
+        $this->turmas = [];
         $this->clientes = Cliente::all();
         $this->statuses = Statues::all();
 
         $this->cliente_id = $request->cliente_id;
+    }
+
+    public function updatedCursoId($value)
+    {
+        $this->turmas = Turmas::where('curso_id', $value)->get();
+        $this->turma_id = null; // limpa a seleção
     }
 
     public function formatarValor($campo)
