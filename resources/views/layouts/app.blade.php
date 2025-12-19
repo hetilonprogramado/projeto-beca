@@ -11,17 +11,19 @@
     </head>
     <body class="bg-gray-50 font-sans">
         <!-- Sistema Principal -->
-    <div id="mainSystem">
-        <!-- Sidebar -->        
-        @livewire('layout.sidebar')
-        <!-- Conteúdo Principal -->
-        <div class="ml-64 min-h-screen bg-gray-50">
+        <div id="mainSystem">
             <!-- Header -->
             @livewire('layout.navigation')
+            
+            <!-- Conteúdo Principal -->
+            <div class="ml-64 min-h-screen bg-gray-50">
+                <!-- Sidebar -->        
+                @livewire('layout.sidebar')
+                <!-- Dashboard -->
+                {{ $slot }}
 
-            <!-- Dashboard -->
-            {{ $slot }}
+                @livewire('redesocial')
+            </div>
         </div>
-    </div>
     </body>
 </html>

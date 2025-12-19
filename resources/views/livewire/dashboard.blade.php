@@ -1,172 +1,225 @@
-<div id="dashboardContent" class="p-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white p-6 rounded-xl shadow-sm card-hover transition-all">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-600 text-sm">Total de Alunos</p>
-                    <p class="text-3xl font-bold text-blue-600">1,234</p>
-                </div>
-                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-user-graduate text-blue-600 text-xl"></i>
-                </div>
-            </div>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Painel Interno</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Georgia', serif;
+        background: #3b0f0f;
+        color: #4d0c0c;
+    }
+
+    .painel-container {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* CARDS SUPERIORES */
+    .cards {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        background: #f7b7b7;
+        width: 180px;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .card .numero {
+        font-size: 40px;
+        color: #4a0e0e;
+    }
+
+    .card img {
+        width: 45px;
+        margin-top: 5px;
+    }
+
+    /* TABELA */
+    .tabela-clientes {
+        background: #f7b7b7;
+        padding: 15px;
+        border-radius: 10px;
+        width: 220px;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    .tabela-clientes table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .tabela-clientes tr {
+        border-bottom: 2px solid #4a0e0e;
+    }
+
+    .tabela-clientes td {
+        padding: 7px 0;
+    }
+
+    /* GRÁFICOS */
+    .graficos {
+        display: flex;
+        gap: 40px;
+        margin-top: 20px;
+    }
+
+    .grafico-barra {
+        width: 380px;
+        height: 260px;
+        background: #4a0e0e;
+        border-radius: 8px;
+        position: relative;
+    }
+
+    .grafico-barra canvas {
+        width: 100%;
+        height: 100%;
+    }
+
+    .grafico-pizza {
+        width: 250px;
+        height: 250px;
+        background: #4a0e0e;
+        border-radius: 8px;
+        position: relative;
+    }
+
+    .grafico-pizza canvas {
+        width: 100%;
+        height: 100%;
+    }
+
+    .titulo-grafico {
+        text-align: center;
+        color: #f7b7b7;
+        font-size: 14px;
+        padding-top: 5px;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="painel-container">
+
+    <!-- CARDS -->
+    <div class="cards">
+
+        <div class="card">
+            <div class="numero">150</div>
+            <img src="https://cdn-icons-png.flaticon.com/512/3144/3144456.png">
+            <div>Vendas hoje</div>
         </div>
-        
-        <div class="bg-white p-6 rounded-xl shadow-sm card-hover transition-all">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-600 text-sm">Cursos Ativos</p>
-                    <p class="text-3xl font-bold text-green-600">45</p>
-                </div>
-                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-book text-green-600 text-xl"></i>
-                </div>
-            </div>
+
+        <div class="card">
+            <div class="numero">30%</div>
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png">
+            <div>Vendas (período)</div>
         </div>
-        
-        <div class="bg-white p-6 rounded-xl shadow-sm card-hover transition-all">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-600 text-sm">Matrículas Hoje</p>
-                    <p class="text-3xl font-bold text-purple-600">28</p>
-                </div>
-                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-file-signature text-purple-600 text-xl"></i>
-                </div>
-            </div>
+
+        <div class="card">
+            <div class="numero">67</div>
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png">
+            <div>Concluídos</div>
         </div>
-        
-        <div class="bg-white p-6 rounded-xl shadow-sm card-hover transition-all">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-600 text-sm">Receita Mensal</p>
-                    <p class="text-3xl font-bold text-orange-600">R$ 89.5k</p>
-                </div>
-                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-dollar-sign text-orange-600 text-xl"></i>
-                </div>
-            </div>
+
+        <div class="card">
+            <div class="numero">15</div>
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png">
+            <div>Pendentes</div>
         </div>
+
     </div>
 
-    <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">Evolução Financeira</h3>
-        <div class="relative">
-            <canvas id="financeChart" width="400" height="200"></canvas>
+    <!-- CONTEÚDOS PRINCIPAIS -->
+    <div style="display: flex; gap: 30px;">
+
+        <!-- TABELA -->
+        <div class="tabela-clientes">
+            <table>
+                <tr><td>Clientes</td><td>Total</td></tr>
+                <tr><td>Cirilo</td><td>45</td></tr>
+                <tr><td>Zé</td><td>45</td></tr>
+                <tr><td>Zack</td><td>45</td></tr>
+                <tr><td>Mathias</td><td>45</td></tr>
+                <tr><td>Pedro</td><td>45</td></tr>
+                <tr><td>Jonas</td><td>45</td></tr>
+                <tr><td>Mateus</td><td>45</td></tr>
+                <tr><td>Hetilon</td><td>45</td></tr>
+            </table>
         </div>
-        <div class="flex justify-center space-x-6 mt-4">
-            <div class="flex items-center space-x-2">
-                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span class="text-sm text-gray-600">Receitas</span>
+
+        <!-- GRÁFICOS -->
+        <div class="graficos">
+
+            <div class="grafico-barra">
+                <div class="titulo-grafico">Vendas no último mês</div>
+                <canvas id="graficoBarra"></canvas>
             </div>
-            <div class="flex items-center space-x-2">
-                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                <span class="text-sm text-gray-600">Despesas</span>
+
+            <div class="grafico-pizza">
+                <div class="titulo-grafico">Doces mais vendidos</div>
+                <canvas id="graficoPizza"></canvas>
             </div>
-            <div class="flex items-center space-x-2">
-                <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
-                <span class="text-sm text-gray-600">Inadimplência</span>
-            </div>
+
         </div>
+
     </div>
 
-    <div class="bg-white p-6 rounded-xl shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold text-gray-800">Avisos Importantes</h3>
-            <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm font-medium">3 novos</span>
-        </div>
-        
-        <div class="space-y-4">
-            <div class="flex items-start space-x-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
-                <div class="flex-shrink-0">
-                    <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                        <i class="fas fa-exclamation text-white text-sm"></i>
-                    </div>
-                </div>
-                <div class="flex-1">
-                    <h4 class="font-semibold text-red-800 mb-1">Sistema de Pagamentos Instável</h4>
-                    <p class="text-red-700 text-sm mb-2">O gateway de pagamento está apresentando intermitências. Algumas transações podem falhar.</p>
-                    <div class="flex items-center text-xs text-red-600">
-                        <i class="fas fa-clock mr-1"></i>
-                        <span>Há 15 minutos</span>
-                        <span class="mx-2">•</span>
-                        <span class="font-medium">Alta Prioridade</span>
-                    </div>
-                </div>
-                <button class="text-red-500 hover:text-red-700 transition-colors">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <div class="flex items-start space-x-4 p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg">
-                <div class="flex-shrink-0">
-                    <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
-                        <i class="fas fa-exclamation-triangle text-white text-sm"></i>
-                    </div>
-                </div>
-                <div class="flex-1">
-                    <h4 class="font-semibold text-yellow-800 mb-1">Manutenção Programada</h4>
-                    <p class="text-yellow-700 text-sm mb-2">Sistema ficará indisponível no domingo das 02h às 06h para atualizações de segurança.</p>
-                    <div class="flex items-center text-xs text-yellow-600">
-                        <i class="fas fa-clock mr-1"></i>
-                        <span>Há 2 horas</span>
-                        <span class="mx-2">•</span>
-                        <span class="font-medium">Média Prioridade</span>
-                    </div>
-                </div>
-                <button class="text-yellow-500 hover:text-yellow-700 transition-colors">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <div class="flex items-start space-x-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-lg">
-                <div class="flex-shrink-0">
-                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                        <i class="fas fa-info text-white text-sm"></i>
-                    </div>
-                </div>
-                <div class="flex-1">
-                    <h4 class="font-semibold text-blue-800 mb-1">Nova Funcionalidade Disponível</h4>
-                    <p class="text-blue-700 text-sm mb-2">Agora você pode exportar relatórios financeiros em formato Excel. Acesse em Relatórios > Financeiro.</p>
-                    <div class="flex items-center text-xs text-blue-600">
-                        <i class="fas fa-clock mr-1"></i>
-                        <span>Há 1 dia</span>
-                        <span class="mx-2">•</span>
-                        <span class="font-medium">Informativo</span>
-                    </div>
-                </div>
-                <button class="text-blue-500 hover:text-blue-700 transition-colors">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <div class="flex items-start space-x-4 p-4 bg-green-50 border-l-4 border-green-500 rounded-lg">
-                <div class="flex-shrink-0">
-                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                        <i class="fas fa-check text-white text-sm"></i>
-                    </div>
-                </div>
-                <div class="flex-1">
-                    <h4 class="font-semibold text-green-800 mb-1">Backup Realizado com Sucesso</h4>
-                    <p class="text-green-700 text-sm mb-2">Backup automático dos dados foi concluído. Todos os dados estão seguros e atualizados.</p>
-                    <div class="flex items-center text-xs text-green-600">
-                        <i class="fas fa-clock mr-1"></i>
-                        <span>Há 3 horas</span>
-                        <span class="mx-2">•</span>
-                        <span class="font-medium">Sucesso</span>
-                    </div>
-                </div>
-                <button class="text-green-500 hover:text-green-700 transition-colors">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="mt-6 text-center">
-            <button class="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors">
-                Ver todos os avisos
-                <i class="fas fa-arrow-right ml-1"></i>
-            </button>
-        </div>
-    </div>
 </div>
+
+<!-- ChartJS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // GRÁFICO DE BARRAS
+    new Chart(document.getElementById("graficoBarra"), {
+        type: "bar",
+        data: {
+            labels: ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"],
+            datasets: [{
+                data: [18, 27, 23, 37, 39],
+                backgroundColor: "#f7b7b7"
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { color: "#f7b7b7" } },
+                y: { ticks: { color: "#f7b7b7" } }
+            }
+        }
+    });
+
+    // GRÁFICO DE PIZZA
+    new Chart(document.getElementById("graficoPizza"), {
+        type: "pie",
+        data: {
+            labels: ["Item 1", "Item 2", "Item 3"],
+            datasets: [{
+                data: [60, 25, 15],
+                backgroundColor: ["#f7b7b7", "#e7a1a1", "#b97d7d"]
+            }]
+        },
+        options: {
+            plugins: { legend: { labels: { color: "#f7b7b7" } } }
+        }
+    });
+</script>
+
+</body>
+</html>

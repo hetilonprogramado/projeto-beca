@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\User;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -14,19 +14,15 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // User::factory(10)->create();
+
         $usuarios = User::get();
         if($usuarios->count() == 0) {
             User::create(array(
                 'id' => 1,
-                'empresa_id' => 1,
-				'name' => 'Perfil TI',
-                'email' => 'perfil@perfilti.com',
-                'password' => Hash::make('p3rf1lt1'),
-                'status_id' => 1,
-                'grupo_usuario_id' => 1,
-                'user_id' => 1,
-                'codigo_acesso' => '0001',
-                'user_system' => 'Sim',
+				'name' => 'Hetilon',
+                'email' => 'hetilon@gmail.com',
+                'password' => Hash::make('Detilon61'),
             ));
         }
     }

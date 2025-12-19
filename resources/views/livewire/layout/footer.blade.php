@@ -47,12 +47,5 @@ body {
 
 </head>
 <body>
-
-<!-- BARRA SUPERIOR -->
-<div class="topbar">
-    <button class="menu-btn">☰</button>
-    <span class="user-info">Usuário: Adm</span>
-</div>
-
 </body>
 </html>
