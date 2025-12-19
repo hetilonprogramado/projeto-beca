@@ -16,15 +16,17 @@ body {
 
 /* MENU LATERAL */
         .sidebar {
-            width: 230px;
+            width: 260px;
             background-color: #5f1123;
             height: 100vh;
             position: fixed;
+            height: calc(100vh - 60px); 
             top: 60px; /* deixa o topo acima do sidebar */
             left: 0;
             padding-top: 20px;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
         }
 
         .sidebar-section {

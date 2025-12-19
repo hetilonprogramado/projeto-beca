@@ -14,11 +14,16 @@
     }
 
     .painel-container {
-        width: 100%;
+        width: 84%;
         padding: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        background: #3b0a18;
+        margin-top: 60px;
+
+        height: 100vh;          /* ocupa a tela */
+        overflow-y: auto; 
     }
 
     /* CARDS SUPERIORES */
@@ -91,11 +96,12 @@
     }
 
     .grafico-pizza {
-        width: 250px;
-        height: 250px;
+        width: 210px;
+        height: 280px;
         background: #4a0e0e;
         border-radius: 8px;
         position: relative;
+        margin-right: 20px;
     }
 
     .grafico-pizza canvas {
