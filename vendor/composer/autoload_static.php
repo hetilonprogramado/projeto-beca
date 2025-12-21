@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita683bc4049850d593c50f7c746d68cbd
+class ComposerStaticInit0da0d8fe77a909250158dab039cfc120
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -227,9 +227,9 @@ class ComposerStaticInita683bc4049850d593c50f7c746d68cbd
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'Whoops\\' => 
         array (
@@ -389,8 +389,8 @@ class ComposerStaticInita683bc4049850d593c50f7c746d68cbd
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -474,8 +474,8 @@ class ComposerStaticInita683bc4049850d593c50f7c746d68cbd
         ),
         'League\\Uri\\' => 
         array (
-            0 => __DIR__ . '/..' . '/league/uri',
-            1 => __DIR__ . '/..' . '/league/uri-interfaces',
+            0 => __DIR__ . '/..' . '/league/uri-interfaces',
+            1 => __DIR__ . '/..' . '/league/uri',
         ),
         'League\\MimeTypeDetection\\' => 
         array (
@@ -679,46 +679,17 @@ class ComposerStaticInita683bc4049850d593c50f7c746d68cbd
     public static $classMap = array (
         'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\PrincipalController' => __DIR__ . '/../..' . '/app/Http/Controllers/PrincipalController.php',
         'App\\Livewire\\Actions\\Logout' => __DIR__ . '/../..' . '/app/Livewire/Actions/Logout.php',
-        'App\\Livewire\\Cliente\\Alterar' => __DIR__ . '/../..' . '/app/Livewire/Cliente/Alterar.php',
-        'App\\Livewire\\Cliente\\Cadastrar' => __DIR__ . '/../..' . '/app/Livewire/Cliente/Cadastrar.php',
-        'App\\Livewire\\Cliente\\Lista' => __DIR__ . '/../..' . '/app/Livewire/Cliente/Lista.php',
-        'App\\Livewire\\Curso\\Alterar' => __DIR__ . '/../..' . '/app/Livewire/Curso/Alterar.php',
-        'App\\Livewire\\Curso\\Cadastrar' => __DIR__ . '/../..' . '/app/Livewire/Curso/Cadastrar.php',
-        'App\\Livewire\\Curso\\Lista' => __DIR__ . '/../..' . '/app/Livewire/Curso/Lista.php',
         'App\\Livewire\\Dashboard' => __DIR__ . '/../..' . '/app/Livewire/Dashboard.php',
-        'App\\Livewire\\Empresa\\Alterar' => __DIR__ . '/../..' . '/app/Livewire/Empresa/Alterar.php',
-        'App\\Livewire\\Empresa\\Cadastrar' => __DIR__ . '/../..' . '/app/Livewire/Empresa/Cadastrar.php',
-        'App\\Livewire\\Empresa\\Lista' => __DIR__ . '/../..' . '/app/Livewire/Empresa/Lista.php',
         'App\\Livewire\\Forms\\LoginForm' => __DIR__ . '/../..' . '/app/Livewire/Forms/LoginForm.php',
+        'App\\Livewire\\Layout\\Footer' => __DIR__ . '/../..' . '/app/Livewire/Layout/Footer.php',
+        'App\\Livewire\\Layout\\Navigation' => __DIR__ . '/../..' . '/app/Livewire/Layout/Navigation.php',
         'App\\Livewire\\Layout\\Sidebar' => __DIR__ . '/../..' . '/app/Livewire/Layout/Sidebar.php',
-        'App\\Livewire\\Matricula\\Alterar' => __DIR__ . '/../..' . '/app/Livewire/Matricula/Alterar.php',
-        'App\\Livewire\\Matricula\\Cadastrar' => __DIR__ . '/../..' . '/app/Livewire/Matricula/Cadastrar.php',
-        'App\\Livewire\\Matricula\\Lista' => __DIR__ . '/../..' . '/app/Livewire/Matricula/Lista.php',
-        'App\\Livewire\\Produtos\\Alterar' => __DIR__ . '/../..' . '/app/Livewire/Produtos/Alterar.php',
-        'App\\Livewire\\Produtos\\Cadastrar' => __DIR__ . '/../..' . '/app/Livewire/Produtos/Cadastrar.php',
-        'App\\Livewire\\Produtos\\Lista' => __DIR__ . '/../..' . '/app/Livewire/Produtos/Lista.php',
-        'App\\Livewire\\Turma\\Alterar' => __DIR__ . '/../..' . '/app/Livewire/Turma/Alterar.php',
-        'App\\Livewire\\Turma\\Cadastrar' => __DIR__ . '/../..' . '/app/Livewire/Turma/Cadastrar.php',
-        'App\\Livewire\\Turma\\CadastrarProfessor' => __DIR__ . '/../..' . '/app/Livewire/Turma/CadastrarProfessor.php',
-        'App\\Livewire\\Turma\\Lista' => __DIR__ . '/../..' . '/app/Livewire/Turma/Lista.php',
+        'App\\Livewire\\Redesocial' => __DIR__ . '/../..' . '/app/Livewire/Redesocial.php',
         'App\\Livewire\\Usuario\\Alterar' => __DIR__ . '/../..' . '/app/Livewire/Usuario/Alterar.php',
         'App\\Livewire\\Usuario\\Cadastrar' => __DIR__ . '/../..' . '/app/Livewire/Usuario/Cadastrar.php',
         'App\\Livewire\\Usuario\\Lista' => __DIR__ . '/../..' . '/app/Livewire/Usuario/Lista.php',
-        'App\\Models\\Cargos' => __DIR__ . '/../..' . '/app/Models/Cargos.php',
-        'App\\Models\\Cidades' => __DIR__ . '/../..' . '/app/Models/Cidades.php',
-        'App\\Models\\Cliente' => __DIR__ . '/../..' . '/app/Models/Cliente.php',
-        'App\\Models\\Contas' => __DIR__ . '/../..' . '/app/Models/Contas.php',
-        'App\\Models\\Curso' => __DIR__ . '/../..' . '/app/Models/Curso.php',
-        'App\\Models\\Empresa' => __DIR__ . '/../..' . '/app/Models/Empresa.php',
-        'App\\Models\\Estados' => __DIR__ . '/../..' . '/app/Models/Estados.php',
-        'App\\Models\\Funcionario' => __DIR__ . '/../..' . '/app/Models/Funcionario.php',
-        'App\\Models\\Matriculas' => __DIR__ . '/../..' . '/app/Models/Matriculas.php',
-        'App\\Models\\Niveis' => __DIR__ . '/../..' . '/app/Models/Niveis.php',
-        'App\\Models\\Salas' => __DIR__ . '/../..' . '/app/Models/Salas.php',
-        'App\\Models\\Statues' => __DIR__ . '/../..' . '/app/Models/Statues.php',
-        'App\\Models\\Tipos_Contas' => __DIR__ . '/../..' . '/app/Models/Tipos_Contas.php',
-        'App\\Models\\Turmas' => __DIR__ . '/../..' . '/app/Models/Turmas.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\VoltServiceProvider' => __DIR__ . '/../..' . '/app/Providers/VoltServiceProvider.php',
@@ -868,18 +839,7 @@ class ComposerStaticInita683bc4049850d593c50f7c746d68cbd
         'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
-        'Database\\Seeders\\CargosSeeder' => __DIR__ . '/../..' . '/database/seeders/CargosSeeder.php',
-        'Database\\Seeders\\CidadesSeeder' => __DIR__ . '/../..' . '/database/seeders/CidadesSeeder.php',
-        'Database\\Seeders\\ContasSeeder' => __DIR__ . '/../..' . '/database/seeders/ContasSeeder.php',
-        'Database\\Seeders\\CursosSeeder' => __DIR__ . '/../..' . '/database/seeders/CursosSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
-        'Database\\Seeders\\EmpresasSeeder' => __DIR__ . '/../..' . '/database/seeders/EmpresasSeeder.php',
-        'Database\\Seeders\\EstadosSeeder' => __DIR__ . '/../..' . '/database/seeders/EstadosSeeder.php',
-        'Database\\Seeders\\NiveisSeeder' => __DIR__ . '/../..' . '/database/seeders/NiveisSeeder.php',
-        'Database\\Seeders\\SalasSeeder' => __DIR__ . '/../..' . '/database/seeders/SalasSeeder.php',
-        'Database\\Seeders\\StatuesSeeder' => __DIR__ . '/../..' . '/database/seeders/StatuesSeeder.php',
-        'Database\\Seeders\\TiposContasSeeder' => __DIR__ . '/../..' . '/database/seeders/TiposContasSeeder.php',
-        'Database\\Seeders\\TurmasSeeder' => __DIR__ . '/../..' . '/database/seeders/TurmasSeeder.php',
         'Database\\Seeders\\UserSeeder' => __DIR__ . '/../..' . '/database/seeders/UserSeeder.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
         'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
@@ -8213,9 +8173,9 @@ class ComposerStaticInita683bc4049850d593c50f7c746d68cbd
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita683bc4049850d593c50f7c746d68cbd::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita683bc4049850d593c50f7c746d68cbd::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInita683bc4049850d593c50f7c746d68cbd::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0da0d8fe77a909250158dab039cfc120::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0da0d8fe77a909250158dab039cfc120::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit0da0d8fe77a909250158dab039cfc120::$classMap;
 
         }, null, ClassLoader::class);
     }

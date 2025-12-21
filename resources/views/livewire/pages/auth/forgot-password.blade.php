@@ -17,16 +17,13 @@ new #[Layout('layouts.guest')] class extends Component
             'email' => ['required', 'string', 'email'],
         ]);
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
+        // Envia o link de redefinição
         $status = Password::sendResetLink(
             $this->only('email')
         );
 
         if ($status != Password::RESET_LINK_SENT) {
             $this->addError('email', __($status));
-
             return;
         }
 
@@ -34,7 +31,8 @@ new #[Layout('layouts.guest')] class extends Component
 
         session()->flash('status', __($status));
     }
-}; ?>
+}; 
+?>
 
 <div>
     <div class="mb-4 text-sm text-[#400d0a] font-['Bree_Serif']">
@@ -52,10 +50,16 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
+        <div class="flex flex-col items-start mt-4 space-y-2">
+            <!-- Botão de envio -->
+            <x-primary-button class="w-full">
+                {{ __('Enviar link de redefinição') }}
             </x-primary-button>
+
+            <!-- Link de voltar para login -->
+            <a href="{{ route('login') }}" class="text-sm text-[#400d0a] hover:text-[#2a0b0b] font-['Bree_Serif'] transition-colors">
+                &larr; Voltar para login
+            </a>
         </div>
     </form>
 </div>
