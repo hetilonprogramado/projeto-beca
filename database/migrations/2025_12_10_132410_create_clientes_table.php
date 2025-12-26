@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nome',100);
             $table->string('endereco',100)->nullable();
             $table->date('data_nasc')->nullable();
-            $table->string('cpf/cnpj')->nullable();
+            $table->string('cpf_cnpj')->nullable();
             $table->string('email',50)->nullable();
             $table->string('telefone',20)->nullable();
             $table->enum('status', ['Ativo', 'Irregular', 'Inativo'])->nullable();

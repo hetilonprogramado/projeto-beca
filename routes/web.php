@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
+Livewire::setUpdateRoute(function ($handle) {
+    return Route::post(env('LIVEWIRE_UPDATE_URI'), $handle);
+});
 /*
 |--------------------------------------------------------------------------
 | Raiz
@@ -29,28 +32,28 @@ Route::middleware('auth')->group(function () {
     /*
     | Operações Principais
     */
-    Volt::route('caixa', 'caixa')->name('caixa');
-    Volt::route('clientes', 'clientes')->name('clientes');
+    Volt::route('caixa', 'caixas.caixa')->name('caixa');
+    Volt::route('clientes', 'clientes.cliente')->name('clientes');
 
     /*
     | Estoque e Produtos
     */
-    Volt::route('produtos', 'produtos')->name('produtos');
-    Volt::route('estoque', 'estoque')->name('estoque');
-    Volt::route('fornecedores', 'fornecedores')->name('fornecedores');
+    Volt::route('produtos', 'produtos.produto')->name('produtos');
+    Volt::route('estoque', 'estoques.estoque')->name('estoque');
+    Volt::route('fornecedores', 'fornecedores.fornecedor')->name('fornecedores');
 
     /*
     | Vendas e Funcionários
     */
-    Volt::route('vendas', 'vendas')->name('vendas');
-    Volt::route('funcionarios', 'funcionarios')->name('funcionarios');
-    Volt::route('delivery', 'delivery')->name('delivery');
+    Volt::route('vendas', 'vendas.venda')->name('vendas');
+    Volt::route('funcionarios', 'funcionarios.funcionario')->name('funcionarios');
+    Volt::route('delivery', 'deliverys.delivery')->name('delivery');
 
     /*
     | Biblioteca e Configurações
     */
-    Volt::route('biblioteca', 'biblioteca')->name('biblioteca');
-    Volt::route('configuracoes', 'configuracoes')->name('configuracoes');
+    Volt::route('biblioteca', 'bibliotecas.biblioteca')->name('biblioteca');
+    Volt::route('configuracoes', 'configuracoes.configuracao')->name('configuracoes');
 
     /*
     | Perfil

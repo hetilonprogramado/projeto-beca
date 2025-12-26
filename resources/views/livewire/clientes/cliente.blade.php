@@ -101,18 +101,18 @@
         <h3>Cadastrar Cliente</h3>
 
         <div class="form-grid">
-            <input id="nome" placeholder="Nome" class="span-2">
-            <input id="telefone" placeholder="Telefone">
-            <input id="email" placeholder="Email">
+            <input wire:model="nome" required id="nome" placeholder="Nome" class="span-2">
+            <input wire:model="telefone" required id="telefone" placeholder="Telefone">
+            <input wire:model="email" required id="email" placeholder="Email">
 
-            <input id="endereco" placeholder="Endereço" class="span-4">
+            <input wire:model="endereco" required id="endereco" placeholder="Endereço" class="span-4">
 
-            <input id="nascimento" type="date">
+            <input wire:model="data_nasc" required id="nascimento" type="date">
             <input id="prospeccao" type="date">
         </div>
 
         <div class="form-actions">
-            <button class="btn btn-cancel" id="cancelCard">Cancelar</button>
+            <button wire:click.prevent="salvar" wire:target="salvar" class="btn btn-cancel" id="cancelCard">Cancelar</button>
             <button class="btn btn-save" id="saveClient">Salvar</button>
         </div>
     </div>
