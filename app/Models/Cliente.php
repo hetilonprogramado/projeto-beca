@@ -12,13 +12,10 @@ class Cliente extends Model
 
     protected $fillable = [
         'nome',
-        'endereco',
-        'data_nasc',
-        'cpf_cnpj',
         'email',
-        'telefone',
-        'status',
-        'foto'
+        'phone',
+        'address',
+        'photo'
     ];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];

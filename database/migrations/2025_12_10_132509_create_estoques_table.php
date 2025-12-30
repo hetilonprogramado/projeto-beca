@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('estoques', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('data_hora');
+            $table->foreignId('produto_id')->nullable()->constrained('produtos')->cascadeOnDelete();
+            $table->string('codigo_barra')->nullable();
             $table->enum('tipo_de_movimento', ['Entrada', 'Saida'])->nullable();
-            $table->string('quantidade');
+            $table->integer('quantidade');
+            $table->string('origem')->nullable();
+            $table->date('data')->nullable();
             $table->timestamps();
         });
     }

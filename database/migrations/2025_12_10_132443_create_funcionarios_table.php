@@ -15,15 +15,11 @@ return new class extends Migration
             $table->increments('id');
             $table->softDeletes();
             $table->string('nome',100);
-            $table->string('cpf/cnpj')->nullable();
-            $table->string('senha')->nullable();
-            $table->string('endereco',20)->nullable();
-            $table->string('telefone');
-            $table->decimal('salario')->nullable()->default(0);
+            $table->string('address')->nullable();
+            $table->string('phone', 20)->nullable();
             $table->string('cargo',100)->nullable();
             $table->string('email');
-            $table->string('nivel_acesso',20)->nullable()->default('funcionario');
-            $table->string('foto');
+            $table->string('photo');
             $table->timestamps();
         });
     }

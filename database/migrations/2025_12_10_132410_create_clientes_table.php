@@ -15,13 +15,10 @@ return new class extends Migration
             $table->increments('id');
             $table->softDeletes();
             $table->string('nome',100);
-            $table->string('endereco',100)->nullable();
-            $table->date('data_nasc')->nullable();
-            $table->string('cpf_cnpj')->nullable();
             $table->string('email',50)->nullable();
-            $table->string('telefone',20)->nullable();
-            $table->enum('status', ['Ativo', 'Irregular', 'Inativo'])->nullable();
-            $table->string('foto');
+            $table->string('phone',20)->nullable();
+            $table->string('address',100)->nullable();
+            $table->string('photo',100)->nullable();
             $table->timestamps();
         });
     }

@@ -13,17 +13,19 @@ return new class extends Migration
     {
         Schema::create('vendas', function (Blueprint $table) {
             $table->id();
-            $table->string('nome_do_cliente',100);
-            $table->string('nome_dos_produtos',100);
-            $table->string('valor_da_compra',100);
+            $table->string('cliente',100);
+            $table->string('descricao_produtos',100);
+            $table->double('total');
+            $table->integer('parcelas');
             $table->enum('tipo_de_pagamento', ['Avista', 'Aprazo'])->nullable();
             $table->enum('forma_de_pagamento', ['Pix', 'Dinheiro', 'Credito', 'Debito', 'Boleto'])->nullable();
-            $table->string('nome_vendedor',100);
-            $table->enum('juros', ['Reais', 'Porcentagem'])->nullable();
-            $table->enum('desconto', ['Reais', 'Porcentagem'])->nullable();
-            $table->string('valor_pago',100);
-            $table->string('troco',100);
-            $table->string('total_carrinho');
+            $table->double('juros')->nullable();
+            $table->double('desconto')->nullable();
+            $table->double('valor_pago',100);
+            $table->double('troco',100);
+            $table->enum('retirada', ['Local', 'Delivery']);
+            $table->string('usuario');
+            $table->datetime('data_hora');
             $table->timestamps();
         });
     }

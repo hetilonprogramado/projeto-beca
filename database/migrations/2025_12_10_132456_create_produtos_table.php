@@ -14,13 +14,11 @@ return new class extends Migration
         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
             $table->string('nome',100);
-            $table->string('marca',100);
-            $table->string('fornecedor',100);
-            $table->string('valor');
-            $table->string('quantidade');
-            $table->string('codigo_barras');
-            $table->enum('status', ['Ativo', 'Irregular', 'Inativo'])->nullable();
-            $table->string('foto');
+            $table->double('valor')->nullable();
+            $table->integer('quantidade')->nullable();
+            $table->string('marca',100)->nullable();
+            $table->string('codigo_barra',100)->nullable();
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }
