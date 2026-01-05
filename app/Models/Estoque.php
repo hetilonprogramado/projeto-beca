@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cliente extends Model
+class Estoque extends Model
 {
-    protected $table = 'clientes';
+    protected $table = 'estoques';
 
     protected $fillable = [
-        'nome',
-        'email',
-        'phone',
-        'address',
-        'photo',
-        'data_nasc',
-        'prospeccao',
+        'codigo_barra',
+        'quantidade',
+        'data',
+        'tipo_de_movimento',
+        'produto_id',
     ];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
@@ -25,5 +23,10 @@ class Cliente extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+
+    public function produto()
+    {
+        return $this->belongsTo('App\Models\Produto', 'produto_id');
+    }
 
 }

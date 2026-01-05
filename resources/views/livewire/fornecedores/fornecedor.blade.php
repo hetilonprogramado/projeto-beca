@@ -15,14 +15,18 @@
 
     <!-- Card de cadastro -->
     <div style="background:#5f1123; color:#fff; padding:20px; border-radius:10px; margin-top:20px;">
-        <input name="supplier_name" placeholder="Nome do fornecedor" class="campo">
-        <input name="supplier_cnpj" placeholder="CNPJ" class="campo">
-        <input name="supplier_phone" placeholder="Telefone" class="campo">
-        <input name="supplier_email" placeholder="Email" class="campo">
-        <input name="supplier_contact" placeholder="Contato" class="campo">
-        <input name="supplier_address" placeholder="Endereço" class="campo">
+        <input name="supplier_name" wire:model="nome" required placeholder="Nome do fornecedor" class="campo">
+        <input name="supplier_cnpj" wire:model="cnpj" required placeholder="CNPJ" class="campo">
+        <input name="supplier_phone" wire:model="phone" required placeholder="Telefone" class="campo">
+        <input name="supplier_email" wire:model="email" required placeholder="Email" class="campo">
+        <input name="supplier_contact" wire:model="contato" required placeholder="Contato" class="campo">
+        <input name="supplier_address" wire:model="address" required placeholder="Endereço" class="campo">
         <div class="mt-2 flex gap-2">
-            <button class="bg-green-500 text-white px-3 py-1 rounded">Salvar</button>
+            <button class="bg-green-500 text-white px-3 py-1 rounded" type="submit" wire:click.prevent="salvar" wire:target="salvar" wire:loading.attr="disabled">
+                <span wire:loading.remove wire:target="salvar">Salvar</span>
+                <i class="fas fa-spinner fa-spin mr-2" wire:loading wire:target="salvar"></i>
+                <span wire:loading wire:target="salvar">Salvando...</span>
+            </button>
             <button class="bg-gray-500 text-white px-3 py-1 rounded">Cancelar</button>
         </div>
     </div>
@@ -41,6 +45,16 @@
         </thead>
         <tbody>
             <!-- Aqui os fornecedores serão renderizados via backend -->
+            @foreach ($fornecedores as $fornecedor)
+                <tr class="border-t">
+                    <td class="p-2">{{ $fornecedor->nome }}</td>
+                    <td class="p-2">{{ $fornecedor->cnpj }}</td>
+                    <td class="p-2">{{ $fornecedor->phone }}</td>
+                    <td class="p-2">{{ $fornecedor->email }}</td>
+                    <td class="p-2">{{ $fornecedor->contato }}</td>
+                    <td class="p-2">{{ $fornecedor->address }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 

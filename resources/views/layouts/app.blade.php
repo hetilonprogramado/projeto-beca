@@ -96,19 +96,7 @@
 <!-- CONTEÚDO -->
 <div class="content">
     <div class="content-inner">
-        @if(Route::currentRouteName() == 'clientes')
-            @include('livewire.clientes.cliente')
-        @elseif(Route::currentRouteName() == 'produtos')
-            @include('livewire.produtos.produto')
-        @elseif(Route::currentRouteName() == 'estoque')
-            @include('livewire.estoques.estoque')
-        @elseif(Route::currentRouteName() == 'funcionarios')
-            @include('livewire.funcionarios.funcionario')
-        @elseif(Route::currentRouteName() == 'fornecedores')
-            @include('livewire.fornecedores.fornecedor')
-        @else
-            @yield('content')
-        @endif
+        {{ $slot }}
     </div>
 </div>
 

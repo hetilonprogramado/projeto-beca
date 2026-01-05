@@ -15,11 +15,11 @@ return new class extends Migration
             $table->increments('id');
             $table->softDeletes();
             $table->string('nome',100);
-            $table->string('address')->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('cargo',100)->nullable();
             $table->string('email');
-            $table->string('photo');
+            $table->double('salario')->nullable();
+            $table->date('admissao')->nullable();
             $table->timestamps();
         });
     }

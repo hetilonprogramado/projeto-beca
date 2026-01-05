@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cliente extends Model
+class Fornecedor extends Model
 {
-    protected $table = 'clientes';
+    protected $table = 'fornecedores';
 
     protected $fillable = [
         'nome',
-        'email',
+        'cnpj',
         'phone',
+        'email',
+        'contato',
         'address',
-        'photo',
-        'data_nasc',
-        'prospeccao',
     ];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
@@ -25,5 +24,4 @@ class Cliente extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-
 }

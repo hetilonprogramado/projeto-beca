@@ -9,43 +9,52 @@ use Carbon\Carbon;
 class Cliente extends Component
 {
     public $nome;
-    public $telefone;
+    public $phone;
     public $email;
-    public $endereco;
+    public $address;
     public $data_nasc;
-    public $prospeccao; // precisa existir
-    public $showCard = false;
+    public $prospeccao;
 
-    public function salvarCliente()
+    public $clients = [];
+
+    protected $rules = [
+        'nome' => 'required|min:4',
+        'phone' => 'nullable|min:9',
+        'email' => 'nullable|email',
+        'address' => 'nullable|min:5',
+        'data_nasc' => 'nullable|date',
+        'prospeccao' => 'nullable|date',
+    ];
+
+    public function mount()
     {
-        $this->validate([
-            'nome' => 'required|min:4',
-            'telefone' => 'nullable|min:9',
-            'email' => 'nullable|email',
-            'endereco' => 'nullable|min:3',
-            'data_nasc' => 'nullable|date',
-            'prospeccao' => 'nullable|date',
-        ]);
+        $this->clients = ClienteModel::all();
+    }
+
+    public function salvar()
+    {
+        $this->data_nasc = Carbon::parse($this->data_nasc)->format('Y-m-d');
+        $this->prospeccao = Carbon::parse($this->prospeccao)->format('Y-m-d');
+
+        $this->validate();
 
         ClienteModel::create([
             'nome' => $this->nome,
-            'telefone' => $this->telefone,
+            'phone' => $this->phone,
             'email' => $this->email,
-            'endereco' => $this->endereco,
-            'data_nasc' => $this->data_nasc ? Carbon::parse($this->data_nasc)->format('Y-m-d') : null,
-            'prospeccao' => $this->prospeccao ? Carbon::parse($this->prospeccao)->format('Y-m-d') : null,
+            'address' => $this->address,
+            'data_nasc' => $this->data_nasc,
+            'prospeccao' => $this->prospeccao,
         ]);
 
-        $this->reset(['nome','telefone','email','endereco','data_nasc','prospeccao']);
-        $this->showCard = false;
+        $this->reset();
 
+        $this->clients = ClienteModel::all(); // atualiza tabela
         session()->flash('message', 'Cliente cadastrado com sucesso!');
     }
 
     public function render()
     {
-        return view('livewire.clientes.cliente', [
-            'clients' => ClienteModel::all()
-        ]);
+        return view('livewire.clientes.cliente');
     }
 }

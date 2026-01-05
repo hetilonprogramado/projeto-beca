@@ -12,14 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('estoques', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('produto_id')->nullable()->constrained('produtos')->cascadeOnDelete();
+            $table->increments('id');
+            $table->integer('produto_id')->unsigned();
             $table->string('codigo_barra')->nullable();
             $table->enum('tipo_de_movimento', ['Entrada', 'Saida'])->nullable();
             $table->integer('quantidade');
-            $table->string('origem')->nullable();
             $table->date('data')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('produto_id')->references('id')->on('produtos');
         });
     }
 

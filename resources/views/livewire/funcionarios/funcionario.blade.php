@@ -16,14 +16,18 @@
 
     <!-- Card de cadastro -->
     <div style="background:#5f1123; color:#fff; padding:20px; border-radius:10px; margin-top:20px;">
-        <input name="employee_name" placeholder="Nome do funcionário" class="campo">
-        <input name="employee_position" placeholder="Cargo" class="campo">
-        <input name="employee_phone" placeholder="Telefone" class="campo">
-        <input name="employee_email" placeholder="Email" class="campo">
-        <input name="employee_salary" type="number" placeholder="Salário" class="campo">
-        <input name="employee_hire_date" type="date" class="campo">
+        <input name="employee_name" wire:model="nome" required placeholder="Nome do funcionário" class="campo">
+        <input name="employee_position" wire:model="cargo" required placeholder="Cargo" class="campo">
+        <input name="employee_phone" wire:model="phone" required placeholder="Telefone" class="campo">
+        <input name="employee_email" wire:model="email" required placeholder="Email" class="campo">
+        <input name="employee_salary" wire:model="salario" required type="number" placeholder="Salário" class="campo">
+        <input name="employee_hire_date" wire:model="admissao" required type="date" class="campo">
         <div class="mt-2 flex gap-2">
-            <button class="bg-green-500 text-white px-3 py-1 rounded">Salvar</button>
+            <button class="bg-green-500 text-white px-3 py-1 rounded" type="submit" wire:click.prevent="salvar" wire:target="salvar" wire:loading.attr="disabled">
+                <span wire:loading.remove wire:target="salvar">Salvar</span>
+                <i class="fas fa-spinner fa-spin mr-2" wire:loading wire:target="salvar"></i>
+                <span wire:loading wire:target="salvar">Salvando...</span>
+            </button>
             <button class="bg-gray-500 text-white px-3 py-1 rounded">Cancelar</button>
         </div>
     </div>
@@ -41,7 +45,18 @@
             </tr>
         </thead>
         <tbody id="employeeTableBody">
-            <!-- Aqui os funcionarios serão renderizados via backend --></tbody>
+            <!-- Aqui os funcionarios serão renderizados via backend -->
+            @foreach($funcionarios as $funcionario)
+            <tr class="border-t">
+                <td class="p-2">{{ $funcionario->nome }}</td>
+                <td class="p-2">{{ $funcionario->cargo }}</td>
+                <td class="p-2">{{ $funcionario->phone }}</td>
+                <td class="p-2">{{ $funcionario->email }}</td>
+                <td class="p-2">{{ $funcionario->salario }}</td>
+                <td class="p-2">{{ \Carbon\Carbon::parse($funcionario->admissao)->format('d/m/Y') }}</td>
+            </tr>
+            @endforeach
+        </tbody>
     </table>
 
 </div>

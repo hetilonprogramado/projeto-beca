@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('phone',20)->nullable();
             $table->string('address',100)->nullable();
             $table->string('photo',100)->nullable();
+            $table->date('data_nasc')->nullable();
+            $table->date('prospeccao')->nullable();
             $table->timestamps();
         });
     }
